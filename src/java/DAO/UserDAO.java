@@ -11,7 +11,7 @@ package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.User;
+import Models.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserDAO extends DBContext {
