@@ -15,14 +15,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class AddRoomServlet extends HttpServlet {
 
     StatusDAO statusDao = new StatusDAO();
@@ -38,29 +33,29 @@ public class AddRoomServlet extends HttpServlet {
         request.setAttribute("statusList", statusList);
         request.setAttribute("roomTypeList", roomTypeList);
         request.getRequestDispatcher("addRoom.jsp").forward(request, response);
-        
+
         HttpSession session = request.getSession();
-        
+
         session.removeAttribute("addRoomError");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
-        
+
         String roomNumber = request.getParameter("roomNumber");
         String roomDesc = request.getParameter("roomDesc");
         double price = Double.parseDouble(request.getParameter("price"));
         int roomTypeId = Integer.parseInt(request.getParameter("roomTypeId"));
         int statusId = Integer.parseInt(request.getParameter("roomStatusId"));
-        
+
         HttpSession session = request.getSession();
-        
-        if (!roomNumber.isEmpty()){
-            for(Room r: dao.getAllRoom()){
-                if (r.getRoomNumber().equalsIgnoreCase(roomNumber)){
+
+        if (!roomNumber.isEmpty()) {
+            for (Room r : dao.getAllRoom()) {
+                if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
                     session.setAttribute("addRoomError", "Room number already existed.");
                     response.sendRedirect("add-room");
                     return;
