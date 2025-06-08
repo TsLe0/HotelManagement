@@ -4,8 +4,24 @@
         <servlet-name>GetAllRooms</servlet-name>
         <servlet-class>Controller.GetAllRooms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminRoom</servlet-name>
+        <servlet-class>Controller.AdminRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <servlet-class>Controller.AddRoomServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoom</servlet-name>
+        <url-pattern>/adminroom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <url-pattern>/add-room</url-pattern>
     </servlet-mapping>
 </web-app>
