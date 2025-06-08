@@ -28,7 +28,7 @@
         <i class="fas fa-users">
         </i>
         <span>
-            Guests
+            Customer
         </span>
     </a>
     <a class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100" href="#">

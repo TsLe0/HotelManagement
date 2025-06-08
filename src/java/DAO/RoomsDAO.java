@@ -6,15 +6,13 @@ package DAO;
 
 import Models.RoomType;
 import Models.Room;
-import Models.RoomImage;
 import Models.RoomStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -87,6 +85,28 @@ public class RoomsDAO {
             ps.executeUpdate();
         } catch (Exception ex) {
             System.out.println(ex);
+        }
+    }
+    public void updateRoom(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
+        String sql = "UPDATE Room SET roomTypeId = ?, statusId = ?, roomDesc = ?, roomPrice = ?,  WHERE roomNumber = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomTypeId);
+            ps.setInt(2, statusId);
+            ps.setString(3, roomDesc);
+            ps.setDouble(4, roomPrice);
+            ps.setString(5, roomNumber);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Product updated successfully!");
+            } else {
+                System.out.println("No product found with the given ID.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

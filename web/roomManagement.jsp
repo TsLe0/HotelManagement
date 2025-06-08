@@ -1,9 +1,4 @@
 
-<%-- 
-    Document   : roomadmin
-    Created on : Jun 7, 2025, 10:18:26 PM
-    Author     : Admin
---%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -50,8 +45,8 @@
             <main class="flex-1 p-6">
                 <div class="flex justify-between">
                     <h2 class="text-3xl font-semibold mb-6">Rooms</h2>
-                    <a href="#"
-                        class="text-xl font-semibold mb-6 bg-[#007bff] cursor-pointer hover:bg-[#0069D9] py-2 px-4 rounded-lg text-white">
+                    <a href="add-room"
+                       class="text-xl font-semibold mb-6 bg-[#007bff] cursor-pointer hover:bg-[#0069D9] py-2 px-4 rounded-lg text-white">
                         Create
                     </a>
                 </div>
@@ -94,12 +89,12 @@
                                         <span class="price" data-price="${r.roomPrice}"></span>
                                     </td>
                                     <td class="px-6 py-4 text-left">
-                                        <button
+                                        <a href="updat-room"
                                             class="text-white bg-[#007bff] hover:bg-[#0069D9]
                                             rounded-lg py-1.5 px-4 mr-4"
                                             >
                                             Edit
-                                        </button>
+                                        </a>
                                         <button 
                                             class="text-white bg-[#dc3545] hover:bg-[#c82333]
                                             rounded-lg py-1.5 px-4 mr-4"
@@ -109,52 +104,6 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                            <!--                             Room 2 
-                                                        <tr class="border-b hover:bg-gray-50">
-                                                            <td class="px-6 py-4">401</td>
-                                                            <td class="px-6 py-4"> Phòng Đôi</td>
-                                                            <td class="px-6 py-4">
-                                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Occupied</span>
-                                                            </td>
-                                                            <td class="px-6 py-4">$120</td>
-                                                            <td class="px-6 py-4 text-left">
-                                                                <button
-                                                                    class="text-white bg-[#007bff] hover:bg-[#0069D9]
-                                                                    rounded-lg py-1.5 px-4 mr-4"
-                                                                    >
-                                                                    Edit
-                                                                </button>
-                                                                <button 
-                                                                    class="text-white bg-[#dc3545] hover:bg-[#c82333]
-                                                                    rounded-lg py-1.5 px-4 mr-4"
-                                                                    >
-                                                                    Delete
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                         Room 3 
-                                                        <tr class="hover:bg-gray-50">
-                                                            <td class="px-6 py-4">D201</td>
-                                                            <td class="px-6 py-4"> Phòng Đôi</td>
-                                                            <td class="px-6 py-4">
-                                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Maintenance</span>
-                                                            </td>
-                                                            <td class="px-6 py-4"><a href="#">300 VND</a></td>
-                                                            <td class="px-6 py-4 text-left">
-                                                                <button
-                                                                    class="text-white bg-[#007bff] hover:bg-[#0069D9]
-                                                                    rounded-lg py-1.5 px-4 mr-4"
-                                                                    >
-                                                                    Edit
-                                                                </button>
-                                                                <button 
-                                                                    class="text-white bg-[#dc3545] hover:bg-[#c82333]
-                                                                    rounded-lg py-1.5 px-4 mr-4"
-                                                                    >
-                                                                    Delete
-                                                                </button>
-                                                            </td>
-                                                        </tr>-->
                         </tbody>
                     </table>
                 </div>
