@@ -18,7 +18,7 @@ import Models.User;
 
 /**
  *
- * @author tphon
+ * @author zx1
  */
 @WebServlet(name = "loginServlet", urlPatterns = {"/login"})
 public class loginServlet extends HttpServlet {
@@ -112,7 +112,7 @@ public class loginServlet extends HttpServlet {
                 }
             }
             //____________________________________________________________________________________________
-            response.sendRedirect("home");
+            response.sendRedirect("home.jsp");
         }
     }
 
