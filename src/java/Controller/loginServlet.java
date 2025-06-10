@@ -90,7 +90,7 @@ public class loginServlet extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("account", user);
-            
+
             // Remember function
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);
@@ -112,7 +112,12 @@ public class loginServlet extends HttpServlet {
                 }
             }
             //____________________________________________________________________________________________
-            response.sendRedirect("home.jsp");
+            // Check user role and redirect accordingly
+            if ("admin".equalsIgnoreCase(user.getRole())) {
+                response.sendRedirect("admin.jsp"); // Redirect admin to admin dashboard
+            } else {
+                response.sendRedirect("home.jsp"); // Redirect normal users to home page
+            }
         }
     }
 
