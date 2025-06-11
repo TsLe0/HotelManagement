@@ -4,8 +4,16 @@
         <servlet-name>GetAllRooms</servlet-name>
         <servlet-class>Controller.GetAllRooms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <servlet-class>Services.UploadAvatarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <url-pattern>/UploadAvatarServlet</url-pattern>
     </servlet-mapping>
 </web-app>
