@@ -39,17 +39,26 @@
 </head>
 <body>
     <div class="profile-container">
+        
         <div class="profile-header">
-            <img src="https://via.placeholder.com/100" alt="Ảnh đại diện">
-            <h2>${sessionScope.user.fullName}</h2>
-            <p>Email: ${sessionScope.user.email}</p>
-        </div>
+            <img src="${user.avatarPath != null ? user.avatarPath : 'image/User.jpg'}" alt="Avatar" width="150" height="150">
 
+            <h2>${sessionScope.user.fullName}</h2>
+        </div>
+<div class="left">
+        <h3>Ảnh đại diện</h3>
+        <form action="UploadAvatarServlet" method="post" enctype="multipart/form-data">
+            <img src="${user.avatarPath != null ? user.avatarPath : 'images/default-avatar.png'}" alt="Avatar">
+            <input type="file" name="avatar" accept="image/*">
+            <button type="submit">Cập nhật ảnh</button>
+        </form>
+    </div>
         <div class="profile-info">
             <h4>Thông Tin Cá Nhân</h4>
             <p><strong>Họ và Tên:</strong> ${sessionScope.user.fullName}</p>
             <p><strong>Số Điện Thoại:</strong> ${sessionScope.user.phone}</p>
             <p><strong>Địa Chỉ:</strong> ${sessionScope.user.address}</p>
+            <p><strong>Email:</strong> ${sessionScope.user.address}</p>
             <button class="btn btn-primary btn-edit" onclick="location.href='editProfile.jsp'">Chỉnh Sửa Thông Tin</button>
         </div>
 
