@@ -67,7 +67,14 @@
                             <c:forEach items="${rList}" var="r">
                                 <!-- Room 1 -->
                                 <tr class="border-b hover:bg-gray-50">
-                                    <td class="px-6 py-4">${r.roomNumber}</td>
+                                    <td class="px-6 py-4" >
+                                        <a href="admin-room-details?roomNumber=${r.roomNumber}"
+                                           class="text-white bg-[#25e610] hover:bg-[#218838]
+                                           rounded-lg py-1.5 px-4 mr-4"
+                                           >
+                                            ${r.roomNumber}
+                                        </a>
+                                    </td>
                                     <td class="px-6 py-4"> ${r.roomType.roomTypeName}</td>
                                     <td class="px-6 py-4">
                                         <c:choose>
@@ -90,9 +97,9 @@
                                     </td>
                                     <td class="px-6 py-4 text-left">
                                         <a href="updat-room"
-                                            class="text-white bg-[#007bff] hover:bg-[#0069D9]
-                                            rounded-lg py-1.5 px-4 mr-4"
-                                            >
+                                           class="text-white bg-[#007bff] hover:bg-[#0069D9]
+                                           rounded-lg py-1.5 px-4 mr-4"
+                                           >
                                             Edit
                                         </a>
                                         <button 
@@ -125,3 +132,4 @@
         });
     </script>
 </html>
+

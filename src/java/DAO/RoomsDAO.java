@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author Admin
@@ -87,6 +86,7 @@ public class RoomsDAO {
             System.out.println(ex);
         }
     }
+
     public void updateRoom(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
         String sql = "UPDATE Room SET roomTypeId = ?, statusId = ?, roomDesc = ?, roomPrice = ?,  WHERE roomNumber = ?";
 
@@ -109,4 +109,51 @@ public class RoomsDAO {
             e.printStackTrace();
         }
     }
+
+    public Room getRoomById(String roomNumber) {
+    String sql = "SELECT \n"
+            + "    r.RoomNumber, r.RoomTypeID, r.RoomStatusID, r.RoomDesc, r.RoomPrice, \n"
+            + "    t.RoomTypeName, t.NumBeds, t.ImagePath,\n"
+            + "    s.RoomStatusName\n"
+            + "FROM Room r\n"
+            + "LEFT JOIN RoomType t ON t.RoomTypeID = r.RoomTypeID\n"
+            + "LEFT JOIN RoomStatus s ON s.RoomStatusID = r.RoomStatusID\n"
+            + "WHERE r.RoomNumber = ?";
+
+    Room room = null;
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, roomNumber);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                room = new Room();
+                room.setRoomNumber(rs.getString(1));
+                room.setRoomTypeID(rs.getInt(2));
+                room.setRoomStatusID(rs.getInt(3));
+                room.setRoomDesc(rs.getString(4));
+                room.setRoomPrice(rs.getDouble(5));
+
+                RoomType roomtype = new RoomType();
+                roomtype.setRoomTypeID(rs.getInt(2));
+                roomtype.setRoomTypeName(rs.getString(6));
+                roomtype.setNumBeds(rs.getInt(7));
+                roomtype.setImagePath(rs.getString(8));
+                room.setRoomType(roomtype);
+
+                RoomStatus roomStatus = new RoomStatus();
+                roomStatus.setRoomStatusID(rs.getInt(3));
+                roomStatus.setRoomStatusName(rs.getString(9));
+                room.setRoomStatus(roomStatus);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // or use logger
+    }
+
+    return room;
+}
+
 }
