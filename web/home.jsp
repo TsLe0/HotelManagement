@@ -40,6 +40,9 @@
    <a class="hover:underline" href="#">
      Contact
    </a>
+       <a href="Myprofile.jsp" class="text-decoration-none">
+     Profile
+   </a>
    </nav>
   </header>
   <main class="max-w-7xl mx-auto px-6">
