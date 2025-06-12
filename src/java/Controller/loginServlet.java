@@ -18,7 +18,7 @@ import Models.User;
 
 /**
  *
- * @author tphon
+ * @author zx1
  */
 @WebServlet(name = "loginServlet", urlPatterns = {"/login"})
 public class loginServlet extends HttpServlet {
@@ -90,7 +90,7 @@ public class loginServlet extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("account", user);
-            
+
             // Remember function
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);
@@ -112,7 +112,12 @@ public class loginServlet extends HttpServlet {
                 }
             }
             //____________________________________________________________________________________________
-            response.sendRedirect("home");
+            // Check user role and redirect accordingly
+            if ("admin".equalsIgnoreCase(user.getRole())) {
+                response.sendRedirect("dashboard.jsp"); // Redirect admin to admin dashboard
+            } else {
+                response.sendRedirect("home.jsp"); // Redirect normal users to home page
+            }
         }
     }
 
