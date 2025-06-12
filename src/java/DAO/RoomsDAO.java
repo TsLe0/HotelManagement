@@ -155,5 +155,17 @@ public class RoomsDAO {
 
     return room;
 }
+    public void deleteRoom(String roomNumber) {
+        String sql = "DELETE FROM Room WHERE RoomNumber = ?;";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomNumber);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            
+        }
+    }
 
 }

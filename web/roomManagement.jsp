@@ -102,12 +102,13 @@
                                            >
                                             Edit
                                         </a>
-                                        <button 
-                                            class="text-white bg-[#dc3545] hover:bg-[#c82333]
-                                            rounded-lg py-1.5 px-4 mr-4"
-                                            >
+                                        <a href="detele-room?roomNumber=${r.roomNumber}" 
+                                           onclick="return confirm('Bạn có chắc muốn xóa phòng này?');"
+                                           class="text-white bg-[#dc3545] hover:bg-[#c82333]
+                                           rounded-lg py-1.5 px-4 mr-4"
+                                           >
                                             Delete
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:forEach>
