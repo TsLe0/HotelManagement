@@ -20,6 +20,10 @@
         <servlet-name>UpdateRoomServlet</servlet-name>
         <servlet-class>Controller.UpdateRoomServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminRoomDetails</servlet-name>
+        <servlet-class>Controller.AdminRoomDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -35,5 +39,9 @@
     <servlet-mapping>
         <servlet-name>UpdateRoomServlet</servlet-name>
         <url-pattern>/update-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoomDetails</servlet-name>
+        <url-pattern>/admin-room-details</url-pattern>
     </servlet-mapping>
 </web-app>
