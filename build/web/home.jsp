@@ -1,9 +1,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <%-- This is a complete JSP file combining the hotel page and footer sections --%>
 <html lang="en">
  <head>
+     
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>
@@ -20,6 +22,7 @@
   </style>
  </head>
  <body class="bg-white text-black">
+     <div class="main-content">
   <header class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
    <div class="flex items-center space-x-1 text-[13px] font-bold text-[#f28c00]">
    <span>
@@ -263,5 +266,6 @@
 
   <div class="fixed bottom-0 left-0 w-full h-4 bg-yellow-400">
   </div>
+         </div>
  </body>
 </html>
