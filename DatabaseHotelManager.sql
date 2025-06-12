@@ -55,18 +55,18 @@ CREATE TABLE Staff (
 );
 
 CREATE TABLE [Admin] (
-    UsersID INT PRIMARY KEY,
-    FOREIGN KEY (UsersID) REFERENCES Users(UsersID)
+    user_id INT PRIMARY KEY,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Booking (
     BookingID INT PRIMARY KEY IDENTITY,
-    UsersID INT,
+    user_id INT,
     RoomNumber VARCHAR(10),
     CheckinDate DATE,
     CheckoutDate DATE,
     TotalPrice DECIMAL(10,2),
-    FOREIGN KEY (UsersID) REFERENCES Users(UsersID),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (RoomNumber) REFERENCES Room(RoomNumber)
 );
 
