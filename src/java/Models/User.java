@@ -6,7 +6,7 @@ package Models;
 
 /**
  *
- * @author tphon
+ * @author zx1
  */
 public class User {
 
