@@ -1,6 +1,6 @@
 
 import DAO.RoomsDAO;
-import Models.Rooms;
+import Models.Room;
 import java.util.List;
 
 
@@ -31,10 +31,12 @@ public class NewMain {
 
     public static void allRoom( ) {
         RoomsDAO _dao = new RoomsDAO();
-       List<Rooms> x = _dao.getAllRoom();
-       for(Rooms c:x){
-            System.out.println(c);
-       }
+//       List<Room> x = _dao.getAllRoom();
+//       for(Room c:x){
+//            System.out.println(c);
+//       }
+       _dao.addRooms("123", 2, 1, "ALi", 0);
+      
     }
 
     

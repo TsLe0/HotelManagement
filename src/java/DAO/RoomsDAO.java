@@ -5,7 +5,8 @@
 package DAO;
 
 import Models.RoomType;
-import Models.Rooms;
+import Models.Room;
+import Models.RoomStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,34 +23,149 @@ public class RoomsDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<Rooms> getAllRoom() {
-        List<Rooms> list = new ArrayList<>();
-        String sql = "Select * from Room r\n"
-                + "join RoomType t on t.TypeID=r.TypeID";
+    public List<Room> getAllRoom() {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    r.RoomNumber, r.RoomTypeID, r.RoomStatusID, r.RoomDesc, r.RoomPrice, \n"
+                + "    t.RoomTypeName, t.NumBeds, t.ImagePath,\n"
+                + "    s.RoomStatusName\n"
+                + "FROM Room r\n"
+                + "left JOIN RoomType t ON t.RoomTypeID = r.RoomTypeID\n"
+                + "left JOIN RoomStatus s ON s.RoomStatusID = r.RoomStatusID";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Rooms room = new Rooms();
-                room.setRoomID(rs.getInt(1));
-                room.setTypeID(rs.getInt(2));
-                room.setStatus(rs.getString(3));
-                RoomType roomtype = new RoomType();
-                roomtype.setTypeID(rs.getInt(4));
-                roomtype.setName(rs.getString(5));
-                roomtype.setDescription(rs.getString(6));
-                roomtype.setPricePerNight(rs.getDouble(7));
-                roomtype.setCapacity(rs.getInt(8));
-                roomtype.setImagePath(rs.getString(9));
+                Room room = new Room();
+                room.setRoomNumber(rs.getString(1));
+                room.setRoomTypeID(rs.getInt(2));
+                room.setRoomStatusID(rs.getInt(3));
+                room.setRoomDesc(rs.getString(4));
+                room.setRoomPrice(rs.getDouble(5));
 
-                room.setRoomtype(roomtype);
+                RoomType roomtype = new RoomType();
+                roomtype.setRoomTypeID(rs.getInt(2));
+                roomtype.setRoomTypeName(rs.getString(6));
+                roomtype.setNumBeds(rs.getInt(7));
+                roomtype.setImagePath(rs.getString(8));
+
+                room.setRoomType(roomtype);
+
+                RoomStatus roomStatus = new RoomStatus();
+                roomStatus.setRoomStatusID(rs.getInt(3));
+                roomStatus.setRoomStatusName(rs.getString(9));
+
+                room.setRoomStatus(roomStatus);
+
                 list.add(room);
 
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
         return list;
 
     }
+
+    public void addRooms(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
+        String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatusID, RoomDesc, RoomPrice) "
+                + "VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+
+            ps.setString(1, roomNumber);
+            ps.setInt(2, roomTypeId);
+            ps.setInt(3, statusId);
+            ps.setString(4, roomDesc);
+            ps.setDouble(5, roomPrice);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void updateRoom(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
+        String sql = "UPDATE Room SET roomTypeId = ?, statusId = ?, roomDesc = ?, roomPrice = ?,  WHERE roomNumber = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomTypeId);
+            ps.setInt(2, statusId);
+            ps.setString(3, roomDesc);
+            ps.setDouble(4, roomPrice);
+            ps.setString(5, roomNumber);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Product updated successfully!");
+            } else {
+                System.out.println("No product found with the given ID.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Room getRoomById(String roomNumber) {
+    String sql = "SELECT \n"
+            + "    r.RoomNumber, r.RoomTypeID, r.RoomStatusID, r.RoomDesc, r.RoomPrice, \n"
+            + "    t.RoomTypeName, t.NumBeds, t.ImagePath,\n"
+            + "    s.RoomStatusName\n"
+            + "FROM Room r\n"
+            + "LEFT JOIN RoomType t ON t.RoomTypeID = r.RoomTypeID\n"
+            + "LEFT JOIN RoomStatus s ON s.RoomStatusID = r.RoomStatusID\n"
+            + "WHERE r.RoomNumber = ?";
+
+    Room room = null;
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, roomNumber);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                room = new Room();
+                room.setRoomNumber(rs.getString(1));
+                room.setRoomTypeID(rs.getInt(2));
+                room.setRoomStatusID(rs.getInt(3));
+                room.setRoomDesc(rs.getString(4));
+                room.setRoomPrice(rs.getDouble(5));
+
+                RoomType roomtype = new RoomType();
+                roomtype.setRoomTypeID(rs.getInt(2));
+                roomtype.setRoomTypeName(rs.getString(6));
+                roomtype.setNumBeds(rs.getInt(7));
+                roomtype.setImagePath(rs.getString(8));
+                room.setRoomType(roomtype);
+
+                RoomStatus roomStatus = new RoomStatus();
+                roomStatus.setRoomStatusID(rs.getInt(3));
+                roomStatus.setRoomStatusName(rs.getString(9));
+                room.setRoomStatus(roomStatus);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // or use logger
+    }
+
+    return room;
+}
+    public void deleteRoom(String roomNumber) {
+        String sql = "DELETE FROM Room WHERE RoomNumber = ?;";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomNumber);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            
+        }
+    }
+
 }

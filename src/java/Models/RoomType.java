@@ -9,63 +9,44 @@ package Models;
  * @author Admin
  */
 public class RoomType {
-    private int typeID;
-    private String name;
-    private String description;
-    private double pricePerNight;
-    private int capacity;
-    private String imagePath;
 
-    public RoomType(int typeID, String name, String description, double pricePerNight, int capacity, String imagePath) {
-        this.typeID = typeID;
-        this.name = name;
-        this.description = description;
-        this.pricePerNight = pricePerNight;
-        this.capacity = capacity;
-        this.imagePath = imagePath;
-    }
+    private int roomTypeID;
+    private String roomTypeName;
+    private int numBeds;
+    private String imagePath;
 
     public RoomType() {
     }
 
-    public int getTypeID() {
-        return typeID;
+    public RoomType(int roomTypeID, String roomTypeName, int numBeds, String imagePath) {
+        this.roomTypeID = roomTypeID;
+        this.roomTypeName = roomTypeName;
+        this.numBeds = numBeds;
+        this.imagePath = imagePath;
     }
 
-    public void setTypeID(int typeID) {
-        this.typeID = typeID;
+    public int getRoomTypeID() {
+        return roomTypeID;
     }
 
-    public String getName() {
-        return name;
+    public void setRoomTypeID(int roomTypeID) {
+        this.roomTypeID = roomTypeID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getRoomTypeName() {
+        return roomTypeName;
     }
 
-    public String getDescription() {
-        return description;
+    public void setRoomTypeName(String roomTypeName) {
+        this.roomTypeName = roomTypeName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getNumBeds() {
+        return numBeds;
     }
 
-    public double getPricePerNight() {
-        return pricePerNight;
-    }
-
-    public void setPricePerNight(double pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setNumBeds(int numBeds) {
+        this.numBeds = numBeds;
     }
 
     public String getImagePath() {
@@ -78,7 +59,6 @@ public class RoomType {
 
     @Override
     public String toString() {
-        return "RoomType{" + "typeID=" + typeID + ", name=" + name + ", description=" + description + ", pricePerNight=" + pricePerNight + ", capacity=" + capacity + ", imagePath=" + imagePath + '}';
+        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", numBeds=" + numBeds + ", imagePath=" + imagePath + '}';
     }
-    
 }

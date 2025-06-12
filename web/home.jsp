@@ -28,8 +28,10 @@
    <span>
      Hotelzz
    </span>
-   <i class="fas fa-user-circle text-[14px]">
-   </i>
+   <a href="login.jsp">
+  <i class="fas fa-user-circle text-[14px]"></i>
+</a>
+
    <i class="fas fa-moon text-[14px]">
    </i>
    </div>

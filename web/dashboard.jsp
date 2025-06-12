@@ -14,7 +14,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
     </head>
     <body class="bg-gray-100 min-h-screen flex flex-col">
-      <jsp:include page="header.jsp" />
+      <jsp:include page="adminHeader.jsp" />
 
         <div class="flex flex-1 overflow-hidden">
             <aside class="hidden md:flex md:flex-col md:w-64 bg-white border-r border-gray-200 overflow-y-auto">
