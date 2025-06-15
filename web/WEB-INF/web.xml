@@ -5,13 +5,62 @@
         <servlet-class>Controller.GetAllRooms</servlet-class>
     </servlet>
     <servlet>
-
+        <servlet-name>AdminRoom</servlet-name>
+        <servlet-class>Controller.AdminRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <servlet-class>Controller.AddRoomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRoom</servlet-name>
+        <servlet-class>Controller.UpdateRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRoomServlet</servlet-name>
+        <servlet-class>Controller.UpdateRoomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminRoomDetails</servlet-name>
+        <servlet-class>Controller.AdminRoomDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeteleRoom</servlet-name>
+        <servlet-class>Controller.DeteleRoom</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
+        <servlet-name>AdminRoom</servlet-name>
+        <url-pattern>/adminroom</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <url-pattern>/add-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRoomServlet</servlet-name>
+        <url-pattern>/update-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoomDetails</servlet-name>
+        <url-pattern>/admin-room-details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeteleRoom</servlet-name>
+        <url-pattern>/detele-room</url-pattern>
+    </servlet-mapping>
+    <servlet>
+    <servlet-name>UploadAvatarServlet</servlet-name>
+    <servlet-class>your.package.UploadAvatarServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>UploadAvatarServlet</servlet-name>
+    <url-pattern>/upload-avatar</url-pattern>
+</servlet-mapping>
+
 </web-app>
+

@@ -60,17 +60,17 @@ public class logoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.removeAttribute("account");
-        //XÓA COOKIE NẾU CÓ
+        if (session != null) {
+            session.invalidate();
+        }
+
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    cookie.setMaxAge(0); // Đặt thời gian sống của cookie về 0 để xóa
-                    response.addCookie(cookie); // Gửi cookie đã xóa về phía client
-                }
-                if ("selectedP".equals(cookie.getName())){
+                if ("username".equals(cookie.getName()) || "selectedP".equals(cookie.getName())) {
+                    cookie.setValue("");
                     cookie.setMaxAge(0);
+                    cookie.setPath("/");
                     response.addCookie(cookie);
                 }
             }
@@ -79,14 +79,6 @@ public class logoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,3 +96,12 @@ public class logoutServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
+/**
+ * Handles the HTTP <code>POST</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
