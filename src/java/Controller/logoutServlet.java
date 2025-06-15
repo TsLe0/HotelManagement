@@ -64,14 +64,13 @@ public class logoutServlet extends HttpServlet {
             session.invalidate();
         }
 
-
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("username".equals(cookie.getName()) || "selectedP".equals(cookie.getName())) {
                     cookie.setValue("");
-                    cookie.setMaxAge(0); 
-                    cookie.setPath("/"); 
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
                     response.addCookie(cookie);
                 }
             }
@@ -79,6 +78,22 @@ public class logoutServlet extends HttpServlet {
         //____________________________________________________________________________
         response.sendRedirect("login.jsp");
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }
 
@@ -90,20 +105,3 @@ public class logoutServlet extends HttpServlet {
  * @throws ServletException if a servlet-specific error occurs
  * @throws IOException if an I/O error occurs
  */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}
