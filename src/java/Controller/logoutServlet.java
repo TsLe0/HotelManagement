@@ -60,35 +60,38 @@ public class logoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.removeAttribute("account");
-        //XÓA COOKIE NẾU CÓ
+        if (session != null) {
+            session.invalidate();
+        }
+
+
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    cookie.setMaxAge(0); // Đặt thời gian sống của cookie về 0 để xóa
-                    response.addCookie(cookie); // Gửi cookie đã xóa về phía client
-                }
-                if ("selectedP".equals(cookie.getName())){
-                    cookie.setMaxAge(0);
+                if ("username".equals(cookie.getName()) || "selectedP".equals(cookie.getName())) {
+                    cookie.setValue("");
+                    cookie.setMaxAge(0); 
+                    cookie.setPath("/"); 
                     response.addCookie(cookie);
                 }
             }
         }
-        //____________________________________________________________________________
-        response.sendRedirect("");
-    }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     
+        response.sendRedirect("home.jsp");
+    
+}
+
+/**
+ * Handles the HTTP <code>POST</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -99,7 +102,7 @@ public class logoutServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

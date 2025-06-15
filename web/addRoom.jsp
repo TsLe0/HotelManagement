@@ -17,7 +17,7 @@
 
     </head>
     <body class="bg-white text-gray-900">
-        <div class="flex flex-col min-h-screen">
+        <div class="flex flex-col ">
             <!-- Header -->
             <jsp:include page="adminHeader.jsp" />
             <div class="flex flex-1 overflow-hidden">
