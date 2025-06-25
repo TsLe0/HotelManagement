@@ -28,13 +28,12 @@
         <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.min.js"></script>
     </head>
 
-    <body class="bg-gray-100 text-gray-800">
-
+    <body class="bg-gray-50 min-h-screen flex flex-col">
         <!-- Header -->
         <jsp:include page="adminHeader.jsp" />
 
-        <!-- Sidebar + Main Content -->
-        <div class="flex">
+        <!-- Content -->
+        <div class="flex flex-1 overflow-hidden">
 
             <!-- Sidebar -->
             <aside class="hidden md:flex h-screen md:flex-col md:w-64 bg-white border-r border-gray-200 overflow-y-auto">
@@ -87,6 +86,9 @@
                                             <c:when test="${r.roomStatus.roomStatusName == 'Bảo trì'}">
                                                 <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
                                             </c:when>
+                                            <c:when test="${r.roomStatus.roomStatusName == 'Vô hiệu hóa'}">
+                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            </c:when>
                                             <c:otherwise>
                                                 <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
                                             </c:otherwise>
@@ -96,18 +98,18 @@
                                         <span class="price" data-price="${r.roomPrice}"></span>
                                     </td>
                                     <td class="px-6 py-4 text-left">
-                                        <a href="updat-room"
+                                        <a href="update-room?roomNumber=${r.roomNumber}"
                                            class="text-white bg-[#007bff] hover:bg-[#0069D9]
                                            rounded-lg py-1.5 px-4 mr-4"
                                            >
                                             Edit
                                         </a>
                                         <a href="detele-room?roomNumber=${r.roomNumber}" 
-                                           onclick="return confirm('Bạn có chắc muốn xóa phòng này?');"
+                                           onclick="return confirm('Bạn có chắc muốn dừng hoạt động  phòng này?');"
                                            class="text-white bg-[#dc3545] hover:bg-[#c82333]
                                            rounded-lg py-1.5 px-4 mr-4"
                                            >
-                                            Delete
+                                            Disable
                                         </a>
                                     </td>
                                 </tr>

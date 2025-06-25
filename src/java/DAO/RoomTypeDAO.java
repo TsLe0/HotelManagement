@@ -22,7 +22,7 @@ public class RoomTypeDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<RoomType> getAllTypes() {
+    public List<RoomType> getAllRoomType() {
         List<RoomType> list = new ArrayList<>();
         String sql = "SELECT TOP (1000) [RoomTypeID]\n"
                 + "      ,[RoomTypeName]\n"

@@ -20,13 +20,16 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-   
-//        allGetCategories();
-//        System.out.println(" /n");
-//      hktProducts();
-//        product();
-       allRoom();
+  RoomsDAO dao = new RoomsDAO();
+
+        // Giả sử roomNumber = "A101" đang có trong DB của bạn
+        String roomNumber = "A101";
+        int roomTypeId = 2;   // Ví dụ RoomTypeID = 2
+        int statusId = 1;     // Ví dụ RoomStatusID = 1 (Available)
+        String roomDesc = "Updated description for room A101";
+        double roomPrice = 1500000.0;   // 1,500,000 VND
+
+        dao.updateRoom(roomNumber, roomTypeId, statusId, roomDesc, roomPrice);
     }
 
     public static void allRoom( ) {

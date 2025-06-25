@@ -94,10 +94,13 @@
                                       placeholder="Description"
                                       name="roomDesc"></textarea>
                         </div>
-                        
-                        <div>
-                            <p class="text-red-600">${addRoomError}</p>
-                        </div>
+
+                       
+                        <c:if test="${not empty addRoomError}">
+                            <div class="mb-4">
+                                <p class="text-red-600 font-medium">${addRoomError}</p>
+                            </div>
+                        </c:if>
 
                         <div class="flex justify-end space-x-3">
                             <a

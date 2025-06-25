@@ -27,8 +27,8 @@ public class AddRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<RoomStatus> statusList = statusDao.getAllStatuses();
-        List<RoomType> roomTypeList = roomTypeDAO.getAllTypes();
+        List<RoomStatus> statusList = statusDao.getAllStatus();
+        List<RoomType> roomTypeList = roomTypeDAO.getAllRoomType();
 
         request.setAttribute("statusList", statusList);
         request.setAttribute("roomTypeList", roomTypeList);
@@ -61,6 +61,11 @@ public class AddRoomServlet extends HttpServlet {
                     return;
                 }
             }
+        }
+        if (roomNumber.length() > 5) {
+            session.setAttribute("addRoomError", "Room number must not exceed 5 characters.");
+            response.sendRedirect("add-room");
+            return;
         }
 
         dao.addRooms(roomNumber, roomTypeId, statusId, roomDesc, price);

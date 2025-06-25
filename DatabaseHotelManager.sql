@@ -12,7 +12,7 @@ CREATE TABLE RoomType (
 
 CREATE TABLE RoomStatus (
     RoomStatusID INT PRIMARY KEY,
-    RoomStatusName NVARCHAR(20) NOT NULL DEFAULT N'Trống' CHECK (RoomStatusName IN (N'Trống', N'Đang sử dụng', N'Bảo trì')),
+    RoomStatusName NVARCHAR(20) NOT NULL DEFAULT N'Trống' CHECK (RoomStatusName IN (N'Trống', N'Đang sử dụng', N'Bảo trì',N'Vô hiệu hóa ')),
     
 );
 CREATE TABLE Room (
@@ -90,7 +90,9 @@ INSERT INTO RoomStatus (RoomStatusID, RoomStatusName)
 VALUES
 (1, N'Trống'),
 (2, N'Đang sử dụng'),
-(3, N'Bảo trì');
+(3, N'Bảo trì'),
+(4,N'Vô hiệu hóa');
+
 
 INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatusID,RoomDesc, RoomPrice)
 VALUES

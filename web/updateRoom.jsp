@@ -3,9 +3,8 @@
     Created on : Jun 8, 2025, 6:21:45 PM
     Author     : Admin
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@
         <meta charset="utf-8"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>
-            Hotel Manager - Create Room
+            Hotel Manager - Update Room
         </title>
         <script src="https://cdn.tailwindcss.com">
         </script>
@@ -22,7 +21,8 @@
 
     </head>
     <body class="bg-white text-gray-900">
-        <div class="flex flex-col min-h-screen">
+        <div class="flex flex-col ">
+            
             <!-- Header -->
             <jsp:include page="adminHeader.jsp" />
             <div class="flex flex-1 overflow-hidden">
@@ -31,11 +31,11 @@
                     <jsp:include page="adminSidebar.jsp" />
                 </aside>
                 <!-- Main content -->
-                <main class="flex-1 overflow-auto p-6 bg-slate-50">
+                <main class="flex-1 overflow-auto p-6 bg-slate-50"> 
                     <h2 class="text-2xl font-semibold mb-6 select-none">
-                        Create New Room
+                        Update Room
                     </h2>
-                    <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg" action="#" method="POST">
+                    <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg" action="update-room" method="POST">
                         <div class="mb-4">
                             <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomNumber">
                                 Room Number
@@ -44,64 +44,66 @@
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" 
                                 id="roomNumber" 
                                 name="roomNumber" 
-                                placeholder="Enter room number"
-                                required="" 
-                                type="text"/>
+                                type="text"
+                                value="${room.roomNumber}" readonly/>
                         </div>
 
+
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="status">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomTypeID">
                                 Room Type
                             </label>
 
-                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="status" name="roomTypeId" required="">
-                                <option value="" disabled="" selected="">
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomTypeID" name="roomTypeID" required="">
+                                <option value="" disabled="">
                                     Select room type
                                 </option>
-                                <c:forEach items="${roomTypeList}" var="s">
-                                    <option value="${s.roomTypeID}">
-                                        ${s.roomTypeName}
+                                <c:forEach items="${roomTypeList}" var="rt">
+                                    <option value="${rt.roomTypeID}" ${room.roomTypeID == rt.roomTypeID ? 'selected' : ''}>
+                                        ${rt.roomTypeName}
                                     </option>
                                 </c:forEach>
                             </select>
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="status">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomStatusID">
                                 Status
                             </label>
 
-                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="status" name="roomStatusId" required="">
-                                <option value="" disabled="" selected="">
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomStatusID" name="roomStatusID" required="">
+                                <option value="" disabled="">
                                     Select status
                                 </option>
-                                <c:forEach items="${statusList}" var="s">
-                                    <option value="${s.roomStatusID}">
-                                        ${s.roomStatusName}
+                                <c:forEach items="${statusList}" var="st">
+                                    <option value="${st.roomStatusID}" ${room.roomStatusID == st.roomStatusID ? 'selected' : ''}>
+                                        ${st.roomStatusName}
                                     </option>
                                 </c:forEach>
 
                             </select>
                         </div>
                         <div class="mb-6">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="price">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomPrice">
                                 Price/Night (₫)
                             </label>
-                            <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="price" min="0" name="price" placeholder="Enter price per night" required="" step="1000" type="number"/>
+                            <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomPrice" min="0" name="roomPrice" placeholder="Enter price per night" required="" step="1000" type="number" 
+                                   value="${room.roomPrice}"/>
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomNumber">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomDesc">
                                 Description
                             </label>
                             <textarea class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" 
-                                      id="roomNumber" 
+                                      id="roomDesc" 
                                       placeholder="Description"
-                                      name="roomDesc"></textarea>
+                                      name="roomDesc">${room.roomDesc}</textarea>
                         </div>
-                        
+
                         <div>
-                            <p class="text-red-600">${addRoomError}</p>
+                            <p class="text-red-600">${error}</p>
+                            <p class="text-green-600">${message}</p>
                         </div>
 
                         <div class="flex justify-end space-x-3">
@@ -113,8 +115,9 @@
                             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-5 py-2 rounded-md" type="reset">
                                 Reset
                             </button>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md" type="submit">
-                                Create
+                            <button 
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md" type="submit">
+                                Update
                             </button>
                         </div>
                     </form>

@@ -23,7 +23,7 @@ public class StatusDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<RoomStatus> getAllStatuses() {
+    public List<RoomStatus> getAllStatus() {
         List<RoomStatus> list = new ArrayList<>();
         String sql = "SELECT TOP (1000) [RoomStatusID]\n"
                 + "      ,[RoomStatusName]\n"
