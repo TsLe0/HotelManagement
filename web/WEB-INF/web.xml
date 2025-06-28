@@ -28,6 +28,10 @@
         <servlet-name>DeteleRoom</servlet-name>
         <servlet-class>Controller.DeteleRoom</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeRoom</servlet-name>
+        <servlet-class>Controller.HomeRoom</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -53,14 +57,15 @@
         <url-pattern>/detele-room</url-pattern>
     </servlet-mapping>
     <servlet>
-    <servlet-name>UploadAvatarServlet</servlet-name>
-    <servlet-class>your.package.UploadAvatarServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>UploadAvatarServlet</servlet-name>
-    <url-pattern>/upload-avatar</url-pattern>
-</servlet-mapping>
-
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <servlet-class>your.package.UploadAvatarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <url-pattern>/upload-avatar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeRoom</servlet-name>
+        <url-pattern>/home-room</url-pattern>
+    </servlet-mapping>
 </web-app>
-
