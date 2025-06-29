@@ -19,7 +19,7 @@
     <body class="bg-white text-gray-800">
     <body class="bg-white text-gray-800">
         <!-- Header -->
-        <jsp:include page="header.jsp" />
+         <jsp:include page="header.jsp" />
         <!-- Hero & Booking Form -->
         <section class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white">
             <img alt="Khách sạn Mường Thanh sang trọng với kiến trúc hiện đại và ánh đèn lung linh buổi tối" class="absolute inset-0 w-full h-full object-cover opacity-30" height="600" src="https://storage.googleapis.com/a1aa/image/40bb647b-9c81-4b98-b0b3-d6bcfb664afa.jpg" width="1920"/>
@@ -33,17 +33,77 @@
                         sạn Mường Thanh trên toàn quốc. Đặt phòng nhanh chóng, giá tốt nhất.
                     </p>
                 </div>
-                <!-- Hiển thị lựa chọn của người dùng -->
-                <div class="mt-8 bg-gray-100 rounded-lg p-4 text-gray-700 shadow-inner">
-                    <h2 class="text-lg font-bold mb-2">Thông tin bạn vừa chọn:</h2>
-                    <p id="show-checkin">Ngày đến: Chưa chọn</p>
-                    <p id="show-checkout">Ngày đi: Chưa chọn</p>
-                    <p id="show-hotel">Khách sạn: Chưa chọn</p>
-                    <p id="show-room-type">Loại phòng: Chưa chọn</p>
-                    <p id="show-guests">Số khách: 1</p>
-                </div>
-
-
+                <form action="#" aria-label="Form Đặt phòng khách sạn Mường Thanh" class="bg-white rounded-lg shadow-lg p-6 w-full md:w-1/2 mt-10 md:mt-0" id="booking" method="POST">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1" for="checkin">
+                                Ngày Đến
+                            </label>
+                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="checkin" name="checkin" required="" type="date"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1" for="checkout">
+                                Ngày Đi
+                            </label>
+                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="checkout" name="checkout" required="" type="date"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1" for="hotel">
+                                Chọn khách sạn
+                            </label>
+                            <select class="w-full border text-black border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="hotel" name="hotel" required="">
+                                <option disabled="" selected="" value="">
+                                    Chọn khách sạn
+                                </option>
+                                <option value="muong-thanh-grand">
+                                    Mường Thanh Grand
+                                </option>
+                                <option value="muong-thanh-premier">
+                                    Mường Thanh Premier
+                                </option>
+                                <option value="muong-thanh-standard">
+                                    Mường Thanh Standard
+                                </option>
+                                <option value="muong-thanh-resort">
+                                    Mường Thanh Resort
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1" for="room-type">
+                                Loại phòng
+                            </label>
+                            <select class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="room-type" name="room-type" required="">
+                                <option disabled="" selected="" value="">
+                                    Chọn loại phòng
+                                </option>
+                                <option value="standard">
+                                    Phòng tiêu chuẩn
+                                </option>
+                                <option value="deluxe">
+                                    Phòng Deluxe
+                                </option>
+                                <option value="suite">
+                                    Phòng Suite
+                                </option>
+                                <option value="family">
+                                    Phòng Gia Đình
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1" for="guests">
+                                Số khách
+                            </label>
+                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="guests" max="10" min="1" name="guests" required="" type="number" value="1"/>
+                        </div>
+                        <div class="flex items-end">
+                            <button class="w-full bg-blue-700 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition" type="submit">
+                                Tìm Phòng
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </section>
         <!-- Hotels Section -->
@@ -162,48 +222,12 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-blue-900 text-white py-6">
-            <div class="max-w-7xl mx-auto text-center text-sm">
-                &copy; 2025 Mường Thanh Hospitality. Đã đăng ký bản quyền.
-            </div>
-        </footer>
-
+              <jsp:include page="footer.jsp" />
         <script>
             document.getElementById('menu-btn').addEventListener('click', function () {
                 const menu = document.getElementById('mobile-menu');
                 menu.classList.toggle('hidden');
             });
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const checkin = document.getElementById("checkin");
-                const checkout = document.getElementById("checkout");
-                const hotel = document.getElementById("hotel");
-                const roomType = document.getElementById("room-type");
-                const guests = document.getElementById("guests");
-
-                function updateInfo() {
-                    document.getElementById("show-checkin").innerText = "Ngày đến: " + (checkin.value || "Chưa chọn");
-                    document.getElementById("show-checkout").innerText = "Ngày đi: " + (checkout.value || "Chưa chọn");
-
-                    let hotelText = hotel.options[hotel.selectedIndex]?.text || "Chưa chọn";
-                    document.getElementById("show-hotel").innerText = "Khách sạn: " + hotelText;
-
-                    let roomTypeText = roomType.options[roomType.selectedIndex]?.text || "Chưa chọn";
-                    document.getElementById("show-room-type").innerText = "Loại phòng: " + roomTypeText;
-
-                    document.getElementById("show-guests").innerText = "Số khách: " + guests.value;
-                }
-
-                checkin.addEventListener("change", updateInfo);
-                checkout.addEventListener("change", updateInfo);
-                hotel.addEventListener("change", updateInfo);
-                roomType.addEventListener("change", updateInfo);
-                guests.addEventListener("input", updateInfo);
-
-                updateInfo(); // Gọi lần đầu để hiển thị mặc định
-            });
-        </script>
-
     </body>
 </html>

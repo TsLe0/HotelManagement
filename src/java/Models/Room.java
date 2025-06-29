@@ -10,25 +10,23 @@ public class Room {
 
     private String roomNumber;
     private int roomTypeID;
-    private int roomStatusID;
-    private String roomDesc;
     private RoomType roomType;
+    private int roomStatusID;
     private RoomStatus roomStatus;
+    private String roomDesc;
     private double roomPrice;
-    private List<RoomImage> roomImages;
 
     public Room() {
     }
 
-    public Room(String roomNumber, int roomTypeID, int roomStatusID, String roomDesc, RoomType roomType, RoomStatus roomStatus, double roomPrice, List<RoomImage> roomImages) {
+    public Room(String roomNumber, int roomTypeID, RoomType roomType, int roomStatusID, RoomStatus roomStatus, String roomDesc, double roomPrice) {
         this.roomNumber = roomNumber;
         this.roomTypeID = roomTypeID;
-        this.roomStatusID = roomStatusID;
-        this.roomDesc = roomDesc;
         this.roomType = roomType;
+        this.roomStatusID = roomStatusID;
         this.roomStatus = roomStatus;
+        this.roomDesc = roomDesc;
         this.roomPrice = roomPrice;
-        this.roomImages = roomImages;
     }
 
     public String getRoomNumber() {
@@ -47,28 +45,20 @@ public class Room {
         this.roomTypeID = roomTypeID;
     }
 
-    public int getRoomStatusID() {
-        return roomStatusID;
-    }
-
-    public void setRoomStatusID(int roomStatusID) {
-        this.roomStatusID = roomStatusID;
-    }
-
-    public String getRoomDesc() {
-        return roomDesc;
-    }
-
-    public void setRoomDesc(String roomDesc) {
-        this.roomDesc = roomDesc;
-    }
-
     public RoomType getRoomType() {
         return roomType;
     }
 
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
+    }
+
+    public int getRoomStatusID() {
+        return roomStatusID;
+    }
+
+    public void setRoomStatusID(int roomStatusID) {
+        this.roomStatusID = roomStatusID;
     }
 
     public RoomStatus getRoomStatus() {
@@ -79,6 +69,14 @@ public class Room {
         this.roomStatus = roomStatus;
     }
 
+    public String getRoomDesc() {
+        return roomDesc;
+    }
+
+    public void setRoomDesc(String roomDesc) {
+        this.roomDesc = roomDesc;
+    }
+
     public double getRoomPrice() {
         return roomPrice;
     }
@@ -87,17 +85,10 @@ public class Room {
         this.roomPrice = roomPrice;
     }
 
-    public List<RoomImage> getRoomImages() {
-        return roomImages;
-    }
-
-    public void setRoomImages(List<RoomImage> roomImages) {
-        this.roomImages = roomImages;
-    }
-
     @Override
     public String toString() {
-        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomStatusID=" + roomStatusID + ", roomDesc=" + roomDesc + ", roomType=" + roomType + ", roomStatus=" + roomStatus + ", roomPrice=" + roomPrice + ", roomImages=" + roomImages + '}';
+        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatusID=" + roomStatusID + ", roomStatus=" + roomStatus + ", roomDesc=" + roomDesc + ", roomPrice=" + roomPrice + '}';
     }
+
 
 }

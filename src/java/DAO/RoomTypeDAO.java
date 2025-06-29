@@ -4,7 +4,6 @@
  */
 package DAO;
 
-import Models.RoomStatus;
 import Models.RoomType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,8 +25,10 @@ public class RoomTypeDAO {
         List<RoomType> list = new ArrayList<>();
         String sql = "SELECT TOP (1000) [RoomTypeID]\n"
                 + "      ,[RoomTypeName]\n"
+                + "      ,[RoomTypePrice]\n"
+                + "      ,[RoomDec]\n"
+                + "      ,[RoomArea]\n"
                 + "      ,[NumBeds]\n"
-                + "      ,[ImagePath]\n"
                 + "  FROM [HotelManagement].[dbo].[RoomType]";
         try {
             conn = new DBContext().getConnection();
@@ -38,8 +39,10 @@ public class RoomTypeDAO {
                 RoomType r = new RoomType();
                 r.setRoomTypeID(rs.getInt(1));
                 r.setRoomTypeName(rs.getString(2));
-                r.setNumBeds(rs.getInt(3));
-                r.setImagePath(rs.getString(4));
+                r.setRoomTypePrice(rs.getDouble(3));
+                r.setRoomDec(rs.getString(4));
+                r.setRoomArea(rs.getDouble(5));
+                r.setNumBeds(rs.getInt(6));
                 list.add(r);
 
             }
@@ -47,5 +50,34 @@ public class RoomTypeDAO {
             System.out.println(e);
         }
         return list;
+    }
+    
+    public RoomType getRoomTypeById(int roomTypeId) {
+        String sql = "SELECT TOP (1000) [RoomTypeID]\n"
+                + "      ,[RoomTypeName]\n"
+                + "      ,[RoomTypePrice]\n"
+                + "      ,[RoomDec]\n"
+                + "      ,[RoomArea]\n"
+                + "      ,[NumBeds]\n"
+                + "  FROM [HotelManagement].[dbo].[RoomType] WHERE RoomTypeID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomTypeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                RoomType r = new RoomType();
+                r.setRoomTypeID(rs.getInt(1));
+                r.setRoomTypeName(rs.getString(2));
+                r.setRoomTypePrice(rs.getDouble(3));
+                r.setRoomDec(rs.getString(4));
+                r.setRoomArea(rs.getDouble(5));
+                r.setNumBeds(rs.getInt(6));
+                return r;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

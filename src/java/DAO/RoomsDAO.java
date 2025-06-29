@@ -6,7 +6,6 @@ package DAO;
 
 import Models.RoomType;
 import Models.Room;
-import Models.RoomStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,13 +24,10 @@ public class RoomsDAO {
 
     public List<Room> getAllRoom() {
         List<Room> list = new ArrayList<>();
-        String sql = "SELECT \n"
-                + "    r.RoomNumber, r.RoomTypeID, r.RoomStatusID, r.RoomDesc, r.RoomPrice, \n"
-                + "    t.RoomTypeName, t.NumBeds, t.ImagePath,\n"
-                + "    s.RoomStatusName\n"
-                + "FROM Room r\n"
-                + "left JOIN RoomType t ON t.RoomTypeID = r.RoomTypeID\n"
-                + "left JOIN RoomStatus s ON s.RoomStatusID = r.RoomStatusID";
+        String sql = "SELECT TOP (1000) [RoomNumber]\n"
+                + "      ,[RoomTypeID]\n"
+                + "      ,[RoomStatus]\n"
+                + "  FROM [HotelManagement].[dbo].[Room]";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -40,23 +36,8 @@ public class RoomsDAO {
                 Room room = new Room();
                 room.setRoomNumber(rs.getString(1));
                 room.setRoomTypeID(rs.getInt(2));
-                room.setRoomStatusID(rs.getInt(3));
-                room.setRoomDesc(rs.getString(4));
-                room.setRoomPrice(rs.getDouble(5));
+                room.setRoomStatus(rs.getString(3));
 
-                RoomType roomtype = new RoomType();
-                roomtype.setRoomTypeID(rs.getInt(2));
-                roomtype.setRoomTypeName(rs.getString(6));
-                roomtype.setNumBeds(rs.getInt(7));
-                roomtype.setImagePath(rs.getString(8));
-
-                room.setRoomType(roomtype);
-
-                RoomStatus roomStatus = new RoomStatus();
-                roomStatus.setRoomStatusID(rs.getInt(3));
-                roomStatus.setRoomStatusName(rs.getString(9));
-
-                room.setRoomStatus(roomStatus);
 
                 list.add(room);
 
@@ -170,5 +151,28 @@ public class RoomsDAO {
             e.printStackTrace();
         }
     }
-
+    
+    public List<Room> getRoomsByTypeId(int roomTypeId) {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT TOP (1000) [RoomNumber]\n"
+                + "      ,[RoomTypeID]\n"
+                + "      ,[RoomStatus]\n"
+                + "  FROM [HotelManagement].[dbo].[Room] WHERE RoomTypeID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomTypeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomNumber(rs.getString(1));
+                room.setRoomTypeID(rs.getInt(2));
+                room.setRoomStatus(rs.getString(3));
+                list.add(room);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }

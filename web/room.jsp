@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -6,155 +7,258 @@
         <meta charset="utf-8"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>
-            Room Booking
+            Mường Thanh Luxury Quảng Ninh
         </title>
         <script src="https://cdn.tailwindcss.com">
         </script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+        <style>
+            body {
+                font-family: "Roboto", sans-serif;
+            }
+        </style>
     </head>
-    <body class="bg-white p-6">
-        <div class="bg-yellow-400 rounded-md p-4 mb-8 flex flex-col sm:flex-row sm:items-center sm:space-x-6">
-            <div class="flex flex-col mb-4 sm:mb-0">
-                <label class="text-[10px] font-normal mb-1" for="roomType">
-                    Room Type
-                </label>
-                <select class="w-24 text-[12px] font-normal rounded border border-gray-300 px-2 py-1" id="roomType">
-                    <option>
-                        All
-                    </option>
-                </select>
+    <body class="bg-gray-200 text-gray-800">
+        <!-- Header -->
+        <jsp:include page="header.jsp" />
+        <!-- Search bar -->
+        <section class="max-w-7xl mx-auto px-4 mt-6">
+            <form action="#" class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0" id="searchForm" method="GET">
+                <!--    <div class="flex-1 min-w-[180px]">
+                     <label class="block text-xs font-normal text-gray-700 mb-1" for="location">
+                      Bạn muốn nghỉ dưỡng ở đâu ?
+                     </label>
+                     <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
+                      <i class="fas fa-map-marker-alt mr-2">
+                      </i>
+                      <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="location" name="location" placeholder="Mường Thanh Luxury Quảng Ninh" type="text" value="Mường Thanh Luxury Quảng Ninh"/>
+                     </div>
+                    </div>-->
+                <div class="flex-1 min-w-[180px]">
+                    <label class="block text-xs font-normal text-gray-700 mb-1" for="date">
+                        Ngày nhận 
+                    </label>
+                    <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
+                        <i class="far fa-calendar-alt mr-2">
+                        </i>
+                        <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="date" name="date" placeholder="10/07/2025 - 22/08/2025" type="date" value="10/07/2025 - 22/08/2025"/>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-[180px]">
+                    <label class="block text-xs font-normal text-gray-700 mb-1" for="date">
+                        Trả phòng
+                    </label>
+                    <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
+                        <i class="far fa-calendar-alt mr-2">
+                        </i>
+                        <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="date" name="date" placeholder="10/07/2025 - 22/08/2025" type="date" value="10/07/2025 - 22/08/2025"/>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-[140px]">
+                    <label class="block text-xs font-normal text-gray-700 mb-1" for="roomCount">
+                        Số phòng
+                    </label>
+                    <select class="bg-gray-100 rounded px-3 py-2 text-xs text-gray-600 w-full outline-none" id="roomCount" name="roomCount">
+                        <option selected="" value="1">
+                            1 Phòng
+                        </option>
+                        <option value="2">
+                            2 Phòng
+                        </option>
+                        <option value="3">
+                            3 Phòng
+                        </option>
+                        <option value="4">
+                            4 Phòng
+                        </option>
+                        <option value="5">
+                            5 Phòng
+                        </option>
+                    </select>
+                </div>
+                <div class="flex-1 min-w-[220px] flex space-x-2">
+                    <div class="flex-1">
+                        <label class="block text-xs font-normal text-gray-700 mb-1" for="voucher">
+                            Mã khuyến mãi/Voucher
+                        </label>
+                        <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-400">
+                            <i class="fas fa-ticket-alt mr-2">
+                            </i>
+                            <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="voucher" name="voucher" placeholder="Nhập mã khuyến mại/mã Vou" type="text"/>
+                        </div>
+                    </div>
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-xs px-4 rounded flex items-center space-x-2 whitespace-nowrap" type="submit">
+                        <i class="fas fa-search">
+                        </i>
+                        <span>
+                            TÌM KIẾM
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </section>
+        <!-- Hotel info -->
+        <section class="max-w-7xl mx-auto px-4 mt-6">
+            <div class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-6">
+                <div class="flex-shrink-0 w-full sm:w-[320px] relative">
+                    <img alt="Hotel exterior at sunset with blue sky and modern tall buildings" class="rounded-md object-cover w-full h-44" height="180" src="https://storage.googleapis.com/a1aa/image/5f54440a-ff66-48d4-009b-f7f80074545e.jpg" width="320"/>
+                    <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs rounded px-2 py-1 flex items-center space-x-1">
+                        <i class="fas fa-image">
+                        </i>
+                        <span>
+                            Xem thêm ảnh
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-4 sm:mt-0 flex-1 text-sm text-gray-800">
+                    <h2 class="font-semibold text-base mb-1">
+                        Mường Thanh Luxury Quảng Ninh
+                    </h2>
+                    <p class="flex items-center text-xs text-gray-600 mb-1">
+                        <i class="fas fa-map-marker-alt mr-1">
+                        </i>
+                        Tổ 1, khu 2, phường Bãi Cháy, thành phố Hạ Long, tỉnh Quảng Ninh,
+                        Việt Nam
+                    </p>
+                    <p class="flex items-center text-xs text-gray-600 mb-2">
+                        <i class="fas fa-phone-alt mr-1">
+                        </i>
+                        Điện thoại: +84 203 3646 618
+                    </p>
+                    <p class="text-xs text-gray-700 leading-tight">
+                        Tọa lạc ngay trung tâm khu du lịch Bãi Cháy - Hạ Long, từ đây du khách
+                        có thể quan sát và ngắm nhìn toàn cảnh non nước Hạ Long, khách sạn
+                        <strong>
+                            Mường Thanh Luxury Quảng Ninh
+                        </strong>
+                        là một nét vẽ trong bức
+                        tranh thủy mặc khổng lồ của thiên nhiên, một tạo hình tuyệt m...
+                        <a class="text-red-600 hover:underline text-xs flex items-center" href="#">
+                            Xem chi tiết
+                            <i class="fas fa-angle-right ml-1">
+                            </i>
+                        </a>
+                    </p>
+                </div>
             </div>
-            <div class="flex flex-col mb-4 sm:mb-0 flex-grow max-w-xs">
-                <label class="text-[10px] font-normal mb-1" for="search">
-                    Search
-                </label>
-                <input class="text-[12px] font-normal rounded border border-gray-300 px-2 py-1" id="search" placeholder="Search..." type="text"/>
+        </section>
+        <!-- Room selection notice -->
+        <section class="max-w-7xl mx-auto px-4 mt-6">
+            <div class="bg-white rounded-md shadow-md p-4 text-xs text-gray-700 font-semibold">
+                Vui lòng chọn phòng
+                <span class="font-normal">
+                    (Có 3 loại phòng theo tìm kiếm)
+                </span>
             </div>
-            <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[14px] rounded-md px-6 py-2 self-start sm:self-auto" type="button">
-                Search
-            </button>
-        </div>
-        <div class="flex flex-wrap gap-6">
-            <div class="w-40">
-                <img alt="Deluxe Suite room with modern furniture and large window" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/90b3873c-e017-4753-ddd1-a0b38137e6c7.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Deluxe Suite
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 100
+        </section>
+        <!-- Room and booking info -->
+        <section class="max-w-7xl mx-auto px-4 mt-6 flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0">
+            <!-- Room cards container -->
+            <div class="flex-1 flex flex-col space-y-6">
+                <c:forEach items="${tList}" var="t" varStatus="loop">
+                    <article class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-6">             
+
+                        <c:set var="imageList" value="${iList[loop.index]}" />
+
+                        <!-- Swiper Container -->
+                        <div class="swiper mySwiper w-full sm:w-[320px]">
+                            <div class="swiper-wrapper">
+                                <c:forEach items="${imageList}" var="d">
+                                    <div class="swiper-slide relative">
+                                        <img class="rounded-md object-cover w-full h-44"
+                                             src="${d.roomImages}" 
+                                             height="180" 
+                                             width="320"/>
+                                    </div>
+                                </c:forEach>
+                            </div>
+
+                            <!-- Navigation buttons -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+
+                        <!-- Thông tin loại phòng -->
+                        <div class="flex-1 mt-4 sm:mt-0 text-xs text-gray-800">
+                            <h3 class="font-semibold text-sm mb-2">${t.roomTypeName}</h3>
+                            <div class="flex items-center space-x-4 mb-2 text-gray-600">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-bed"></i>
+                                    <span>${t.numBeds}</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-vr-cardboard"></i>
+                                    <span>${t.roomArea}<sup>2</sup></span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4 mb-3 text-gray-600">
+                                <i class="fas fa-tv"></i>
+                                <i class="fas fa-suitcase-rolling"></i>
+                                <i class="fas fa-smoking-ban"></i>
+                            </div>
+                            <div class="text-xs text-gray-700 mb-2">Giá chỉ từ</div>
+                            <div class="text-yellow-600 font-semibold text-lg mb-2">
+                                ${t.roomTypePrice} VNĐ
+                                <span class="text-gray-700 font-normal text-sm">/ đêm</span>
+                            </div>
+                            <a href="room-detail?roomTypeId=${t.roomTypeID}">
+                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold px-4 py-2 rounded">
+                                    Chọn phòng
+                                </button>
+                            </a>
+                        </div>
+                    </article>
+                </c:forEach>
+
+            </div>
+            <!-- Booking info -->
+<!--            <aside class="bg-white rounded-md shadow-md p-4 w-full lg:w-[320px] text-xs text-gray-800">
+                <h4 class="font-semibold border-b border-gray-300 pb-2 mb-2">
+                    Thông tin đặt phòng
+                </h4>
+                <div class="mb-3">
+                    <div class="font-semibold mb-1">
+                        Mường Thanh Luxury Quảng Ninh
+                    </div>
+                    <div class="mb-1" id="bookingDates">
+                        10/07/2025 - 22/08/2025
+                        <span class="text-gray-500">
+                            (44 ngày 43 đêm )
+                        </span>
+                    </div>
+                    <hr class="border-gray-300"/>
+                </div>
+                <div class="mb-3 font-semibold border-b border-gray-300 pb-2">
+                    Thông tin phòng
+                </div>
+                <div class="flex justify-between font-semibold text-yellow-600 mb-4" id="bookingTotal">
+                    <span>
+                        Tổng cộng
+                    </span>
+                    <span>
+                        0 VNĐ
                     </span>
                 </div>
-                <p class="text-[10px] font-light mb-1">
-                    suite Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    spacious and luxurious suite with stunning views. Enjoy the comfort and elegance of this beautiful...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-            <div class="w-40">
-                <img alt="Family Suite room with bed and framed art on wall" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/ef32114b-df87-422e-d673-bd5586a03f10.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Family Suite
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 300
-                    </span>
-                </div>
-                <p class="text-[10px] font-light mb-1">
-                    basic Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    spacious suite suitable for families with children. This comfortable and well-appointed suite offe...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-            <div class="w-40">
-                <img alt="Test Hotel room with green armchair and side table" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/25c571cc-efca-43d8-b9fc-fe3eb8cf4af2.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Test Hotel
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 1000
-                    </span>
-                </div>
-                <p class="text-[10px] font-light mb-1">
-                    luxury Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    spacious executive room with a view of the city skyline. Enjoy the comforts of modern luxury in th...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-            <div class="w-40">
-                <img alt="Executive Room with round mirror and plants" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/7b299403-f8a2-4ce6-8696-498a76a7236d.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Executive Room
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 200
-                    </span>
-                </div>
-                <p class="text-[10px] font-light mb-1">
-                    luxury Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    spacious executive room with a view of the city skyline. Enjoy the comforts of modern luxury in th...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-            <div class="w-40">
-                <img alt="Luxury Villa room with sofa and plants" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/679dafb5-f92d-473a-3cf8-aa52810ba955.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Luxury Villa
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 500
-                    </span>
-                </div>
-                <p class="text-[10px] font-light mb-1">
-                    basic Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    n exquisite villa with a private pool and garden. Indulge in the ultimate luxury and tranquility wi...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-            <div class="w-40">
-                <img alt="Standard Room with bed and window view" class="rounded-md mb-2" height="120" src="https://storage.googleapis.com/a1aa/image/e7f1237f-6db0-4c27-ece4-67bbba972fa9.jpg" width="160"/>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-bold text-[14px] leading-tight">
-                        Standard Room
-                    </h3>
-                    <span class="font-bold text-[14px]">
-                        $ 121
-                    </span>
-                </div>
-                <p class="text-[10px] font-light mb-1">
-                    basic Room
-                </p>
-                <p class="text-[10px] font-normal leading-tight mb-3">
-                    comfortable and affordable standard room. Experience a pleasant stay in this cozy room, designed f...
-                </p>
-                <button class="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-[12px] rounded-md w-full py-2" type="button">
-                    BOOKED
-                </button>
-            </div>
-        </div>
+                <button class="w-full bg-gray-500 text-white font-semibold py-2 rounded cursor-default" disabled="" id="bookNowBtn">
+                    ĐẶT NGAY
+                </button>-->
+            </aside>
+        </section>
+        <jsp:include page="footer.jsp" />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            const swiper = new Swiper('.mySwiper', {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                spaceBetween: 10,
+            });
+        </script>
+
     </body>
 </html>

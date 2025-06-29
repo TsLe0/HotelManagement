@@ -1,15 +1,12 @@
 
-import DAO.RoomsDAO;
-import Models.Room;
+import DAO.RoomTypeDAO;
+import Models.RoomType;
 import java.util.List;
-
-
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-
 /**
  *
  * @author Admin
@@ -20,28 +17,25 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-  RoomsDAO dao = new RoomsDAO();
+        RoomTypeDAO dao = new RoomTypeDAO();
+        List<RoomType> roomTypes = dao.getAllRoomType();
 
-        // Giả sử roomNumber = "A101" đang có trong DB của bạn
-        String roomNumber = "A101";
-        int roomTypeId = 2;   // Ví dụ RoomTypeID = 2
-        int statusId = 1;     // Ví dụ RoomStatusID = 1 (Available)
-        String roomDesc = "Updated description for room A101";
-        double roomPrice = 1500000.0;   // 1,500,000 VND
-
-        dao.updateRoom(roomNumber, roomTypeId, statusId, roomDesc, roomPrice);
+        System.out.println("==== Testing getAllRoomType() ====");
+        if (roomTypes == null) {
+            System.out.println("❌ Test failed: Returned list is null.");
+        } else if (roomTypes.isEmpty()) {
+            System.out.println("✅ Test passed: List is empty (no RoomType records in DB).");
+        } else {
+            System.out.println("✅ Test passed: Retrieved " + roomTypes.size() + " RoomType(s).");
+            for (RoomType rt : roomTypes) {
+                System.out.println("RoomTypeID: " + rt.getRoomTypeID()
+                        + ", Name: " + rt.getRoomTypeName()
+                        + ", Price: " + rt.getRoomTypePrice()
+                        + ", Description: " + rt.getRoomDec()
+                        + ", Area: " + rt.getRoomArea()
+                        + ", Beds: " + rt.getNumBeds());
+            }
+    }
     }
 
-    public static void allRoom( ) {
-        RoomsDAO _dao = new RoomsDAO();
-//       List<Room> x = _dao.getAllRoom();
-//       for(Room c:x){
-//            System.out.println(c);
-//       }
-       _dao.addRooms("123", 2, 1, "ALi", 0);
-      
-    }
-
-    
-    
 }

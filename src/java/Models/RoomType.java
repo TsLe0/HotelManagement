@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
 /**
@@ -12,15 +9,21 @@ public class RoomType {
 
     private int roomTypeID;
     private String roomTypeName;
+    private String roomDec;
+    private double roomArea;
+    private double roomTypePrice;
     private int numBeds;
     private String imagePath;
 
     public RoomType() {
     }
 
-    public RoomType(int roomTypeID, String roomTypeName, int numBeds, String imagePath) {
+    public RoomType(int roomTypeID, String roomTypeName, String roomDec, double roomArea, double roomTypePrice, int numBeds, String imagePath) {
         this.roomTypeID = roomTypeID;
         this.roomTypeName = roomTypeName;
+        this.roomDec = roomDec;
+        this.roomArea = roomArea;
+        this.roomTypePrice = roomTypePrice;
         this.numBeds = numBeds;
         this.imagePath = imagePath;
     }
@@ -41,6 +44,30 @@ public class RoomType {
         this.roomTypeName = roomTypeName;
     }
 
+    public String getRoomDec() {
+        return roomDec;
+    }
+
+    public void setRoomDec(String roomDec) {
+        this.roomDec = roomDec;
+    }
+
+    public double getRoomArea() {
+        return roomArea;
+    }
+
+    public void setRoomArea(double roomArea) {
+        this.roomArea = roomArea;
+    }
+
+    public double getRoomTypePrice() {
+        return roomTypePrice;
+    }
+
+    public void setRoomTypePrice(double roomTypePrice) {
+        this.roomTypePrice = roomTypePrice;
+    }
+
     public int getNumBeds() {
         return numBeds;
     }
@@ -59,6 +86,11 @@ public class RoomType {
 
     @Override
     public String toString() {
-        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", numBeds=" + numBeds + ", imagePath=" + imagePath + '}';
+        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", roomDec=" + roomDec + ", roomArea=" + roomArea + ", roomTypePrice=" + roomTypePrice + ", numBeds=" + numBeds + ", imagePath=" + imagePath + '}';
     }
+
+  
+    
+  
+    
 }

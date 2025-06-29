@@ -6,9 +6,7 @@ package Controller;
 
 import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
-import DAO.StatusDAO;
 import Models.Room;
-import Models.RoomStatus;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -20,17 +18,14 @@ import java.util.List;
 
 public class AddRoomServlet extends HttpServlet {
 
-    StatusDAO statusDao = new StatusDAO();
     RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
     RoomsDAO dao = new RoomsDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<RoomStatus> statusList = statusDao.getAllStatus();
         List<RoomType> roomTypeList = roomTypeDAO.getAllRoomType();
 
-        request.setAttribute("statusList", statusList);
         request.setAttribute("roomTypeList", roomTypeList);
         request.getRequestDispatcher("addRoom.jsp").forward(request, response);
 

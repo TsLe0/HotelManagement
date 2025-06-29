@@ -6,7 +6,6 @@ package Controller;
 
 import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
-import DAO.StatusDAO;
 import Models.Room; 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +20,6 @@ import java.io.IOException;
 
 public class UpdateRoomServlet extends HttpServlet {
 
-    StatusDAO statusDao = new StatusDAO();
     RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
     RoomsDAO dao = new RoomsDAO();
     Room room;
@@ -35,7 +33,6 @@ public class UpdateRoomServlet extends HttpServlet {
             request.setAttribute("room", room);
             
             request.setAttribute("roomTypeList", roomTypeDAO.getAllRoomType());
-            request.setAttribute("statusList", statusDao.getAllStatus());
             
             request.getRequestDispatcher("updateRoom.jsp").forward(request, response);
         } catch (Exception e) {
