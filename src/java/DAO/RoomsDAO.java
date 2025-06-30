@@ -37,7 +37,7 @@ public class RoomsDAO {
                 room.setRoomNumber(rs.getString(1));
                 room.setRoomTypeID(rs.getInt(2));
                 room.setRoomStatus(rs.getString(3));
-
+//
 
                 list.add(room);
 
@@ -112,9 +112,9 @@ public class RoomsDAO {
                     room = new Room();
                     room.setRoomNumber(rs.getString(1));
                     room.setRoomTypeID(rs.getInt(2));
-                    room.setRoomStatusID(rs.getInt(3));
-                    room.setRoomDesc(rs.getString(4));
-                    room.setRoomPrice(rs.getDouble(5));
+//                    room.setRoomStatusID(rs.getInt(3));
+//                    room.setRoomDesc(rs.getString(4));
+//                    room.setRoomPrice(rs.getDouble(5));
 
                     RoomType roomtype = new RoomType();
                     roomtype.setRoomTypeID(rs.getInt(2));
@@ -123,10 +123,10 @@ public class RoomsDAO {
                     roomtype.setImagePath(rs.getString(8));
                     room.setRoomType(roomtype);
 
-                    RoomStatus roomStatus = new RoomStatus();
-                    roomStatus.setRoomStatusID(rs.getInt(3));
-                    roomStatus.setRoomStatusName(rs.getString(9));
-                    room.setRoomStatus(roomStatus);
+//                    RoomStatus roomStatus = new RoomStatus();
+//                    roomStatus.setRoomStatusID(rs.getInt(3));
+//                    roomStatus.setRoomStatusName(rs.getString(9));
+//                    room.setRoomStatus(roomStatus);
                 }
             }
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 
-import DAO.RoomTypeDAO;
-import Models.RoomType;
-import java.util.List;
+import java.sql.Date;
+import DAO.BookingDAO;
+import Models.Booking;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,25 +17,30 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RoomTypeDAO dao = new RoomTypeDAO();
-        List<RoomType> roomTypes = dao.getAllRoomType();
+        // Tạo đối tượng Booking
+ Booking booking = new Booking();
+        booking.setUserId(1); // UserID đã tồn tại trong DB
+        booking.setRoomTypeId(2); // RoomTypeID đã tồn tại
+        booking.setRoomNumber(null);
+        booking.setCheckinDate(Date.valueOf("2025-07-10"));
+        booking.setCheckoutDate(Date.valueOf("2025-07-15"));
+        booking.setNumberOfGuests(2);
+        booking.setTotalPrice(1500000.0);
+        booking.setStatus("Pending");
+        booking.setBookingDate(new Date(System.currentTimeMillis()));
+        booking.setSpecialRequests("Cần phòng gần thang máy");
 
-        System.out.println("==== Testing getAllRoomType() ====");
-        if (roomTypes == null) {
-            System.out.println("❌ Test failed: Returned list is null.");
-        } else if (roomTypes.isEmpty()) {
-            System.out.println("✅ Test passed: List is empty (no RoomType records in DB).");
+        // Gọi DAO để thêm vào DB
+        BookingDAO dao = new BookingDAO();
+        boolean success = dao.addBooking(booking);
+
+        // In kết quả
+        if (success) {
+            System.out.println("✅ Booking added successfully!");
         } else {
-            System.out.println("✅ Test passed: Retrieved " + roomTypes.size() + " RoomType(s).");
-            for (RoomType rt : roomTypes) {
-                System.out.println("RoomTypeID: " + rt.getRoomTypeID()
-                        + ", Name: " + rt.getRoomTypeName()
-                        + ", Price: " + rt.getRoomTypePrice()
-                        + ", Description: " + rt.getRoomDec()
-                        + ", Area: " + rt.getRoomArea()
-                        + ", Beds: " + rt.getNumBeds());
-            }
+            System.out.println("❌ Failed to add booking.");
+        }
     }
-    }
-
 }
+
+

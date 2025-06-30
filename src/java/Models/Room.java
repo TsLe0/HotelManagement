@@ -11,22 +11,16 @@ public class Room {
     private String roomNumber;
     private int roomTypeID;
     private RoomType roomType;
-    private int roomStatusID;
-    private RoomStatus roomStatus;
-    private String roomDesc;
-    private double roomPrice;
+    private String roomStatus;
 
     public Room() {
     }
 
-    public Room(String roomNumber, int roomTypeID, RoomType roomType, int roomStatusID, RoomStatus roomStatus, String roomDesc, double roomPrice) {
+    public Room(String roomNumber, int roomTypeID, RoomType roomType, String roomStatus) {
         this.roomNumber = roomNumber;
         this.roomTypeID = roomTypeID;
         this.roomType = roomType;
-        this.roomStatusID = roomStatusID;
         this.roomStatus = roomStatus;
-        this.roomDesc = roomDesc;
-        this.roomPrice = roomPrice;
     }
 
     public String getRoomNumber() {
@@ -53,42 +47,21 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public int getRoomStatusID() {
-        return roomStatusID;
-    }
-
-    public void setRoomStatusID(int roomStatusID) {
-        this.roomStatusID = roomStatusID;
-    }
-
-    public RoomStatus getRoomStatus() {
+    public String getRoomStatus() {
         return roomStatus;
     }
 
-    public void setRoomStatus(RoomStatus roomStatus) {
+    public void setRoomStatus(String roomStatus) {
         this.roomStatus = roomStatus;
-    }
-
-    public String getRoomDesc() {
-        return roomDesc;
-    }
-
-    public void setRoomDesc(String roomDesc) {
-        this.roomDesc = roomDesc;
-    }
-
-    public double getRoomPrice() {
-        return roomPrice;
-    }
-
-    public void setRoomPrice(double roomPrice) {
-        this.roomPrice = roomPrice;
     }
 
     @Override
     public String toString() {
-        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatusID=" + roomStatusID + ", roomStatus=" + roomStatus + ", roomDesc=" + roomDesc + ", roomPrice=" + roomPrice + '}';
+        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatus=" + roomStatus + '}';
     }
+
+  
+    
 
 
 }

@@ -65,18 +65,25 @@ CREATE TABLE [Admin] (
 );
 GO
 
--- Tạo bảng Booking
-CREATE TABLE Booking (
-    BookingID INT PRIMARY KEY IDENTITY,
-    user_id INT,
-	RoomNumber VARCHAR(5) NULL,
-    RoomTypeID INT,
-    CheckinDate DATE,
-    CheckoutDate DATE,
-    TotalPrice DECIMAL(10,2),
-    BookingDec NVARCHAR(100),
-	BookingStatus NVARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+-- Tạo bảng Bookings
+DROP TABLE IF EXISTS Booking;
+GO
+
+CREATE TABLE Bookings (
+    BookingID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    RoomTypeID INT NOT NULL,
+	CustomerName NVARCHAR(50) NULL,
+	CustomerPhoneNumber NVARCHAR(20) NULL,
+	RoomNumber  VARCHAR(5),
+    CheckInDate DATE NOT NULL,
+    CheckOutDate DATE NOT NULL,
+    NumberOfGuests INT NOT NULL,
+    TotalPrice DECIMAL(10, 2) NOT NULL,
+    Status NVARCHAR(50) NOT NULL, -- e.g., 'Confirmed', 'Pending', 'Cancelled'
+    BookingDate DATETIME NOT NULL DEFAULT GETDATE(),
+    SpecialRequests NVARCHAR(MAX),
+    FOREIGN KEY (UserID) REFERENCES Users(user_id),
 	FOREIGN KEY (RoomNumber) REFERENCES Room(RoomNumber),
     FOREIGN KEY (RoomTypeID) REFERENCES RoomType(RoomTypeID)
 );
@@ -89,7 +96,7 @@ CREATE TABLE Payment (
     Amount DECIMAL(10,2),
     PaymentDate DATE,
     PaymentMethod NVARCHAR(50),
-    FOREIGN KEY (BookingID) REFERENCES Booking(BookingID)
+    FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
 );
 GO
 INSERT INTO RoomType (RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds) VALUES
@@ -143,10 +150,10 @@ INSERT INTO Staff (user_id, Salary, Position, HireDate, [Shift], [Status]) VALUE
 (3, 8000000.00, N'Lễ tân', '2023-01-10', N'Ca sáng', N'Đang làm'),
 (4, 8500000.00, N'Quản lý', '2022-11-05', N'Ca chiều', N'Đang làm');
 go
--- Booking của khách hàng (user_id = 1) đặt phòng 101 (RoomNumber), loại phòng 1
-INSERT INTO Booking (user_id, RoomNumber, RoomTypeID, CheckinDate, CheckoutDate, TotalPrice)
-VALUES (1, '101', 1, '2025-07-01', '2025-07-03', 1000000.00);
-go
+-- Ví dụ chèn dữ liệu vào bảng Bookings mới
+-- INSERT INTO Bookings (UserID, RoomTypeID, CheckInDate, CheckOutDate, NumberOfGuests, TotalPrice, Status, SpecialRequests) 
+-- VALUES (1, 2, '2025-08-01', '2025-08-05', 2, 3200000.00, 'Confirmed', N'Yêu cầu phòng có view đẹp');
+-- GO
 -- Giả sử BookingID = 1
 INSERT INTO Payment (BookingID, Amount, PaymentDate, PaymentMethod)
 VALUES (1, 1000000.00, '2025-06-30', N'Thẻ tín dụng');

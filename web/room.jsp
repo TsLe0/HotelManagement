@@ -215,37 +215,7 @@
 
             </div>
             <!-- Booking info -->
-<!--            <aside class="bg-white rounded-md shadow-md p-4 w-full lg:w-[320px] text-xs text-gray-800">
-                <h4 class="font-semibold border-b border-gray-300 pb-2 mb-2">
-                    Thông tin đặt phòng
-                </h4>
-                <div class="mb-3">
-                    <div class="font-semibold mb-1">
-                        Mường Thanh Luxury Quảng Ninh
-                    </div>
-                    <div class="mb-1" id="bookingDates">
-                        10/07/2025 - 22/08/2025
-                        <span class="text-gray-500">
-                            (44 ngày 43 đêm )
-                        </span>
-                    </div>
-                    <hr class="border-gray-300"/>
-                </div>
-                <div class="mb-3 font-semibold border-b border-gray-300 pb-2">
-                    Thông tin phòng
-                </div>
-                <div class="flex justify-between font-semibold text-yellow-600 mb-4" id="bookingTotal">
-                    <span>
-                        Tổng cộng
-                    </span>
-                    <span>
-                        0 VNĐ
-                    </span>
-                </div>
-                <button class="w-full bg-gray-500 text-white font-semibold py-2 rounded cursor-default" disabled="" id="bookNowBtn">
-                    ĐẶT NGAY
-                </button>-->
-            </aside>
+            <
         </section>
         <jsp:include page="footer.jsp" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

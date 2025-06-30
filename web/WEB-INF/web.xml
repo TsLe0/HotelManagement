@@ -36,6 +36,10 @@
         <servlet-name>RoomDetailServlet</servlet-name>
         <servlet-class>Controller.RoomDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingResult</servlet-name>
+        <servlet-class>Controller.BookingResult</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -75,5 +79,9 @@
     <servlet-mapping>
         <servlet-name>RoomDetailServlet</servlet-name>
         <url-pattern>/room-detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingResult</servlet-name>
+        <url-pattern>/booking-result</url-pattern>
     </servlet-mapping>
 </web-app>
