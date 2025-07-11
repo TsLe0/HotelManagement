@@ -4,11 +4,12 @@
  */
 package DAO;
 
-import Models.RoomType;
 import Models.Room;
+import Models.RoomType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,135 +19,107 @@ import java.util.List;
  */
 public class RoomsDAO {
 
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    private Connection conn = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+
+    private Room extractRoomFromResultSet(ResultSet rs) throws SQLException {
+        Room room = new Room();
+        room.setRoomNumber(rs.getString("RoomNumber"));
+        room.setRoomStatus(rs.getString("RoomStatus"));
+        room.setRoomTypeID(rs.getInt("RoomTypeID"));
+
+        RoomType roomType = new RoomType();
+        roomType.setRoomTypeID(rs.getInt("RoomTypeID"));
+    
+        room.setRoomType(roomType);
+        return room;
+    }
 
     public List<Room> getAllRoom() {
         List<Room> list = new ArrayList<>();
-        String sql = "SELECT TOP (1000) [RoomNumber]\n"
-                + "      ,[RoomTypeID]\n"
-                + "      ,[RoomStatus]\n"
-                + "  FROM [HotelManagement].[dbo].[Room]";
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                   + "FROM Room r";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {
                 Room room = new Room();
-                room.setRoomNumber(rs.getString(1));
-                room.setRoomTypeID(rs.getInt(2));
-                room.setRoomStatus(rs.getString(3));
-//
-
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
+                int roomTypeId = rs.getInt("RoomTypeID");
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
                 list.add(room);
-
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return list;
-
     }
 
-    public void addRooms(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
-        String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatusID, RoomDesc, RoomPrice) "
-                + "VALUES (?, ?, ?, ?, ?)";
-
+    public void addRoom(Room room) {
+        String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatus) VALUES (?, ?, ?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-
-            ps.setString(1, roomNumber);
-            ps.setInt(2, roomTypeId);
-            ps.setInt(3, statusId);
-            ps.setString(4, roomDesc);
-            ps.setDouble(5, roomPrice);
+            ps.setString(1, room.getRoomNumber());
+            ps.setInt(2, room.getRoomTypeID());
+            ps.setString(3, room.getRoomStatus());
             ps.executeUpdate();
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
     }
 
-    public void updateRoom(String roomNumber, int roomTypeId, int statusId, String roomDesc, double roomPrice) {
-        String sql = "UPDATE Room SET RoomTypeID = ?, RoomStatusID = ?, RoomDesc = ?, RoomPrice = ? WHERE RoomNumber = ?";
-
+    public void updateRoom(Room room) {
+        String sql = "UPDATE Room SET RoomTypeID = ?, RoomStatus = ? WHERE RoomNumber = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, roomTypeId);
-            ps.setInt(2, statusId);
-            ps.setString(3, roomDesc);
-            ps.setDouble(4, roomPrice);
-            ps.setString(5, roomNumber);
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Room " + roomNumber + " updated successfully!");
-            } else {
-                System.out.println("No room found with the given RoomNumber: " + roomNumber);
-            }
+            ps.setInt(1, room.getRoomTypeID());
+            ps.setString(2, room.getRoomStatus());
+            ps.setString(3, room.getRoomNumber());
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public Room getRoomById(String roomNumber) {
-        String sql = "SELECT \n"
-                + "    r.RoomNumber, r.RoomTypeID, r.RoomStatusID, r.RoomDesc, r.RoomPrice, \n"
-                + "    t.RoomTypeName, t.NumBeds, t.ImagePath,\n"
-                + "    s.RoomStatusName\n"
-                + "FROM Room r\n"
-                + "LEFT JOIN RoomType t ON t.RoomTypeID = r.RoomTypeID\n"
-                + "LEFT JOIN RoomStatus s ON s.RoomStatusID = r.RoomStatusID\n"
-                + "WHERE r.RoomNumber = ?";
-
-        Room room = null;
-
-        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                   + "FROM Room r "
+                   + "WHERE r.RoomNumber = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
             ps.setString(1, roomNumber);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    room = new Room();
-                    room.setRoomNumber(rs.getString(1));
-                    room.setRoomTypeID(rs.getInt(2));
-//                    room.setRoomStatusID(rs.getInt(3));
-//                    room.setRoomDesc(rs.getString(4));
-//                    room.setRoomPrice(rs.getDouble(5));
-
-                    RoomType roomtype = new RoomType();
-                    roomtype.setRoomTypeID(rs.getInt(2));
-                    roomtype.setRoomTypeName(rs.getString(6));
-                    roomtype.setNumBeds(rs.getInt(7));
-                    roomtype.setImagePath(rs.getString(8));
-                    room.setRoomType(roomtype);
-
-//                    RoomStatus roomStatus = new RoomStatus();
-//                    roomStatus.setRoomStatusID(rs.getInt(3));
-//                    roomStatus.setRoomStatusName(rs.getString(9));
-//                    room.setRoomStatus(roomStatus);
-                }
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Room room = new Room();
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
+                int roomTypeId = rs.getInt("RoomTypeID");
+                room.setRoomTypeID(roomTypeId);
+                RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+                return room;
             }
         } catch (Exception e) {
-            e.printStackTrace(); // or use logger
+            e.printStackTrace();
         }
-
-        return room;
+        return null;
     }
 
     public void disableRoom(String roomNumber) {
-        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(
-                "UPDATE Room SET RoomStatusID = 4 WHERE RoomNumber = ?")) {
-
+        String sql = "UPDATE Room SET RoomStatus = 'Disabled' WHERE RoomNumber = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
             ps.setString(1, roomNumber);
-            int rows = ps.executeUpdate();
-
-            System.out.println((rows > 0)
-                    ? "Room " + roomNumber + " disabled successfully."
-                    : "No room found with RoomNumber: " + roomNumber);
-
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,24 +127,25 @@ public class RoomsDAO {
     
     public List<Room> getRoomsByTypeId(int roomTypeId) {
         List<Room> list = new ArrayList<>();
-        String sql = "SELECT TOP (1000) [RoomNumber]\n"
-                + "      ,[RoomTypeID]\n"
-                + "      ,[RoomStatus]\n"
-                + "  FROM [HotelManagement].[dbo].[Room] WHERE RoomTypeID = ?";
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                   + "FROM Room r "
+                   + "WHERE r.RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, roomTypeId);
             rs = ps.executeQuery();
+            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {
                 Room room = new Room();
-                room.setRoomNumber(rs.getString(1));
-                room.setRoomTypeID(rs.getInt(2));
-                room.setRoomStatus(rs.getString(3));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
                 list.add(room);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return list;
     }

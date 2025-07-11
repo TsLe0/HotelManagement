@@ -47,26 +47,28 @@ public class UpdateRoomServlet extends HttpServlet {
             throws ServletException, IOException {
         String roomNumber = request.getParameter("roomNumber");
         String roomTypeID_raw = request.getParameter("roomTypeID");
-        String roomStatusID_raw = request.getParameter("roomStatusID");
-        String roomDesc = request.getParameter("roomDesc");
-        String roomPrice_raw = request.getParameter("roomPrice");
+        String roomStatus = request.getParameter("roomStatus");
 
         try {
             int roomTypeID = Integer.parseInt(roomTypeID_raw);
-            int roomStatusID = Integer.parseInt(roomStatusID_raw);
-            double roomPrice = Double.parseDouble(roomPrice_raw);
-            dao.updateRoom(roomNumber, roomTypeID, roomStatusID, roomDesc, roomPrice);
+            
+            Room roomToUpdate = new Room();
+            roomToUpdate.setRoomNumber(roomNumber);
+            roomToUpdate.setRoomTypeID(roomTypeID);
+            roomToUpdate.setRoomStatus(roomStatus);
+
+            dao.updateRoom(roomToUpdate);
+            
             request.setAttribute("message", "Room " + roomNumber + " updated successfully!");
             response.sendRedirect("adminroom"); // Redirect to the room management page
         } catch (NumberFormatException e) {
-            request.setAttribute("error", "Invalid number format for Room Type ID, Room Status ID, or Room Price.");
+            request.setAttribute("error", "Invalid number format for Room Type ID.");
             request.getRequestDispatcher("updateRoom.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "An error occurred while updating the room: " + e.getMessage());
             request.getRequestDispatcher("updateRoom.jsp").forward(request, response);
         }
-        
     }
 
     @Override

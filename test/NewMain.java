@@ -32,14 +32,8 @@ public class NewMain {
 
         // Gọi DAO để thêm vào DB
         BookingDAO dao = new BookingDAO();
-        boolean success = dao.addBooking(booking);
 
         // In kết quả
-        if (success) {
-            System.out.println("✅ Booking added successfully!");
-        } else {
-            System.out.println("❌ Failed to add booking.");
-        }
     }
 }
 

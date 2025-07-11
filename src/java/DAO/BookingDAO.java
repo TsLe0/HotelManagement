@@ -49,7 +49,7 @@ public class BookingDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1; // Trả về -1 nếu thất bại
+        return -1; 
     }
 
     // Lấy danh sách tất cả các booking

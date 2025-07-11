@@ -77,20 +77,20 @@
                                     <td class="px-6 py-4"> ${r.roomType.roomTypeName}</td>
                                     <td class="px-6 py-4">
                                         <c:choose>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Trống'}">
-                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatusName == 'Trống'}">
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Đang sử dụng'}">
-                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatusName == 'Đang sử dụng'}">
+                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Bảo trì'}">
-                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatusName == 'Bảo trì'}">
+                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Vô hiệu hóa'}">
-                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatusName == 'Vô hiệu hóa'}">
+                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
