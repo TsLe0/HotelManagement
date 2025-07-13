@@ -29,6 +29,7 @@ public class BookingResult extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String bookingIdRaw = request.getParameter("bookingId");
+        System.out.println(bookingIdRaw);
         
         int bookingId = Integer.parseInt(bookingIdRaw);
         

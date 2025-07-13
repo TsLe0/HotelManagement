@@ -55,10 +55,10 @@
                     <table id="room-tbl" class="min-w-full text-sm text-left whitespace-nowrap mb-3">
                         <thead class="bg-gray-50 border-b font-medium">
                             <tr>
-                                <th class="px-6 py-3">RoomNumber</th>
-                                <th class="px-6 py-3">RoomName</th>
-                                <th class="px-6 py-3">Status</th>
-                                <th class="px-6 py-3">Price/Night</th>
+                                <th class="px-6 py-3">Số phòng</th>
+                                <th class="px-6 py-3">Loại phòng</th>
+                                <th class="px-6 py-3">Trạng thái</th>
+                                <th class="px-6 py-3">Giá/Đêm</th>
                                 <th class="px-6 py-3 text-right w-10">Actions</th>
                             </tr>
                         </thead>
@@ -74,28 +74,28 @@
                                             ${r.roomNumber}
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4"> ${r.roomType.roomTypeName}</td>
+                                    <td class="px-6 py-4">${r.roomType.roomTypeName}</td>
                                     <td class="px-6 py-4">
                                         <c:choose>
-                                            <c:when test="${r.roomStatusName == 'Trống'}">
-                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Trống'}">
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatusName == 'Đang sử dụng'}">
-                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Đang sử dụng'}">
+                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatusName == 'Bảo trì'}">
-                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Bảo trì'}">
+                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatusName == 'Vô hiệu hóa'}">
-                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Vô hiệu hóa'}">
+                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatusName}</span>
+                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="price" data-price="${r.roomPrice}"></span>
+                                        <span class="price" data-price="${r.roomType.roomTypePrice}"></span>
                                     </td>
                                     <td class="px-6 py-4 text-left">
                                         <a href="update-room?roomNumber=${r.roomNumber}"
@@ -135,4 +135,3 @@
         });
     </script>
 </html>
-

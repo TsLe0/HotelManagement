@@ -5,24 +5,20 @@
 package Controller;
 
 import DAO.RoomTypeDAO;
-import DAO.RoomsDAO;
-import Models.Room;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 
 /**
  *
  * @author Admin
  */
-public class AdminRoom extends HttpServlet {
+public class EditRoomTypeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,25 +37,26 @@ public class AdminRoom extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminRoom</title>");            
+            out.println("<title>Servlet EditRoomTypeServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminRoom at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditRoomTypeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-      RoomsDAO dao = new RoomsDAO();
-      RoomTypeDAO tdao= new RoomTypeDAO();
+    RoomTypeDAO rtd = new RoomTypeDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      List<RoomType> tList = tdao.getAllRoomType();
-        List<Room> rList = dao.getAllRoom();
-        request.setAttribute("rList", rList);
-         request.setAttribute("tList", tList);
-        request.getRequestDispatcher("roomManagement.jsp").forward(request, response);
+        
+        String id = request.getParameter("roomTypeId");
+        
+        RoomType rt = rtd.getRoomTypeById(id);
+        
+        request.setAttribute("roomType", rt);
+        request.getRequestDispatcher("roomTypeDetail.jsp").forward(request, response);
     }
 
     /**

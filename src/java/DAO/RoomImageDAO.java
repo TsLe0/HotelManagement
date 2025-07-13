@@ -21,21 +21,21 @@ public class RoomImageDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<RoomImage> getAllRoomImageByRoomTypeId(int roomTypeId) {
+    public List<RoomImage> getAllRoomImageByRoomTypeId(String roomTypeId) {
         List<RoomImage> list = new ArrayList<>();
         String sql = "select * from RoomImage\n"
                 + "where RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, roomTypeId);
+            ps.setString(1, roomTypeId);
             rs = ps.executeQuery();
             
             while (rs.next()) {
 
                 RoomImage r = new RoomImage();
                 r.setImageID(rs.getInt(1));
-                r.setRoomTypeID(rs.getInt(2));
+                r.setRoomTypeID(rs.getString(2));
                 r.setRoomImages(rs.getString(3));
 
                 list.add(r);

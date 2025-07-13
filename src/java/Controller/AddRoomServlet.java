@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.RoomTypeDAO;
@@ -25,12 +21,10 @@ public class AddRoomServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<RoomType> roomTypeList = roomTypeDAO.getAllRoomType();
-
         request.setAttribute("roomTypeList", roomTypeList);
         request.getRequestDispatcher("addRoom.jsp").forward(request, response);
 
         HttpSession session = request.getSession();
-
         session.removeAttribute("addRoomError");
     }
 
@@ -41,7 +35,7 @@ public class AddRoomServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String roomNumber = request.getParameter("roomNumber");
-        int roomTypeId = Integer.parseInt(request.getParameter("roomTypeId"));
+        String roomTypeId = request.getParameter("roomTypeId"); // Changed to String
         String roomStatus = request.getParameter("roomStatus");
 
         HttpSession session = request.getSession();
@@ -59,7 +53,7 @@ public class AddRoomServlet extends HttpServlet {
             response.sendRedirect("add-room");
             return;
         }
-        
+
         if (roomNumber.length() > 10) {
             session.setAttribute("addRoomError", "Room number must not exceed 10 characters.");
             response.sendRedirect("add-room");
@@ -68,12 +62,11 @@ public class AddRoomServlet extends HttpServlet {
 
         Room newRoom = new Room();
         newRoom.setRoomNumber(roomNumber);
-        newRoom.setRoomTypeID(roomTypeId);
+        newRoom.setRoomTypeID(roomTypeId); // Now a String
         newRoom.setRoomStatus(roomStatus);
-        
+
         dao.addRoom(newRoom);
 
         response.sendRedirect("adminroom");
     }
-
 }

@@ -27,10 +27,10 @@ public class RoomsDAO {
         Room room = new Room();
         room.setRoomNumber(rs.getString("RoomNumber"));
         room.setRoomStatus(rs.getString("RoomStatus"));
-        room.setRoomTypeID(rs.getInt("RoomTypeID"));
+        room.setRoomTypeID(rs.getString("RoomTypeID"));
 
         RoomType roomType = new RoomType();
-        roomType.setRoomTypeID(rs.getInt("RoomTypeID"));
+        roomType.setRoomTypeID(rs.getString("RoomTypeID"));
     
         room.setRoomType(roomType);
         return room;
@@ -47,12 +47,14 @@ public class RoomsDAO {
             RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {
                 Room room = new Room();
-                room.setRoomNumber(rs.getString("RoomNumber"));
-                room.setRoomStatus(rs.getString("RoomStatus"));
-                int roomTypeId = rs.getInt("RoomTypeID");
-                room.setRoomTypeID(roomTypeId);
-                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
-                list.add(room);
+            room.setRoomNumber(rs.getString("RoomNumber"));
+            room.setRoomStatus(rs.getString("RoomStatus"));
+
+            String roomTypeId = rs.getString("RoomTypeID");
+            room.setRoomTypeID(roomTypeId);
+            room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+            
+            list.add(room);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +68,7 @@ public class RoomsDAO {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, room.getRoomNumber());
-            ps.setInt(2, room.getRoomTypeID());
+            ps.setString(2, room.getRoomTypeID());
             ps.setString(3, room.getRoomStatus());
             ps.executeUpdate();
         } catch (Exception ex) {
@@ -79,7 +81,7 @@ public class RoomsDAO {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, room.getRoomTypeID());
+            ps.setString(1, room.getRoomTypeID());
             ps.setString(2, room.getRoomStatus());
             ps.setString(3, room.getRoomNumber());
             ps.executeUpdate();
@@ -101,7 +103,7 @@ public class RoomsDAO {
                 Room room = new Room();
                 room.setRoomNumber(rs.getString("RoomNumber"));
                 room.setRoomStatus(rs.getString("RoomStatus"));
-                int roomTypeId = rs.getInt("RoomTypeID");
+                String roomTypeId = rs.getString("RoomTypeID");
                 room.setRoomTypeID(roomTypeId);
                 RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
                 room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
@@ -125,7 +127,7 @@ public class RoomsDAO {
         }
     }
     
-    public List<Room> getRoomsByTypeId(int roomTypeId) {
+    public List<Room> getRoomsByTypeId(String roomTypeId) {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
                    + "FROM Room r "
@@ -133,7 +135,7 @@ public class RoomsDAO {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, roomTypeId);
+            ps.setString(1, roomTypeId);
             rs = ps.executeQuery();
             RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {

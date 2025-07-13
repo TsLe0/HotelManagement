@@ -7,18 +7,19 @@ package Models;
  */
 public class RoomType {
 
-    private int roomTypeID;
+    private String roomTypeID;
     private String roomTypeName;
     private String roomDec;
     private double roomArea;
     private double roomTypePrice;
     private int numBeds;
     private String imagePath;
+    private String roomTypeStatus;
 
     public RoomType() {
     }
 
-    public RoomType(int roomTypeID, String roomTypeName, String roomDec, double roomArea, double roomTypePrice, int numBeds, String imagePath) {
+    public RoomType(String roomTypeID, String roomTypeName, String roomDec, double roomArea, double roomTypePrice, int numBeds, String imagePath, String roomTypeStatus) {
         this.roomTypeID = roomTypeID;
         this.roomTypeName = roomTypeName;
         this.roomDec = roomDec;
@@ -26,16 +27,17 @@ public class RoomType {
         this.roomTypePrice = roomTypePrice;
         this.numBeds = numBeds;
         this.imagePath = imagePath;
+        this.roomTypeStatus = roomTypeStatus;
     }
 
-    public int getRoomTypeID() {
+    public String getRoomTypeID() {
         return roomTypeID;
     }
 
-    public void setRoomTypeID(int roomTypeID) {
+    public void setRoomTypeID(String roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
-
+    
     public String getRoomTypeName() {
         return roomTypeName;
     }
@@ -84,11 +86,20 @@ public class RoomType {
         this.imagePath = imagePath;
     }
 
-    @Override
-    public String toString() {
-        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", roomDec=" + roomDec + ", roomArea=" + roomArea + ", roomTypePrice=" + roomTypePrice + ", numBeds=" + numBeds + ", imagePath=" + imagePath + '}';
+    public String getRoomTypeStatus() {
+        return roomTypeStatus;
     }
 
+    public void setRoomTypeStatus(String roomTypeStatus) {
+        this.roomTypeStatus = roomTypeStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", roomDec=" + roomDec + ", roomArea=" + roomArea + ", roomTypePrice=" + roomTypePrice + ", numBeds=" + numBeds + ", imagePath=" + imagePath + ", roomTypeStatus=" + roomTypeStatus + '}';
+    }
+
+ 
   
     
   

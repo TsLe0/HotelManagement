@@ -6,19 +6,19 @@ GO
 
 -- Tạo bảng RoomType
 CREATE TABLE RoomType (
-    RoomTypeID  INT IDENTITY(1,1) PRIMARY KEY,
+    RoomTypeID  VARCHAR(5) PRIMARY KEY,
     RoomTypeName NVARCHAR(100) NOT NULL UNIQUE,
 	RoomTypePrice  DECIMAL(10,2) NOT NULL,
 	RoomDec NVARCHAR(100),
 	RoomArea DECIMAL(10,2),
-    NumBeds  INT NOT NULL
+    NumBeds  INT NOT NULL,
+	RoomTypeStatus NVARCHAR(20) NOT NULL DEFAULT N'Đang kinh doanh' CHECK (RoomTypeStatus IN (N'Đang kinh doanh', N'Ngừng kinh doanh'))
 );
-GO
 
 -- Tạo bảng Room
 CREATE TABLE Room (
     RoomNumber  VARCHAR(5) PRIMARY KEY,
-    RoomTypeID INT,
+    RoomTypeID VARCHAR(5),
     RoomStatus NVARCHAR(20) NOT NULL DEFAULT N'Trống' CHECK (RoomStatus IN (N'Trống', N'Đang sử dụng', N'Bảo trì', N'Vô hiệu hóa')),
 	FOREIGN KEY (RoomTypeID) REFERENCES RoomType(RoomTypeID)
 );
@@ -27,7 +27,7 @@ GO
 -- Tạo bảng RoomImage
 CREATE TABLE RoomImage (
     ImageID INT IDENTITY(1,1) PRIMARY KEY,     
-    RoomTypeID  INT ,                           
+    RoomTypeID  VARCHAR(5) ,                           
     RoomImages NVARCHAR(255) NOT NULL,                   
     FOREIGN KEY (RoomTypeID) REFERENCES RoomType(RoomTypeID)
 );
@@ -40,7 +40,7 @@ CREATE TABLE users (
     password VARCHAR(255),
     email VARCHAR(100) UNIQUE,
     phone VARCHAR(20),
-    address TEXT,
+    address Nvarchar(50),
     role VARCHAR(20) CHECK (role IN ('customer', 'admin', 'staff')) DEFAULT 'customer',
     created_at DATETIME DEFAULT GETDATE()
 );
@@ -50,10 +50,10 @@ GO
 CREATE TABLE Staff (
     user_id INT PRIMARY KEY,
     Salary DECIMAL(10,2),
-    Position VARCHAR(100),	
+    Position NVARCHAR(100),	
     HireDate DATE,	
-    [Shift] VARCHAR(50),	
-    [Status] VARCHAR(20),	
+    [Shift] NVARCHAR(50),	
+    [Status] NVARCHAR(20),	
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 GO
@@ -72,7 +72,7 @@ GO
 CREATE TABLE Bookings (
     BookingID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
-    RoomTypeID INT NOT NULL,
+    RoomTypeID VARCHAR(5) NOT NULL,
 	CustomerName NVARCHAR(50) NULL,
 	CustomerPhoneNumber NVARCHAR(20) NULL,
 	RoomNumber  VARCHAR(5),
@@ -99,44 +99,44 @@ CREATE TABLE Payment (
     FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
 );
 GO
-INSERT INTO RoomType (RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds) VALUES
-(N'Phòng đơn', 500000.00, N'Phòng cho 1 người', 18.00, 1),
-(N'Phòng đôi', 800000.00, N'Phòng cho 2 người', 25.00, 2),
-(N'Phòng gia đình', 1200000.00, N'Phòng cho gia đình 3 người', 35.00, 3),
-(N'Phòng VIP', 2000000.00, N'Phòng sang trọng cho 2 người', 45.00, 2);
+INSERT INTO RoomType (RoomTypeID,RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds,RoomTypeStatus) VALUES
+('D01',N'Phòng đơn', 500000.00, N'Phòng cho 1 người', 18.00, 1, N'Đang kinh doanh'),
+('D02',N'Phòng đôi', 800000.00, N'Phòng cho 2 người', 25.00, 2, N'Đang kinh doanh'),
+('P01',N'Phòng gia đình', 1200000.00, N'Phòng cho gia đình 3 người', 35.00, 3, N'Đang kinh doanh'),
+('V01',N'Phòng VIP', 2000000.00, N'Phòng sang trọng cho 2 người', 45.00, 2, N'Đang kinh doanh');
 
 go
 INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatus) VALUES
-('101', 1, N'Trống'),
-('102', 2, N'Đang sử dụng'),
-('201', 3, N'Bảo trì'),
-('VIP1', 4, N'Trống');
+('A101','D01', N'Trống'),
+('D102','D02', N'Đang sử dụng'),
+('D201', 'P01', N'Bảo trì'),
+('VIP1','V01', N'Trống');
 go 
 -- Phòng đơn
 INSERT INTO RoomImage (RoomTypeID, RoomImages) VALUES
-(1, N'phong_don_1.jpg'),
-(1, N'phong_don_2.jpg'),
-(1, N'phong_don_3.jpg');
+('D01', 'https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1020,q_auto,w_2000/partner-images/bf/b5/b56283782b0111d5937634a299aa5a927d766b2b249e2e4f7760773125de.jpeg'),
+('D01', 'https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1020,q_auto,w_2000/partner-images/cc/dc/e4e32cd1e4a516d3a071b750db111fc05875576ec06d56d596888557a320.jpeg'),
+('D01', 'https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1020,q_auto,w_2000/partner-images/99/70/eabf124fa80d4da93f089292dc3e5d5cf8304c802cb4ab42ac638939590e.jpeg');
 
 -- Phòng đôi
 INSERT INTO RoomImage (RoomTypeID, RoomImages) VALUES
-(2, N'phong_doi_1.jpg'),
-(2, N'phong_doi_2.jpg'),
-(2, N'phong_doi_3.jpg'),
-(2, N'phong_doi_4.jpg');
+('D02', N'https://booking.muongthanh.com/images/hotels/rooms/original/z4171312768965_ff546c284fbcf05aa6e0331ee4723aab_1678438739.jpg'),
+('D02', N'https://eholiday.vn/wp-content/uploads/2023/08/Khach-san-Muong-Thanh-Luxury-Quang-Ninh-Phong-Family-Suite.jpg'),
+('D02', N'https://www.vn.kayak.com/rimg/himg/79/53/c9/expedia_group-806047-336585-505783.jpg?width=1366&height=768&crop=true'),
+('D02', N'https://ik.imagekit.io/tvlk/generic-asset/dgXfoyh24ryQLRcGq00cIdKHRmotrWLNlvG-TxlcLxGkiDwaUSggleJNPRgIHCX6/hotel/asset/10025383-1000x626-FIT_AND_TRIM-fd0c564ed05ab55c0075981979ad5770.jpeg');
 
 -- Phòng gia đình
 INSERT INTO RoomImage (RoomTypeID, RoomImages) VALUES
-(3, N'phong_gia_dinh_1.jpg'),
-(3, N'phong_gia_dinh_2.jpg'),
-(3, N'phong_gia_dinh_3.jpg');
+('P01', N'https://d3tosvr3yotk6r.cloudfront.net/Content/UserUploads/Images/Hotels/5/1801/Rooms/5775/medium_Picture13.png'),
+('P01', N'https://travelmart.vn/uploads/2017/08/23/20_i599db08c3efe5.jpg'),
+('P01', N'https://ticotravel.com.vn/wp-content/uploads/2022/07/Muong-Thanh-Luxury-Khanh-Hoa-8.png');
 
 -- Phòng VIP
 INSERT INTO RoomImage (RoomTypeID, RoomImages) VALUES
-(4, N'phong_vip_1.jpg'),
-(4, N'phong_vip_2.jpg'),
-(4, N'phong_vip_3.jpg'),
-(4, N'phong_vip_4.jpg');
+('V01', 'https://travelmart.vn/uploads/2018/05/10/20_i5af3c6487bbb2.jpg'),
+('V01', 'https://travelmart.vn/uploads/2018/06/04/20_i5b14a081535b5.jpg'),
+('V01', 'https://d3tosvr3yotk6r.cloudfront.net/Content/UserUploads/Images/Hotels/5/2/Rooms/2068/medium_590-%20(1).jpg'),
+('V01', 'https://eholiday.vn/wp-content/uploads/2024/05/Muong-Thanh-Luxury-Da-Nang-Grand-Suite.jpg');
 go
 INSERT INTO users (username, password, email, phone, address, role) VALUES
 ('khach1', 'pass123', 'khach1@example.com', '0901234567', N'Hà Nội', 'customer'),

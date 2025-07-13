@@ -4,24 +4,24 @@
  */
 package Models;
 
-import java.util.List;
-
 public class Room {
 
     private String roomNumber;
-    private int roomTypeID;
+    private String roomTypeID;
     private RoomType roomType;
     private String roomStatus;
 
     public Room() {
     }
 
-    public Room(String roomNumber, int roomTypeID, RoomType roomType, String roomStatus) {
+    public Room(String roomNumber, String roomTypeID, RoomType roomType, String roomStatus) {
         this.roomNumber = roomNumber;
         this.roomTypeID = roomTypeID;
         this.roomType = roomType;
         this.roomStatus = roomStatus;
     }
+
+
 
     public String getRoomNumber() {
         return roomNumber;
@@ -31,13 +31,14 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
-    public int getRoomTypeID() {
+    public String getRoomTypeID() {
         return roomTypeID;
     }
 
-    public void setRoomTypeID(int roomTypeID) {
+    public void setRoomTypeID(String roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
+
 
     public RoomType getRoomType() {
         return roomType;
@@ -59,6 +60,7 @@ public class Room {
     public String toString() {
         return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatus=" + roomStatus + '}';
     }
+
 
   
     

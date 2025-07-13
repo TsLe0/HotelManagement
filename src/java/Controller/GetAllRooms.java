@@ -39,7 +39,7 @@ public class GetAllRooms extends HttpServlet {
             iList.add(imageDAO.getAllRoomImageByRoomTypeId(r.getRoomTypeID()));
         }
         request.setAttribute("iList", iList);
-        System.out.println(iList.get(0));
+//        System.out.println(iList.get(0));
         request.setAttribute("tList", tList);
         request.getRequestDispatcher("room.jsp").forward(request, response);
     }

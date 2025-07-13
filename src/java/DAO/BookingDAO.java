@@ -26,7 +26,7 @@ public class BookingDAO extends DBContext {
         try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, booking.getUserId());
-            ps.setInt(2, booking.getRoomTypeId());
+            ps.setString(2, booking.getRoomTypeId());
             ps.setString(3, booking.getRoomNumber());
             ps.setDate(4, booking.getCheckinDate());
             ps.setDate(5, booking.getCheckoutDate());
@@ -47,6 +47,7 @@ public class BookingDAO extends DBContext {
                 }
             }
         } catch (SQLException e) {
+                System.out.println("tuanvm dm ");
             e.printStackTrace();
         }
         return -1; 
@@ -63,7 +64,7 @@ public class BookingDAO extends DBContext {
                 Booking b = new Booking();
                 b.setBookingId(rs.getInt("BookingID"));
                 b.setUserId(rs.getInt("UserID"));
-                b.setRoomTypeId(rs.getInt("RoomTypeID"));
+                b.setRoomTypeId(rs.getString("RoomTypeID"));
                 b.setRoomNumber(rs.getString("RoomNumber"));
                 b.setCheckinDate(rs.getDate("CheckInDate"));
                 b.setCheckoutDate(rs.getDate("CheckOutDate"));
@@ -94,17 +95,17 @@ public class BookingDAO extends DBContext {
                 Booking b = new Booking();
                 b.setBookingId(rs.getInt(1));
                 b.setUserId(rs.getInt(2));
-                b.setRoomTypeId(rs.getInt(3));
-                b.setRoomNumber(rs.getString(4));
-                b.setCheckinDate(rs.getDate(5));
-                b.setCheckoutDate(rs.getDate(6));
-                b.setNumberOfGuests(rs.getInt(7));
-                b.setTotalPrice(rs.getDouble(8));
-                b.setStatus(rs.getString(9));
-                b.setBookingDate(rs.getDate(10));
-                b.setSpecialRequests(rs.getString(11));
-                b.setCustomerName(rs.getString(12));
-                b.setCustomerPhoneNumber(rs.getString(13));
+                b.setRoomTypeId(rs.getString(3));
+                b.setCustomerName(rs.getString(4));
+                b.setCustomerPhoneNumber(rs.getString(5));
+                b.setRoomNumber(rs.getString(6));
+                b.setCheckinDate(rs.getDate(7));
+                b.setCheckoutDate(rs.getDate(8));
+                b.setNumberOfGuests(rs.getInt(9));
+                b.setTotalPrice(rs.getFloat(10));
+                b.setStatus(rs.getString(11));
+                b.setBookingDate(rs.getDate(12));
+                b.setSpecialRequests(rs.getString(13));
 
                 return b;
             }

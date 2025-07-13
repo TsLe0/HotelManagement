@@ -4,19 +4,21 @@ package Models;
 
 public class RoomImage {
     private int imageID;
-    private int roomTypeID;
+    private String roomTypeID;
     private String roomImages;
     private RoomType roomType;
 
     public RoomImage() {
     }
 
-    public RoomImage(int imageID, int roomTypeID, String roomImages, RoomType roomType) {
+    public RoomImage(int imageID, String roomTypeID, String roomImages, RoomType roomType) {
         this.imageID = imageID;
         this.roomTypeID = roomTypeID;
         this.roomImages = roomImages;
         this.roomType = roomType;
     }
+
+  
 
     public int getImageID() {
         return imageID;
@@ -26,13 +28,15 @@ public class RoomImage {
         this.imageID = imageID;
     }
 
-    public int getRoomTypeID() {
+    public String getRoomTypeID() {
         return roomTypeID;
     }
 
-    public void setRoomTypeID(int roomTypeID) {
+    public void setRoomTypeID(String roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
+
+   
 
     public String getRoomImages() {
         return roomImages;
@@ -54,7 +58,7 @@ public class RoomImage {
     public String toString() {
         return "RoomImage{" + "imageID=" + imageID + ", roomTypeID=" + roomTypeID + ", roomImages=" + roomImages + ", roomType=" + roomType + '}';
     }
-    
+
     
 
 }

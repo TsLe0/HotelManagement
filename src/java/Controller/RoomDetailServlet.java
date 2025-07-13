@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.RoomImageDAO;
@@ -22,10 +18,6 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class RoomDetailServlet extends HttpServlet {
 
     RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
@@ -35,19 +27,17 @@ public class RoomDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String roomTypeIdRaw = request.getParameter("roomTypeId");
+        String roomTypeId = request.getParameter("roomTypeId");
         try {
-            int roomTypeId = Integer.parseInt(roomTypeIdRaw);
-            RoomType roomType = roomTypeDAO.getRoomTypeById(roomTypeId);
+            RoomType roomType = roomTypeDAO.getRoomTypeById(roomTypeId); // String version
 
             if (roomType == null) {
                 response.sendRedirect("home.jsp?error=Room+not+found");
                 return;
             }
 
-            List<Room> rooms = roomsDAO.getRoomsByTypeId(roomTypeId);
-
-            List<RoomImage> roomImages = roomImageDAO.getAllRoomImageByRoomTypeId(roomTypeId);
+            List<Room> rooms = roomsDAO.getRoomsByTypeId(roomTypeId); // String version
+            List<RoomImage> roomImages = roomImageDAO.getAllRoomImageByRoomTypeId(roomTypeId); // String version
 
             request.setAttribute("roomType", roomType);
             request.setAttribute("rooms", rooms);
@@ -56,7 +46,8 @@ public class RoomDetailServlet extends HttpServlet {
             System.out.println(roomType);
 
             request.getRequestDispatcher("roomDetail.jsp").forward(request, response);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
+            response.sendRedirect("home.jsp?error=Invalid+RoomTypeId");
         }
     }
 
@@ -74,40 +65,35 @@ public class RoomDetailServlet extends HttpServlet {
         User user = (User) session.getAttribute("account");
         System.out.println("Booking session ID: " + session.getId());
 
-
         if (user == null) {
-            System.out.println("oi");
             session.setAttribute("originalURL", request.getRequestURI() + "?" + request.getQueryString());
             response.sendRedirect("login.jsp?error=Please login to book a room.");
             return;
         }
 
-        String roomTypeIdRaw = request.getParameter("roomTypeId");
+        String roomTypeId = request.getParameter("roomTypeId");
         String checkinRaw = request.getParameter("checkin");
         String checkoutRaw = request.getParameter("checkout");
         String guestsRaw = request.getParameter("guests");
 
         try {
-            int roomTypeId = Integer.parseInt(roomTypeIdRaw);
             LocalDate checkinDate = LocalDate.parse(checkinRaw);
             LocalDate checkoutDate = LocalDate.parse(checkoutRaw);
             int guests = Integer.parseInt(guestsRaw);
 
             if (checkinDate.isBefore(LocalDate.now())) {
                 request.setAttribute("error", "Check-in date cannot be in the past.");
-                processRequest(request, response); // Redisplay the detail page with an error
+                processRequest(request, response);
                 return;
             }
-            if (checkoutDate.isBefore(checkinDate) || checkoutDate.isEqual(checkinDate)) {
+            if (!checkoutDate.isAfter(checkinDate)) {
                 request.setAttribute("error", "Check-out date must be after the check-in date.");
-                processRequest(request, response); // Redisplay the detail page with an error
+                processRequest(request, response);
                 return;
             }
 
-            RoomType roomType = roomTypeDAO.getRoomTypeById(roomTypeId);
-
-            RoomImageDAO roomImageDAO = new RoomImageDAO();
-            List<RoomImage> roomImages = roomImageDAO.getAllRoomImageByRoomTypeId(roomTypeId);
+            RoomType roomType = roomTypeDAO.getRoomTypeById(roomTypeId); // String version
+            List<RoomImage> roomImages = roomImageDAO.getAllRoomImageByRoomTypeId(roomTypeId); // String version
 
             long nights = ChronoUnit.DAYS.between(checkinDate, checkoutDate);
             double totalPrice = nights * roomType.getRoomTypePrice();

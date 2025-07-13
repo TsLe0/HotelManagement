@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Booking {
     private int bookingId;
     private int userId;
-    private int roomTypeId;
+    private String roomTypeId;
     private String roomNumber;
     private Date checkinDate;
     private Date checkoutDate;
@@ -45,13 +45,15 @@ public class Booking {
         this.userId = userId;
     }
 
-    public int getRoomTypeId() {
+    public String getRoomTypeId() {
         return roomTypeId;
     }
 
-    public void setRoomTypeId(int roomTypeId) {
+    public void setRoomTypeId(String roomTypeId) {
         this.roomTypeId = roomTypeId;
     }
+
+ 
 
     public String getRoomNumber() {
         return roomNumber;
@@ -135,7 +137,9 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", roomTypeId=" + roomTypeId + ", roomNumber=" + roomNumber + ", checkinDate=" + checkinDate + ", checkoutDate=" + checkoutDate + ", numberOfGuests=" + numberOfGuests + ", totalPrice=" + totalPrice + ", status=" + status + ", bookingDate=" + bookingDate + ", specialRequests=" + specialRequests + ", customerPhoneNumber=" + customerPhoneNumber + ", customerName=" + customerName + '}';
+        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", roomTypeId=" + roomTypeId + ", roomNumber=" + roomNumber + ", checkinDate=" + checkinDate + ", checkoutDate=" + checkoutDate + ", numberOfGuests=" + numberOfGuests + ", totalPrice=" + totalPrice + ", status=" + status + ", bookingDate=" + bookingDate + ", specialRequests=" + specialRequests + ", customerPhoneNumber=" + customerPhoneNumber + ", customerName=" + customerName + ", user=" + user + '}';
     }
+
+  
 }
   

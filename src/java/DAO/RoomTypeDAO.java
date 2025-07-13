@@ -29,6 +29,7 @@ public class RoomTypeDAO {
                 + "      ,[RoomDec]\n"
                 + "      ,[RoomArea]\n"
                 + "      ,[NumBeds]\n"
+                + "      ,[RoomTypeStatus]\n"
                 + "  FROM [HotelManagement].[dbo].[RoomType]";
         try {
             conn = new DBContext().getConnection();
@@ -37,12 +38,13 @@ public class RoomTypeDAO {
             while (rs.next()) {
 
                 RoomType r = new RoomType();
-                r.setRoomTypeID(rs.getInt(1));
+                r.setRoomTypeID(rs.getString(1));
                 r.setRoomTypeName(rs.getString(2));
                 r.setRoomTypePrice(rs.getDouble(3));
                 r.setRoomDec(rs.getString(4));
                 r.setRoomArea(rs.getDouble(5));
                 r.setNumBeds(rs.getInt(6));
+                r.setRoomTypeStatus(rs.getString(7));
                 list.add(r);
 
             }
@@ -52,27 +54,29 @@ public class RoomTypeDAO {
         return list;
     }
     
-    public RoomType getRoomTypeById(int roomTypeId) {
+    public RoomType getRoomTypeById(String roomTypeId) {
         String sql = "SELECT TOP (1000) [RoomTypeID]\n"
                 + "      ,[RoomTypeName]\n"
                 + "      ,[RoomTypePrice]\n"
                 + "      ,[RoomDec]\n"
                 + "      ,[RoomArea]\n"
                 + "      ,[NumBeds]\n"
+                + "      ,[RoomTypeStatus]\n"
                 + "  FROM [HotelManagement].[dbo].[RoomType] WHERE RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, roomTypeId);
+            ps.setString(1, roomTypeId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 RoomType r = new RoomType();
-                r.setRoomTypeID(rs.getInt(1));
+                r.setRoomTypeID(rs.getString(1));
                 r.setRoomTypeName(rs.getString(2));
                 r.setRoomTypePrice(rs.getDouble(3));
                 r.setRoomDec(rs.getString(4));
                 r.setRoomArea(rs.getDouble(5));
                 r.setNumBeds(rs.getInt(6));
+                r.setRoomTypeStatus(rs.getString(7));
                 return r;
             }
         } catch (Exception e) {
@@ -80,4 +84,26 @@ public class RoomTypeDAO {
         }
         return null;
     }
+    public boolean addRoomType(RoomType roomType) {
+    String sql = "INSERT INTO RoomType (RoomTypeID, RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds, RoomTypeStatus) "
+               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setString(1, roomType.getRoomTypeID());
+        ps.setString(2, roomType.getRoomTypeName());
+        ps.setDouble(3, roomType.getRoomTypePrice());
+        ps.setString(4, roomType.getRoomDec());
+        ps.setDouble(5, roomType.getRoomArea());
+        ps.setInt(6, roomType.getNumBeds());
+        ps.setString(7, roomType.getRoomTypeStatus()); // ví dụ: "Đang kinh doanh" hoặc "Ngừng kinh doanh"
+
+        return ps.executeUpdate() > 0;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
 }
