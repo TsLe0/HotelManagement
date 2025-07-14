@@ -22,16 +22,37 @@ public class AddRoomTypeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Đọc dữ liệu từ form
-        String id = request.getParameter("roomTypeID");
-        String name = request.getParameter("roomTypeName");
+        String id = request.getParameter("roomTypeID").trim();
+        String name = request.getParameter("roomTypeName").trim();
         double price = Double.parseDouble(request.getParameter("roomTypePrice"));
         String desc = request.getParameter("roomDec");
         double area = Double.parseDouble(request.getParameter("roomArea"));
         int numBeds = Integer.parseInt(request.getParameter("numBeds"));
         String status = request.getParameter("roomTypeStatus");
+        
+        if (id.isEmpty()) {
+            request.setAttribute("error", "Mã hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
+            return;
+        }
 
-        // Tạo RoomType object
+        if (name.isEmpty()) {
+            request.setAttribute("error", "Tên hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
+            return;
+        }
+
+        if (id.length() > 6) {
+            request.setAttribute("error", "Mã hạng phòng không được vượt quá 6 ký tự.");
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
+            return;
+        }
+
+        if (name.length() > 50) {
+            request.setAttribute("error", "Tên hạng phòng không được vượt quá 50 ký tự.");
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
+            return;
+        }
         RoomType roomType = new RoomType();
         roomType.setRoomTypeID(id);
         roomType.setRoomTypeName(name);
@@ -41,15 +62,24 @@ public class AddRoomTypeServlet extends HttpServlet {
         roomType.setNumBeds(numBeds);
         roomType.setRoomTypeStatus(status);
 
-        // Gọi DAO để lưu vào DB
         RoomTypeDAO dao = new RoomTypeDAO();
+
+        if (dao.existsRoomTypeId(id)) {
+
+            request.setAttribute("error", "ID loại phòng đã tồn tại. Vui lòng chọn ID khác.");
+            request.setAttribute("roomType", roomType);
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
+            return;
+        }
+
         boolean success = dao.addRoomType(roomType);
 
         if (success) {
-            response.sendRedirect("admin-room-type"); // chuyển tới danh sách sau khi thêm thành công
+            response.sendRedirect("admin-room-type");
         } else {
             request.setAttribute("error", "Thêm loại phòng thất bại. Vui lòng kiểm tra lại.");
-            request.getRequestDispatcher("add-room-type").forward(request, response);
+            request.setAttribute("roomType", roomType);
+            request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
         }
     }
 

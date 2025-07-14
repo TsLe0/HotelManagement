@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 /**
  *
  * @author Admin
@@ -37,7 +36,7 @@ public class EditRoomTypeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditRoomTypeServlet</title>");            
+            out.println("<title>Servlet EditRoomTypeServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditRoomTypeServlet at " + request.getContextPath() + "</h1>");
@@ -47,14 +46,15 @@ public class EditRoomTypeServlet extends HttpServlet {
     }
 
     RoomTypeDAO rtd = new RoomTypeDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String id = request.getParameter("roomTypeId");
-        
+
         RoomType rt = rtd.getRoomTypeById(id);
-        
+
         request.setAttribute("roomType", rt);
         request.getRequestDispatcher("editRoomType.jsp").forward(request, response);
     }
@@ -71,12 +71,22 @@ public class EditRoomTypeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String roomTypeId = request.getParameter("roomTypeId");
-        String roomTypeName = request.getParameter("roomTypeName");
+        String roomTypeName = request.getParameter("roomTypeName").trim();
         double roomTypePrice = Double.parseDouble(request.getParameter("roomTypePrice"));
         String roomDec = request.getParameter("roomDec");
         double roomArea = Double.parseDouble(request.getParameter("roomArea"));
         int numBeds = Integer.parseInt(request.getParameter("numBeds"));
         String roomTypeStatus = request.getParameter("roomTypeStatus");
+        if (roomTypeName.isEmpty()) {
+            request.setAttribute("error", "Tên hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
+
+            // Lấy lại đối tượng hiện tại để hiển thị lại dữ liệu
+            RoomType existingRoomType = rtd.getRoomTypeById(roomTypeId);
+            request.setAttribute("roomType", existingRoomType);
+
+            request.getRequestDispatcher("editRoomType.jsp").forward(request, response);
+            return;
+        }
 
         RoomType rt = new RoomType();
         rt.setRoomTypeID(roomTypeId);
@@ -86,9 +96,9 @@ public class EditRoomTypeServlet extends HttpServlet {
         rt.setRoomArea(roomArea);
         rt.setNumBeds(numBeds);
         rt.setRoomTypeStatus(roomTypeStatus);
-        
+
         boolean success = rtd.editRoomType(rt);
-        
+
         if (success) {
             response.sendRedirect("admin-room-type");
         } else {

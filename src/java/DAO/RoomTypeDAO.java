@@ -54,6 +54,39 @@ public class RoomTypeDAO {
         return list;
     }
     
+    public List<RoomType> getActiveRoomTypes() {
+        List<RoomType> list = new ArrayList<>();
+        String sql = "SELECT TOP (1000) [RoomTypeID]\n"
+                + "      ,[RoomTypeName]\n"
+                + "      ,[RoomTypePrice]\n"
+                + "      ,[RoomDec]\n"
+                + "      ,[RoomArea]\n"
+                + "      ,[NumBeds]\n"
+                + "      ,[RoomTypeStatus]\n"
+                + "  FROM [HotelManagement].[dbo].[RoomType] WHERE [RoomTypeStatus] = N'Đang kinh doanh'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                RoomType r = new RoomType();
+                r.setRoomTypeID(rs.getString(1));
+                r.setRoomTypeName(rs.getString(2));
+                r.setRoomTypePrice(rs.getDouble(3));
+                r.setRoomDec(rs.getString(4));
+                r.setRoomArea(rs.getDouble(5));
+                r.setNumBeds(rs.getInt(6));
+                r.setRoomTypeStatus(rs.getString(7));
+                list.add(r);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
     public RoomType getRoomTypeById(String roomTypeId) {
         String sql = "SELECT TOP (1000) [RoomTypeID]\n"
                 + "      ,[RoomTypeName]\n"
@@ -144,6 +177,27 @@ public class RoomTypeDAO {
             ex.printStackTrace();
         }
     }
+}
+public boolean existsRoomTypeId(String roomTypeId) {
+    String sql = "SELECT 1 FROM RoomType WHERE RoomTypeID = ?";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, roomTypeId);
+        rs = ps.executeQuery();
+        return rs.next(); // true nếu tìm thấy
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    return false;
 }
 
 

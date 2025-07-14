@@ -62,6 +62,32 @@ public class RoomsDAO {
         return list;
     }
 
+    public List<Room> getActiveRoom() {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                   + "FROM Room r WHERE r.RoomStatus = 'Active'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
+            while (rs.next()) {
+                Room room = new Room();
+            room.setRoomNumber(rs.getString("RoomNumber"));
+            room.setRoomStatus(rs.getString("RoomStatus"));
+
+            String roomTypeId = rs.getString("RoomTypeID");
+            room.setRoomTypeID(roomTypeId);
+            room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+            
+            list.add(room);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public void addRoom(Room room) {
         String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatus) VALUES (?, ?, ?)";
         try {

@@ -11,6 +11,7 @@ import Models.Room;
 import Models.RoomImage;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet(name = "GetAllRooms", urlPatterns = {"/rooms"})
 public class GetAllRooms extends HttpServlet {
     
     RoomsDAO dao = new RoomsDAO();
@@ -33,7 +35,7 @@ public class GetAllRooms extends HttpServlet {
             throws ServletException, IOException {
         
         List<List<RoomImage>> iList = new ArrayList<>();
-        List<RoomType> tList = typeDao.getAllRoomType();
+        List<RoomType> tList = typeDao.getActiveRoomTypes();
         
         for (RoomType r : tList) {
             iList.add(imageDAO.getAllRoomImageByRoomTypeId(r.getRoomTypeID()));
