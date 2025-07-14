@@ -105,5 +105,47 @@ public class RoomTypeDAO {
         return false;
     }
 }
+    public boolean editRoomType(RoomType roomType) {
+        String sql = "UPDATE RoomType SET RoomTypeName = ?, RoomTypePrice = ?, RoomDec = ?, "
+                   + "RoomArea = ?, NumBeds = ?, RoomTypeStatus = ? WHERE RoomTypeID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomType.getRoomTypeName());
+            ps.setDouble(2, roomType.getRoomTypePrice());
+            ps.setString(3, roomType.getRoomDec());
+            ps.setDouble(4, roomType.getRoomArea());
+            ps.setInt(5, roomType.getNumBeds());
+            ps.setString(6, roomType.getRoomTypeStatus());
+            ps.setString(7, roomType.getRoomTypeID());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean disableRoomType(String roomTypeId) {
+    String sql = "UPDATE RoomType SET RoomTypeStatus = N'Ngừng kinh doanh' WHERE RoomTypeID = ?";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, roomTypeId);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+
 
 }

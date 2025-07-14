@@ -5,23 +5,17 @@ import Models.RoomType;
 public class NewMain {
     public static void main(String[] args) {
         RoomTypeDAO dao = new RoomTypeDAO();
+    
+    // Nhập RoomTypeID cần disable
+    String testRoomTypeId = "RT005";
 
-        RoomType roomType = new RoomType();
-        roomType.setRoomTypeID("RT005");
-        roomType.setRoomTypeName("Luxury Suite");
-        roomType.setRoomTypePrice(250.00);
-        roomType.setRoomDec("Phòng sang trọng, view biển");
-        roomType.setRoomArea(45.5);
-        roomType.setNumBeds(2);
-        roomType.setRoomTypeStatus("Đang kinh doanh"); // hoặc "Ngừng kinh doanh"
-
-        boolean success = dao.addRoomType(roomType);
-
-        if (success) {
-            System.out.println("Thêm RoomType thành công!");
-        } else {
-            System.out.println("Thêm RoomType thất bại!");
-        }
+    boolean result = dao.disableRoomType(testRoomTypeId);
+    
+    if (result) {
+        System.out.println("RoomType với ID " + testRoomTypeId + " đã được chuyển sang trạng thái 'Ngừng kinh doanh'.");
+    } else {
+        System.out.println("Không thể cập nhật RoomType với ID " + testRoomTypeId + ". Có thể ID không tồn tại hoặc đã ở trạng thái 'Ngừng kinh doanh'.");
     }
     }
+}
 

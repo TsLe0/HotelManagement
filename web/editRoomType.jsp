@@ -26,15 +26,15 @@
                 Sửa thông tin hạng phòng
             </h2>
             <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg"
-                  action="add-room-type" method="POST">
+                  action="edit-roomtype" method="POST">
 
                 <!-- RoomTypeID -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-semibold mb-2" for="roomTypeID">
                         Mã hạng phòng
                     </label>
-                    <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                           id="roomTypeID" name="roomTypeID" placeholder="VD: RT001" required type="text"/>
+                    <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 bg-gray-100"
+                           id="roomTypeID" name="roomTypeId" required type="text" value="${roomType.roomTypeID}" readonly/>
                 </div>
 
                 <!-- RoomTypeName -->
@@ -43,7 +43,7 @@
                         Tên hạng phòng
                     </label>
                     <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                           id="roomTypeName" name="roomTypeName" placeholder="VD: Deluxe" required type="text"/>
+                           id="roomTypeName" name="roomTypeName" required type="text" value="${roomType.roomTypeName}"/>
                 </div>
 
                 <!-- Price -->
@@ -52,7 +52,7 @@
                         Giá / đêm (₫)
                     </label>
                     <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                           id="roomTypePrice" name="roomTypePrice" type="number" min="0" step="1000" required placeholder="VD: 500000"/>
+                           id="roomTypePrice" name="roomTypePrice" type="number" min="0" step="1000" required value="${roomType.roomTypePrice}"/>
                 </div>
 
                 <!-- Area -->
@@ -61,7 +61,7 @@
                         Diện tích (m²)
                     </label>
                     <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                           id="roomArea" name="roomArea" type="number" step="0.1" min="0" required placeholder="VD: 35.5"/>
+                           id="roomArea" name="roomArea" type="number" step="0.1" min="0" required value="${roomType.roomArea}"/>
                 </div>
 
                 <!-- Number of Beds -->
@@ -70,7 +70,7 @@
                         Số giường
                     </label>
                     <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                           id="numBeds" name="numBeds" type="number" min="1" required placeholder="VD: 2"/>
+                           id="numBeds" name="numBeds" type="number" min="1" required value="${roomType.numBeds}"/>
                 </div>
 
                 <!-- Description -->
@@ -79,7 +79,7 @@
                         Mô tả
                     </label>
                     <textarea class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
-                              id="roomDec" name="roomDec" rows="3" placeholder="Mô tả hạng phòng..."></textarea>
+                              id="roomDec" name="roomDec" rows="3">${roomType.roomDec}</textarea>
                 </div>
 
                 <!-- Status -->
@@ -89,8 +89,8 @@
                     </label>
                     <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
                             id="roomTypeStatus" name="roomTypeStatus" required>
-                        <option value="Đang kinh doanh">Đang kinh doanh</option>
-                        <option value="Ngừng kinh doanh">Ngừng kinh doanh</option>
+                        <option value="Đang kinh doanh" ${roomType.roomTypeStatus == 'Đang kinh doanh' ? 'selected' : ''}>Đang kinh doanh</option>
+                        <option value="Ngừng kinh doanh" ${roomType.roomTypeStatus == 'Ngừng kinh doanh' ? 'selected' : ''}>Ngừng kinh doanh</option>
                     </select>
                 </div>
 
@@ -104,14 +104,11 @@
                 <!-- Buttons -->
                 <div class="flex justify-end space-x-3">
                     <a href='admin-room-type'
-                       class="bg-red-600 text-white hover:bg-red-800 font-semibold px-5 py-2 rounded-md">
-                        Cancel
+                       class="bg-gray-200 text-gray-800 hover:bg-gray-300 font-semibold px-5 py-2 rounded-md">
+                        Hủy
                     </a>
-                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-5 py-2 rounded-md" type="reset">
-                        Reset
-                    </button>
                     <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md" type="submit">
-                        Edit
+                        Lưu thay đổi
                     </button>
                 </div>
             </form>

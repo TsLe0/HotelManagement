@@ -52,6 +52,10 @@
         <servlet-name>EditRoomTypeServlet</servlet-name>
         <servlet-class>Controller.EditRoomTypeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DisableRoomType</servlet-name>
+        <servlet-class>Controller.DisableRoomType</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -107,5 +111,9 @@
     <servlet-mapping>
         <servlet-name>EditRoomTypeServlet</servlet-name>
         <url-pattern>/edit-roomtype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisableRoomType</servlet-name>
+        <url-pattern>/disable-room-type</url-pattern>
     </servlet-mapping>
 </web-app>

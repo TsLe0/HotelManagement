@@ -63,7 +63,7 @@
                                             <c:when test="${t.roomTypeStatus == 'Đang kinh doanh'}">
                                                 <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${t.roomTypeStatus}</span>
                                             </c:when>
-                                            <c:when test="${t.roomTypeStatus == 'Ngừng hiệu hóa'}">
+                                            <c:when test="${t.roomTypeStatus == 'Ngừng kinh doanh'}">
                                                 <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${t.roomTypeStatus}</span>
                                             </c:when>
                                             <c:otherwise>
@@ -76,7 +76,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-left">
                                         <a href="edit-roomtype?roomTypeId=${t.roomTypeID}" class="text-white bg-[#007bff] hover:bg-[#0069D9] rounded-lg py-1.5 px-4 mr-4">Edit</a>
-                                        <a href="delete-room-type?roomTypeId=${t.roomTypeID}" onclick="return confirm('Bạn có chắc muốn dừng hoạt động loại phòng này?');" class="text-white bg-[#dc3545] hover:bg-[#c82333] rounded-lg py-1.5 px-4 mr-4">Disable</a>
+                                        <a href="disable-room-type?roomTypeId=${t.roomTypeID}" onclick="return confirm('Bạn có chắc muốn dừng hoạt động loại phòng này?');" class="text-white bg-[#dc3545] hover:bg-[#c82333] rounded-lg py-1.5 px-4 mr-4">Disable</a>
                                     </td>
                                 </tr>
                             </c:forEach>

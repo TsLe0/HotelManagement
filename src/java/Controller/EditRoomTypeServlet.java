@@ -56,7 +56,7 @@ public class EditRoomTypeServlet extends HttpServlet {
         RoomType rt = rtd.getRoomTypeById(id);
         
         request.setAttribute("roomType", rt);
-        request.getRequestDispatcher("roomTypeDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("editRoomType.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +70,32 @@ public class EditRoomTypeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String roomTypeId = request.getParameter("roomTypeId");
+        String roomTypeName = request.getParameter("roomTypeName");
+        double roomTypePrice = Double.parseDouble(request.getParameter("roomTypePrice"));
+        String roomDec = request.getParameter("roomDec");
+        double roomArea = Double.parseDouble(request.getParameter("roomArea"));
+        int numBeds = Integer.parseInt(request.getParameter("numBeds"));
+        String roomTypeStatus = request.getParameter("roomTypeStatus");
+
+        RoomType rt = new RoomType();
+        rt.setRoomTypeID(roomTypeId);
+        rt.setRoomTypeName(roomTypeName);
+        rt.setRoomTypePrice(roomTypePrice);
+        rt.setRoomDec(roomDec);
+        rt.setRoomArea(roomArea);
+        rt.setNumBeds(numBeds);
+        rt.setRoomTypeStatus(roomTypeStatus);
+        
+        boolean success = rtd.editRoomType(rt);
+        
+        if (success) {
+            response.sendRedirect("admin-room-type");
+        } else {
+            // Handle error
+            request.setAttribute("error", "Failed to update room type.");
+            doGet(request, response);
+        }
     }
 
     /**
