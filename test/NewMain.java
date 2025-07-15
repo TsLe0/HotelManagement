@@ -1,21 +1,18 @@
-import java.util.List;
-import DAO.RoomTypeDAO;
-import Models.RoomType;
+import DAO.RoomsDAO;
+import Models.Room;
 
 public class NewMain {
     public static void main(String[] args) {
-        RoomTypeDAO dao = new RoomTypeDAO();
-    
-    // Nhập RoomTypeID cần disable
-    String testRoomTypeId = "RT005";
+         RoomsDAO dao = new RoomsDAO();
 
-    boolean result = dao.disableRoomType(testRoomTypeId);
-    
-    if (result) {
-        System.out.println("RoomType với ID " + testRoomTypeId + " đã được chuyển sang trạng thái 'Ngừng kinh doanh'.");
-    } else {
-        System.out.println("Không thể cập nhật RoomType với ID " + testRoomTypeId + ". Có thể ID không tồn tại hoặc đã ở trạng thái 'Ngừng kinh doanh'.");
-    }
+        String testRoomNumber = "101";  // Thay bằng số phòng bạn muốn test
+
+        boolean result = dao.disableRoom(testRoomNumber);
+
+        if (result) {
+            System.out.println("Phòng " + testRoomNumber + " đã được vô hiệu hóa thành công.");
+        } else {
+            System.out.println("Không thể vô hiệu hóa phòng " + testRoomNumber + ".");
+        }
     }
 }
-

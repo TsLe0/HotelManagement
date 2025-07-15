@@ -35,7 +35,14 @@
 
                     <!-- Image -->
                     <div class="md:w-1/2">
-                        <img alt="Room Image" class="w-full h-full object-cover" src="${room.roomType.imagePath}" />
+                        <c:if test="${not empty iList}">
+                            <img alt="Room Image" class="w-full h-full object-cover" src="${iList[0].roomImages}" />
+                        </c:if>
+                        <c:if test="${empty iList}">
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <span class="text-gray-500">No Image</span>
+                            </div>
+                        </c:if>
                     </div>
 
                     <!-- Details -->
@@ -58,35 +65,17 @@
                             <!-- Room Status -->
                             <div class="flex justify-between border-b border-gray-200 pb-2">
                                 <span class="font-medium text-gray-800">Room Status:</span>
-                                <c:choose>
-                                    <c:when test="${room.roomStatus.roomStatusName == 'Trống'}">
-                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${room.roomStatus.roomStatusName}</span>
-                                    </c:when>
-                                    <c:when test="${room.roomStatus.roomStatusName == 'Đang sử dụng'}">
-                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${room.roomStatus.roomStatusName}</span>
-                                    </c:when>
-                                    <c:when test="${room.roomStatus.roomStatusName == 'Bảo trì'}">
-                                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${room.roomStatus.roomStatusName}</span>
-                                    </c:when>
-                                    <c:when test="${room.roomStatus.roomStatusName == 'Vô hiệu hóa'}">
-                                        <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${room.roomStatus.roomStatusName}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${room.roomStatus.roomStatusName}</span>
-                                    </c:otherwise>
-                                </c:choose>
+                                <span>${room.roomStatus}</span>
                             </div>
-
 
                             <div class="flex justify-between border-b border-gray-200 pb-2">
                                 <span class="font-medium text-gray-800">Room Description:</span>
-                                <span class="max-w-xs text-right">${room.roomDesc}</span>
+                                <span class="max-w-xs text-right">${room.roomType.roomDec}</span>
                             </div>
-
 
                             <div class="flex justify-between border-b border-gray-200 pb-2">
                                 <span class="font-medium text-gray-800">Room Price:</span>
-                                <span class="text-indigo-600 font-semibold price" data-price="${room.roomPrice}">${room.roomPrice}</span>
+                                <span class="text-indigo-600 font-semibold price" data-price="${room.roomType.roomTypePrice}">${room.roomType.roomTypePrice}</span>
                             </div>
 
                             <!-- Number of Beds -->

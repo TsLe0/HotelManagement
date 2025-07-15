@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AddRoomTypeServlet extends HttpServlet {
@@ -29,6 +30,7 @@ public class AddRoomTypeServlet extends HttpServlet {
         double area = Double.parseDouble(request.getParameter("roomArea"));
         int numBeds = Integer.parseInt(request.getParameter("numBeds"));
         String status = request.getParameter("roomTypeStatus");
+        HttpSession session = request.getSession();
         
         if (id.isEmpty()) {
             request.setAttribute("error", "Mã hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
@@ -53,6 +55,7 @@ public class AddRoomTypeServlet extends HttpServlet {
             request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
             return;
         }
+        
         RoomType roomType = new RoomType();
         roomType.setRoomTypeID(id);
         roomType.setRoomTypeName(name);
@@ -65,7 +68,6 @@ public class AddRoomTypeServlet extends HttpServlet {
         RoomTypeDAO dao = new RoomTypeDAO();
 
         if (dao.existsRoomTypeId(id)) {
-
             request.setAttribute("error", "ID loại phòng đã tồn tại. Vui lòng chọn ID khác.");
             request.setAttribute("roomType", roomType);
             request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
@@ -75,9 +77,10 @@ public class AddRoomTypeServlet extends HttpServlet {
         boolean success = dao.addRoomType(roomType);
 
         if (success) {
+            session.setAttribute("message", "Thêm thành công.");
             response.sendRedirect("admin-room-type");
         } else {
-            request.setAttribute("error", "Thêm loại phòng thất bại. Vui lòng kiểm tra lại.");
+            session.setAttribute("errorMessage", "Thêm loại phòng thất bại.");
             request.setAttribute("roomType", roomType);
             request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
         }

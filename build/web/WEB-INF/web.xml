@@ -25,10 +25,6 @@
         <servlet-class>Controller.AdminRoomDetails</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeteleRoom</servlet-name>
-        <servlet-class>Controller.DeteleRoom</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>HomeRoom</servlet-name>
         <servlet-class>Controller.HomeRoom</servlet-class>
     </servlet>
@@ -56,6 +52,14 @@
         <servlet-name>DisableRoomType</servlet-name>
         <servlet-class>Controller.DisableRoomType</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminRoomTypeDetails</servlet-name>
+        <servlet-class>Controller.AdminRoomTypeDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteRoom</servlet-name>
+        <servlet-class>Controller.DeleteRoom</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -75,10 +79,6 @@
     <servlet-mapping>
         <servlet-name>AdminRoomDetails</servlet-name>
         <url-pattern>/admin-room-details</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeteleRoom</servlet-name>
-        <url-pattern>/detele-room</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>UploadAvatarServlet</servlet-name>
@@ -115,5 +115,13 @@
     <servlet-mapping>
         <servlet-name>DisableRoomType</servlet-name>
         <url-pattern>/disable-room-type</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoomTypeDetails</servlet-name>
+        <url-pattern>/admin-room-type-details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRoom</servlet-name>
+        <url-pattern>/delete-room</url-pattern>
     </servlet-mapping>
 </web-app>

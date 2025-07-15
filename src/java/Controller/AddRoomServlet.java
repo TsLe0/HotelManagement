@@ -31,42 +31,46 @@ public class AddRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
-
-        String roomNumber = request.getParameter("roomNumber");
-        String roomTypeId = request.getParameter("roomTypeId"); // Changed to String
-        String roomStatus = request.getParameter("roomStatus");
-
         HttpSession session = request.getSession();
+        try {
 
-        if (roomNumber != null && !roomNumber.trim().isEmpty()) {
-            for (Room r : dao.getAllRoom()) {
-                if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
-                    session.setAttribute("addRoomError", "Room number already existed.");
-                    response.sendRedirect("add-room");
-                    return;
+            String roomNumber = request.getParameter("roomNumber");
+            String roomTypeId = request.getParameter("roomTypeId"); // Changed to String
+            String roomStatus = request.getParameter("roomStatus");
+
+            if (roomNumber != null && !roomNumber.trim().isEmpty()) {
+                for (Room r : dao.getAllRoom()) {
+                    if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
+                        session.setAttribute("addRoomError", "Room number already existed.");
+                        response.sendRedirect("add-room");
+                        return;
+                    }
                 }
+            } else {
+                session.setAttribute("addRoomError", "Room number cannot be empty.");
+                response.sendRedirect("add-room");
+                return;
             }
-        } else {
-            session.setAttribute("addRoomError", "Room number cannot be empty.");
-            response.sendRedirect("add-room");
-            return;
+
+            if (roomNumber.length() > 6) {
+                session.setAttribute("addRoomError", "Room number must not exceed 6 characters.");
+                response.sendRedirect("add-room");
+                return;
+            }
+
+            Room newRoom = new Room();
+            newRoom.setRoomNumber(roomNumber);
+            newRoom.setRoomTypeID(roomTypeId); // Now a String
+            newRoom.setRoomStatus(roomStatus);
+
+            dao.addRoom(newRoom);
+
+            session.setAttribute("message", "Thêm thành công.");
+            response.sendRedirect("adminroom");
+        } catch (Exception e) {
+            session.setAttribute("errorMessage", "Thêm loại phòng thất bại.");
+            e.printStackTrace();
         }
-
-        if (roomNumber.length() > 10) {
-            session.setAttribute("addRoomError", "Room number must not exceed 10 characters.");
-            response.sendRedirect("add-room");
-            return;
-        }
-
-        Room newRoom = new Room();
-        newRoom.setRoomNumber(roomNumber);
-        newRoom.setRoomTypeID(roomTypeId); // Now a String
-        newRoom.setRoomStatus(roomStatus);
-
-        dao.addRoom(newRoom);
-
-        response.sendRedirect("adminroom");
     }
 }

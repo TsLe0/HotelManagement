@@ -35,6 +35,18 @@
                 </div>
 
                 <div class="bg-white shadow rounded-lg overflow-x-auto">
+                    <c:if test="${not empty sessionScope.message}">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.message}</span>
+                    </div>
+                    <c:remove var="message" scope="session" />
+                </c:if>
+                <c:if test="${not empty sessionScope.errorMessage}">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.errorMessage}</span>
+                    </div>
+                    <c:remove var="errorMessage" scope="session" />
+                </c:if>
                     <table id="room-tbl" class="min-w-full text-sm text-left whitespace-nowrap mb-3">
                         <thead class="bg-gray-50 border-b font-medium">
                             <tr>
@@ -50,7 +62,7 @@
                             <c:forEach items="${tList}" var="t">
                                 <tr class="border-b hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <a href="admin-room-details?roomTypeId=${t.roomTypeID}" class="text-white bg-[#25e610] hover:bg-[#218838] rounded-lg py-1.5 px-4 mr-4">
+                                        <a href="admin-room-type-details?roomTypeId=${t.roomTypeID}" class="text-white bg-[#25e610] hover:bg-[#218838] rounded-lg py-1.5 px-4 mr-4">
                                             ${t.roomTypeID}
                                         </a>
                                     </td>
@@ -86,15 +98,28 @@
             </main>
         </div>
 
-        <script>
-            $('#room-tbl').DataTable({
-                autoWidth: false
-            });
+         <script>
+    $(document).ready(function () {
+        const table = $('#room-tbl').DataTable({
+            autoWidth: false
+        });
 
+        // Hàm format tiền
+        function formatPrices() {
             document.querySelectorAll('.price').forEach(el => {
                 const price = Number(el.dataset.price);
                 el.textContent = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
             });
-        </script>
+        }
+
+        // Gọi khi bảng vẽ lại (phân trang, search, sort...)
+        table.on('draw', function () {
+            formatPrices();
+        });
+
+        // Gọi ngay khi trang tải xong
+        formatPrices();
+    });
+</script>
     </body>
 </html>

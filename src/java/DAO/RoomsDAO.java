@@ -112,13 +112,14 @@ public class RoomsDAO {
             ps.setString(3, room.getRoomNumber());
             ps.executeUpdate();
         } catch (Exception e) {
+            System.out.println("con moa may");
             e.printStackTrace();
         }
     }
 
     public Room getRoomById(String roomNumber) {
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r "
+                   + "FROM Room r JOIN RoomType rt ON r.RoomTypeID = rt.RoomTypeID "
                    + "WHERE r.RoomNumber = ?";
         try {
             conn = new DBContext().getConnection();
@@ -141,17 +142,33 @@ public class RoomsDAO {
         return null;
     }
 
-    public void disableRoom(String roomNumber) {
-        String sql = "UPDATE Room SET RoomStatus = 'Disabled' WHERE RoomNumber = ?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, roomNumber);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public boolean disableRoom(String roomNumber) {
+    Room room = getRoomById(roomNumber);
+
+    if (room == null) {
+        System.out.println("Không tìm thấy phòng: " + roomNumber);
+        return false;
     }
+
+    if ("Đang sử dụng".equalsIgnoreCase(room.getRoomStatus())) {
+        System.out.println("Không thể vô hiệu hóa phòng đang được sử dụng: " + roomNumber);
+        return false;
+    }
+
+    String sql = "UPDATE Room SET RoomStatus = N'Vô hiệu hóa' WHERE RoomNumber = ?";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, roomNumber);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+    }
+}
+
     
     public List<Room> getRoomsByTypeId(String roomTypeId) {
         List<Room> list = new ArrayList<>();

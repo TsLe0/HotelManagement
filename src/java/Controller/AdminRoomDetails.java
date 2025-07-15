@@ -4,9 +4,11 @@
  */
 package Controller;
 
+import DAO.RoomImageDAO;
 import DAO.RoomsDAO;
 import Models.Room;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet(name = "AdminRoomDetails", urlPatterns = {"/admin-room-details"})
 public class AdminRoomDetails extends HttpServlet {
 
     /**
@@ -57,24 +60,30 @@ public class AdminRoomDetails extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    RoomsDAO dao =new RoomsDAO();
-    Room room ;
+    RoomsDAO dao = new RoomsDAO();
+    RoomImageDAO imageDAO = new RoomImageDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String roomNumber = request.getParameter("roomNumber");
+        String roomNumber = request.getParameter("roomNumber");
 
         if (roomNumber != null) {
-            room = dao.getRoomById(roomNumber);
-            List<Room> rList = dao.getAllRoom();   
+            Room room = dao.getRoomById(roomNumber);
 
             if (room != null) {
+                List<Models.RoomImage> iList = imageDAO.getAllRoomImageByRoomTypeId(room.getRoomTypeID());
                 request.setAttribute("room", room);
-                request.setAttribute("rList", rList);
+                request.setAttribute("iList", iList);
                 request.getRequestDispatcher("roomDetailsManagement.jsp").forward(request, response);
+            } else {
+                // Handle case where room is not found
+                response.sendRedirect("adminroom?error=Room+not+found");
             }
+        } else {
+            // Handle case where roomNumber is not provided
+            response.sendRedirect("adminroom?error=Room+number+is+required");
         }
-
     }
 
     /**

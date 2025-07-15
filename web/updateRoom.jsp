@@ -59,7 +59,7 @@
                                     Select room type
                                 </option>
                                 <c:forEach items="${roomTypeList}" var="rt">
-                                    <option value="${rt.roomTypeID}" ${room.roomTypeID == rt.roomTypeID ? 'selected' : ''}>
+                                    <option value="${rt.roomTypeID}" data-price="${rt.roomTypePrice}" ${room.roomTypeID == rt.roomTypeID ? 'selected' : ''}>
                                         ${rt.roomTypeName}
                                     </option>
                                 </c:forEach>
@@ -67,20 +67,14 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomStatusID">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomStatus">
                                 Status
                             </label>
 
-                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomStatusID" name="roomStatusID" required="">
-                                <option value="" disabled="">
-                                    Select status
-                                </option>
-                                <c:forEach items="${statusList}" var="st">
-                                    <option value="${st.roomStatusID}" ${room.roomStatusID == st.roomStatusID ? 'selected' : ''}>
-                                        ${st.roomStatusName}
-                                    </option>
-                                </c:forEach>
-
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomStatus" name="roomStatus" required="">
+                                <option value="Trống" ${room.roomStatus == 'Trống' ? 'selected' : ''}>Trống</option>
+                                <option value="Đang sử dụng" ${room.roomStatus == 'Đang sử dụng' ? 'selected' : ''}>Đang sử dụng</option>
+                                <option value="Bảo trì" ${room.roomStatus == 'Bảo trì' ? 'selected' : ''}>Bảo trì</option>
                             </select>
                         </div>
                         <div class="mb-6">
@@ -88,17 +82,7 @@
                                 Price/Night (₫)
                             </label>
                             <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomPrice" min="0" name="roomPrice" placeholder="Enter price per night" required="" step="1000" type="number" 
-                                   value="${room.roomPrice}"/>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomDesc">
-                                Description
-                            </label>
-                            <textarea class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" 
-                                      id="roomDesc" 
-                                      placeholder="Description"
-                                      name="roomDesc">${room.roomDesc}</textarea>
+                                   value="${room.roomType.roomTypePrice}" readonly/>
                         </div>
 
                         <div>
@@ -124,5 +108,12 @@
                 </main>
             </div>
         </div>
+        <script>
+            document.getElementById('roomTypeID').addEventListener('change', function () {
+                var selectedOption = this.options[this.selectedIndex];
+                var price = selectedOption.getAttribute('data-price');
+                document.getElementById('roomPrice').value = price;
+            });
+        </script>
     </body>
 </html>

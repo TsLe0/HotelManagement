@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -77,6 +78,8 @@ public class EditRoomTypeServlet extends HttpServlet {
         double roomArea = Double.parseDouble(request.getParameter("roomArea"));
         int numBeds = Integer.parseInt(request.getParameter("numBeds"));
         String roomTypeStatus = request.getParameter("roomTypeStatus");
+        HttpSession session = request.getSession();
+        
         if (roomTypeName.isEmpty()) {
             request.setAttribute("error", "Tên hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
 
@@ -100,10 +103,10 @@ public class EditRoomTypeServlet extends HttpServlet {
         boolean success = rtd.editRoomType(rt);
 
         if (success) {
+            session.setAttribute("message", "Cập nhật thành công.");
             response.sendRedirect("admin-room-type");
         } else {
-            // Handle error
-            request.setAttribute("error", "Failed to update room type.");
+            session.setAttribute("errorMessage", "Lỗi không thể cập nhật.");
             doGet(request, response);
         }
     }

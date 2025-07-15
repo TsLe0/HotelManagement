@@ -50,6 +50,20 @@
                     </a>
                 </div>
 
+                <!-- Alerts -->
+                <c:if test="${not empty sessionScope.message}">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.message}</span>
+                    </div>
+                    <c:remove var="message" scope="session" />
+                </c:if>
+                <c:if test="${not empty sessionScope.errorMessage}">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.errorMessage}</span>
+                    </div>
+                    <c:remove var="errorMessage" scope="session" />
+                </c:if>
+
                 <!-- Table -->
                 <div class="bg-white shadow rounded-lg overflow-x-auto">
                     <table id="room-tbl" class="min-w-full text-sm text-left whitespace-nowrap mb-3">
@@ -104,13 +118,15 @@
                                            >
                                             Edit
                                         </a>
-                                        <a href="detele-room?roomNumber=${r.roomNumber}" 
-                                           onclick="return confirm('Bạn có chắc muốn dừng hoạt động  phòng này?');"
-                                           class="text-white bg-[#dc3545] hover:bg-[#c82333]
-                                           rounded-lg py-1.5 px-4 mr-4"
-                                           >
-                                            Disable
-                                        </a>
+                                        <c:if test="${r.roomStatus != 'Vô hiệu hóa'}">
+                                            <a href="delete-room?roomNumber=${r.roomNumber}"
+                                               onclick="return confirm('Bạn có chắc muốn dừng hoạt động phòng này?');"
+                                               class="text-white bg-[#dc3545] hover:bg-[#c82333]
+                                               rounded-lg py-1.5 px-4 mr-4"
+                                               >
+                                                Disable
+                                            </a>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -121,17 +137,35 @@
 
         </div>
     </body>
-    <script>
+<!--    <script>
         $('#room-tbl').DataTable({
             autoWidth: false
         });
 
-    </script>
+    </script>-->
 
-    <script>
-        document.querySelectorAll('.price').forEach(el => {
-            const price = Number(el.dataset.price);
-            el.textContent = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+   <script>
+    $(document).ready(function () {
+        const table = $('#room-tbl').DataTable({
+            autoWidth: false
         });
-    </script>
+
+        // Hàm format tiền
+        function formatPrices() {
+            document.querySelectorAll('.price').forEach(el => {
+                const price = Number(el.dataset.price);
+                el.textContent = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+            });
+        }
+
+        // Gọi khi bảng vẽ lại (phân trang, search, sort...)
+        table.on('draw', function () {
+            formatPrices();
+        });
+
+        // Gọi ngay khi trang tải xong
+        formatPrices();
+    });
+</script>
+
 </html>

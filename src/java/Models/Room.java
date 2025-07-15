@@ -10,15 +10,18 @@ public class Room {
     private String roomTypeID;
     private RoomType roomType;
     private String roomStatus;
+    private double roomPrice;
 
     public Room() {
     }
 
-    public Room(String roomNumber, String roomTypeID, RoomType roomType, String roomStatus) {
+    public Room(String roomNumber, String roomTypeID, RoomType roomType, String roomStatus, double roomPrice ) {
         this.roomNumber = roomNumber;
         this.roomTypeID = roomTypeID;
         this.roomType = roomType;
         this.roomStatus = roomStatus;
+        this.roomPrice = roomPrice;
+       
     }
 
 
@@ -56,10 +59,20 @@ public class Room {
         this.roomStatus = roomStatus;
     }
 
+    public double getRoomPrice() {
+        return roomPrice;
+    }
+
+    public void setRoomPrice(double roomPrice) {
+        this.roomPrice = roomPrice;
+    }
+
     @Override
     public String toString() {
-        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatus=" + roomStatus + '}';
+        return "Room{" + "roomNumber=" + roomNumber + ", roomTypeID=" + roomTypeID + ", roomType=" + roomType + ", roomStatus=" + roomStatus + ", roomPrice=" + roomPrice + '}';
     }
+
+   
 
 
   
