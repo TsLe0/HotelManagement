@@ -30,7 +30,7 @@ public class RoomImageDAO {
             ps = conn.prepareStatement(sql);
             ps.setString(1, roomTypeId);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
 
                 RoomImage r = new RoomImage();
@@ -46,4 +46,24 @@ public class RoomImageDAO {
         }
         return list;
     }
+
+    public void insertRoomImages(String roomTypeID, List<String> imagePaths) {
+        String sql = "INSERT INTO RoomImage (RoomTypeID, RoomImages) VALUES (?, ?)";
+        System.out.println(imagePaths.size());
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            
+            for (String path : imagePaths) {
+                ps.setString(1, roomTypeID);
+                ps.setString(2, path);
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

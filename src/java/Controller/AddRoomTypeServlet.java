@@ -1,16 +1,31 @@
 package Controller;
 
+import DAO.RoomImageDAO;
 import DAO.RoomTypeDAO;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 1024 * 1024 * 5, // 5MB/file
+        maxRequestSize = 1024 * 1024 * 25 // 25MB request
+)
 public class AddRoomTypeServlet extends HttpServlet {
+
+    RoomImageDAO imageDAO = new RoomImageDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +46,7 @@ public class AddRoomTypeServlet extends HttpServlet {
         int numBeds = Integer.parseInt(request.getParameter("numBeds"));
         String status = request.getParameter("roomTypeStatus");
         HttpSession session = request.getSession();
-        
+
         if (id.isEmpty()) {
             request.setAttribute("error", "Mã hạng phòng không được để trống hoặc chỉ chứa khoảng trắng.");
             request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
@@ -55,7 +70,7 @@ public class AddRoomTypeServlet extends HttpServlet {
             request.getRequestDispatcher("addRoomType.jsp").forward(request, response);
             return;
         }
-        
+
         RoomType roomType = new RoomType();
         roomType.setRoomTypeID(id);
         roomType.setRoomTypeName(name);
@@ -77,6 +92,31 @@ public class AddRoomTypeServlet extends HttpServlet {
         boolean success = dao.addRoomType(roomType);
 
         if (success) {
+            // Upload và lưu ảnh
+            Collection<Part> parts = request.getParts();
+            List<String> imagePaths = new ArrayList<>();
+
+            String uploadPath = getServletContext().getRealPath("/") + "uploads/room_images/";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            
+            System.out.println(parts.size());
+
+            for (Part part : parts) {
+                if (part.getName().equals("roomImages") && part.getSize() > 0) {
+                    String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
+                    String filePath = uploadPath + uniqueFileName;
+                    part.write(filePath);
+
+                    imagePaths.add("uploads/room_images/" + uniqueFileName);
+                }
+            }
+
+            imageDAO.insertRoomImages(id, imagePaths);
+
             session.setAttribute("message", "Thêm thành công.");
             response.sendRedirect("admin-room-type");
         } else {
