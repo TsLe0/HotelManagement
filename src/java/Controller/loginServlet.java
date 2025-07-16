@@ -91,6 +91,8 @@ public class loginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", user);
 
+            System.out.println("Login session ID: " + session.getId());
+
             // Remember function
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);

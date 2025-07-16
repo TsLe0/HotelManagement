@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
 /**
@@ -10,35 +7,67 @@ package Models;
  */
 public class RoomType {
 
-    private int roomTypeID;
+    private String roomTypeID;
     private String roomTypeName;
+    private String roomDec;
+    private double roomArea;
+    private double roomTypePrice;
     private int numBeds;
     private String imagePath;
+    private String roomTypeStatus;
 
     public RoomType() {
     }
 
-    public RoomType(int roomTypeID, String roomTypeName, int numBeds, String imagePath) {
+    public RoomType(String roomTypeID, String roomTypeName, String roomDec, double roomArea, double roomTypePrice, int numBeds, String imagePath, String roomTypeStatus) {
         this.roomTypeID = roomTypeID;
         this.roomTypeName = roomTypeName;
+        this.roomDec = roomDec;
+        this.roomArea = roomArea;
+        this.roomTypePrice = roomTypePrice;
         this.numBeds = numBeds;
         this.imagePath = imagePath;
+        this.roomTypeStatus = roomTypeStatus;
     }
 
-    public int getRoomTypeID() {
+    public String getRoomTypeID() {
         return roomTypeID;
     }
 
-    public void setRoomTypeID(int roomTypeID) {
+    public void setRoomTypeID(String roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
-
+    
     public String getRoomTypeName() {
         return roomTypeName;
     }
 
     public void setRoomTypeName(String roomTypeName) {
         this.roomTypeName = roomTypeName;
+    }
+
+    public String getRoomDec() {
+        return roomDec;
+    }
+
+    public void setRoomDec(String roomDec) {
+        this.roomDec = roomDec;
+    }
+
+    public double getRoomArea() {
+        return roomArea;
+    }
+
+    public void setRoomArea(double roomArea) {
+        this.roomArea = roomArea;
+    }
+
+    public double getRoomTypePrice() {
+        return roomTypePrice;
+    }
+
+    public void setRoomTypePrice(double roomTypePrice) {
+        this.roomTypePrice = roomTypePrice;
     }
 
     public int getNumBeds() {
@@ -57,8 +86,22 @@ public class RoomType {
         this.imagePath = imagePath;
     }
 
+    public String getRoomTypeStatus() {
+        return roomTypeStatus;
+    }
+
+    public void setRoomTypeStatus(String roomTypeStatus) {
+        this.roomTypeStatus = roomTypeStatus;
+    }
+
     @Override
     public String toString() {
-        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", numBeds=" + numBeds + ", imagePath=" + imagePath + '}';
+        return "RoomType{" + "roomTypeID=" + roomTypeID + ", roomTypeName=" + roomTypeName + ", roomDec=" + roomDec + ", roomArea=" + roomArea + ", roomTypePrice=" + roomTypePrice + ", numBeds=" + numBeds + ", imagePath=" + imagePath + ", roomTypeStatus=" + roomTypeStatus + '}';
     }
+
+ 
+  
+    
+  
+    
 }

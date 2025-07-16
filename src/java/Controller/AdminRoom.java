@@ -4,12 +4,15 @@
  */
 package Controller;
 
+import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
 import Models.Room;
+import Models.RoomType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -47,21 +50,15 @@ public class AdminRoom extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+      RoomsDAO dao = new RoomsDAO();
+      RoomTypeDAO tdao= new RoomTypeDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomsDAO dao = new RoomsDAO();
+      List<RoomType> tList = tdao.getAllRoomType();
         List<Room> rList = dao.getAllRoom();
         request.setAttribute("rList", rList);
+         request.setAttribute("tList", tList);
         request.getRequestDispatcher("roomManagement.jsp").forward(request, response);
     }
 

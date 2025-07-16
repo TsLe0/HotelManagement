@@ -4,37 +4,79 @@
  */
 package Controller;
 
+import DAO.RoomImageDAO;
+import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
 import Models.Room;
+import Models.RoomImage;
+import Models.RoomType;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
+@WebServlet(name = "GetAllRooms", urlPatterns = {"/rooms"})
 public class GetAllRooms extends HttpServlet {
-
+    
+    RoomsDAO dao = new RoomsDAO();
+    RoomTypeDAO typeDao = new RoomTypeDAO();
+    RoomImageDAO imageDAO = new RoomImageDAO();
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomsDAO dao = new RoomsDAO();
-        List<Room> list = dao.getAllRoom();
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
 
+        String pageStr = request.getParameter("page");
+        String searchQuery = request.getParameter("search");
+        String sort = request.getParameter("sort");
+        int page = (pageStr == null) ? 1 : Integer.parseInt(pageStr);
+        int pageSize = 3; // Number of rooms per page
+
+        if (sort == null || sort.trim().isEmpty()) {
+            sort = "default";
+        }
+
+        int totalRooms;
+        List<RoomType> tList;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            totalRooms = typeDao.countSearchedActiveRoomTypes(searchQuery);
+            tList = typeDao.searchActiveRoomTypesByName(searchQuery, page, pageSize, sort);
+        } else {
+            totalRooms = typeDao.countActiveRoomTypes();
+            tList = typeDao.getActiveRoomTypes(page, pageSize, sort);
+        }
+
+        int totalPages = (int) Math.ceil((double) totalRooms / pageSize);
+        List<List<RoomImage>> iList = new ArrayList<>();
+
+        for (RoomType r : tList) {
+            iList.add(imageDAO.getAllRoomImageByRoomTypeId(r.getRoomTypeID()));
+        }
+
+        request.setAttribute("iList", iList);
+        request.setAttribute("tList", tList);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("searchQuery", searchQuery);
+        request.setAttribute("sort", sort);
+        request.getRequestDispatcher("room.jsp").forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";

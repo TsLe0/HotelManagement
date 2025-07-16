@@ -30,7 +30,7 @@
                     <h2 class="text-2xl font-semibold mb-6 select-none">
                         Create New Room
                     </h2>
-                    <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg" action="#" method="POST">
+                    <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg" action="add-room" method="POST">
                         <div class="mb-4">
                             <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomNumber">
                                 Room Number
@@ -45,59 +45,43 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="status">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomType">
                                 Room Type
                             </label>
-
-                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="status" name="roomTypeId" required="">
-                                <option value="" disabled="" selected="">
-                                    Select room type
-                                </option>
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="roomType" name="roomTypeId" required="">
+                                <option value="" disabled selected>Select room type</option>
                                 <c:forEach items="${roomTypeList}" var="s">
-                                    <option value="${s.roomTypeID}">
+                                    <option value="${s.roomTypeID}" data-price="${s.roomTypePrice}">
                                         ${s.roomTypeName}
                                     </option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="status">
-                                Status
-                            </label>
-
-                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="status" name="roomStatusId" required="">
-                                <option value="" disabled="" selected="">
-                                    Select status
-                                </option>
-                                <c:forEach items="${statusList}" var="s">
-                                    <option value="${s.roomStatusID}">
-                                        ${s.roomStatusName}
-                                    </option>
-                                </c:forEach>
-
-                            </select>
-                        </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 font-semibold mb-2 select-none" for="price">
-                                Price/Night (₫)
+                                Price/Night (VNĐ)
                             </label>
-                            <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" id="price" min="0" name="price" placeholder="Enter price per night" required="" step="1000" type="number"/>
+                            <input class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 text-gray-900 text-sm" id="price" name="price" readonly type="text"/>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="status">
+                                Trạng thái
+                            </label>
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" 
+                                    id="status" name="roomStatus" required>
+                                <option value="Trống">Trống</option>
+                                <option value="Đang sử dụng">Đang sử dụng</option>
+                                <option value="Bảo trì">Bảo trì</option>
+                            </select>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomNumber">
-                                Description
-                            </label>
-                            <textarea class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500" 
-                                      id="roomNumber" 
-                                      placeholder="Description"
-                                      name="roomDesc"></textarea>
-                        </div>
-                        
-                        <div>
-                            <p class="text-red-600">${addRoomError}</p>
-                        </div>
+
+                        <c:if test="${not empty addRoomError}">
+                            <div class="mb-4">
+                                <p class="text-red-600 font-medium">${addRoomError}</p>
+                            </div>
+                        </c:if>
 
                         <div class="flex justify-end space-x-3">
                             <a
@@ -116,5 +100,18 @@
                 </main>
             </div>
         </div>
+        <script>
+            document.getElementById('roomType').addEventListener('change', function () {
+                const selectedOption = this.options[this.selectedIndex];
+                const price = selectedOption.dataset.price;
+                const priceField = document.getElementById('price');
+
+                if (price) {
+                    priceField.value = parseFloat(price).toLocaleString('vi-VN');
+                } else {
+                    priceField.value = '';
+                }
+            });
+        </script>
     </body>
 </html>

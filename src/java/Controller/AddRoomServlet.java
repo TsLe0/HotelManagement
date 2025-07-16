@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
-import DAO.StatusDAO;
 import Models.Room;
-import Models.RoomStatus;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -20,52 +14,63 @@ import java.util.List;
 
 public class AddRoomServlet extends HttpServlet {
 
-    StatusDAO statusDao = new StatusDAO();
     RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
     RoomsDAO dao = new RoomsDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<RoomStatus> statusList = statusDao.getAllStatuses();
-        List<RoomType> roomTypeList = roomTypeDAO.getAllTypes();
-
-        request.setAttribute("statusList", statusList);
+        List<RoomType> roomTypeList = roomTypeDAO.getAllRoomType();
         request.setAttribute("roomTypeList", roomTypeList);
         request.getRequestDispatcher("addRoom.jsp").forward(request, response);
 
         HttpSession session = request.getSession();
-
         session.removeAttribute("addRoomError");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
-
-        String roomNumber = request.getParameter("roomNumber");
-        String roomDesc = request.getParameter("roomDesc");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int roomTypeId = Integer.parseInt(request.getParameter("roomTypeId"));
-        int statusId = Integer.parseInt(request.getParameter("roomStatusId"));
-
         HttpSession session = request.getSession();
+        try {
 
-        if (!roomNumber.isEmpty()) {
-            for (Room r : dao.getAllRoom()) {
-                if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
-                    session.setAttribute("addRoomError", "Room number already existed.");
-                    response.sendRedirect("add-room");
-                    return;
+            String roomNumber = request.getParameter("roomNumber");
+            String roomTypeId = request.getParameter("roomTypeId"); // Changed to String
+            String roomStatus = request.getParameter("roomStatus");
+
+            if (roomNumber != null && !roomNumber.trim().isEmpty()) {
+                for (Room r : dao.getAllRoom()) {
+                    if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
+                        session.setAttribute("addRoomError", "Room number already existed.");
+                        response.sendRedirect("add-room");
+                        return;
+                    }
                 }
+            } else {
+                session.setAttribute("addRoomError", "Room number cannot be empty.");
+                response.sendRedirect("add-room");
+                return;
             }
+
+            if (roomNumber.length() > 6) {
+                session.setAttribute("addRoomError", "Room number must not exceed 6 characters.");
+                response.sendRedirect("add-room");
+                return;
+            }
+
+            Room newRoom = new Room();
+            newRoom.setRoomNumber(roomNumber);
+            newRoom.setRoomTypeID(roomTypeId); // Now a String
+            newRoom.setRoomStatus(roomStatus);
+
+            dao.addRoom(newRoom);
+
+            session.setAttribute("message", "Thêm thành công.");
+            response.sendRedirect("adminroom");
+        } catch (Exception e) {
+            session.setAttribute("errorMessage", "Thêm loại phòng thất bại.");
+            e.printStackTrace();
         }
-
-        dao.addRooms(roomNumber, roomTypeId, statusId, roomDesc, price);
-
-        response.sendRedirect("adminroom");
     }
-
 }

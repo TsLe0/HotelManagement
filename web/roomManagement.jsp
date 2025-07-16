@@ -28,13 +28,12 @@
         <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.min.js"></script>
     </head>
 
-    <body class="bg-gray-100 text-gray-800">
-
+    <body class="bg-gray-50 min-h-screen flex flex-col">
         <!-- Header -->
         <jsp:include page="adminHeader.jsp" />
 
-        <!-- Sidebar + Main Content -->
-        <div class="flex">
+        <!-- Content -->
+        <div class="flex flex-1 overflow-hidden">
 
             <!-- Sidebar -->
             <aside class="hidden md:flex h-screen md:flex-col md:w-64 bg-white border-r border-gray-200 overflow-y-auto">
@@ -51,15 +50,29 @@
                     </a>
                 </div>
 
+                <!-- Alerts -->
+                <c:if test="${not empty sessionScope.message}">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.message}</span>
+                    </div>
+                    <c:remove var="message" scope="session" />
+                </c:if>
+                <c:if test="${not empty sessionScope.errorMessage}">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">${sessionScope.errorMessage}</span>
+                    </div>
+                    <c:remove var="errorMessage" scope="session" />
+                </c:if>
+
                 <!-- Table -->
                 <div class="bg-white shadow rounded-lg overflow-x-auto">
                     <table id="room-tbl" class="min-w-full text-sm text-left whitespace-nowrap mb-3">
                         <thead class="bg-gray-50 border-b font-medium">
                             <tr>
-                                <th class="px-6 py-3">RoomNumber</th>
-                                <th class="px-6 py-3">RoomName</th>
-                                <th class="px-6 py-3">Status</th>
-                                <th class="px-6 py-3">Price/Night</th>
+                                <th class="px-6 py-3">Số phòng</th>
+                                <th class="px-6 py-3">Loại phòng</th>
+                                <th class="px-6 py-3">Trạng thái</th>
+                                <th class="px-6 py-3">Giá/Đêm</th>
                                 <th class="px-6 py-3 text-right w-10">Actions</th>
                             </tr>
                         </thead>
@@ -75,40 +88,45 @@
                                             ${r.roomNumber}
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4"> ${r.roomType.roomTypeName}</td>
+                                    <td class="px-6 py-4">${r.roomType.roomTypeName}</td>
                                     <td class="px-6 py-4">
                                         <c:choose>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Trống'}">
-                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Trống'}">
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Đang sử dụng'}">
-                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Đang sử dụng'}">
+                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
-                                            <c:when test="${r.roomStatus.roomStatusName == 'Bảo trì'}">
-                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                            <c:when test="${r.roomStatus == 'Bảo trì'}">
+                                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
+                                            </c:when>
+                                            <c:when test="${r.roomStatus == 'Vô hiệu hóa'}">
+                                                <span class="bg-gray-800 text-white text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatus.roomStatusName}</span>
+                                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">${r.roomStatus}</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="price" data-price="${r.roomPrice}"></span>
+                                        <span class="price" data-price="${r.roomType.roomTypePrice}"></span>
                                     </td>
                                     <td class="px-6 py-4 text-left">
-                                        <a href="updat-room"
+                                        <a href="update-room?roomNumber=${r.roomNumber}"
                                            class="text-white bg-[#007bff] hover:bg-[#0069D9]
                                            rounded-lg py-1.5 px-4 mr-4"
                                            >
                                             Edit
                                         </a>
-                                        <a href="detele-room?roomNumber=${r.roomNumber}" 
-                                           onclick="return confirm('Bạn có chắc muốn xóa phòng này?');"
-                                           class="text-white bg-[#dc3545] hover:bg-[#c82333]
-                                           rounded-lg py-1.5 px-4 mr-4"
-                                           >
-                                            Delete
-                                        </a>
+                                        <c:if test="${r.roomStatus != 'Vô hiệu hóa'}">
+                                            <a href="delete-room?roomNumber=${r.roomNumber}"
+                                               onclick="return confirm('Bạn có chắc muốn dừng hoạt động phòng này?');"
+                                               class="text-white bg-[#dc3545] hover:bg-[#c82333]
+                                               rounded-lg py-1.5 px-4 mr-4"
+                                               >
+                                                Disable
+                                            </a>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -119,18 +137,35 @@
 
         </div>
     </body>
-    <script>
+<!--    <script>
         $('#room-tbl').DataTable({
             autoWidth: false
         });
 
-    </script>
+    </script>-->
 
-    <script>
-        document.querySelectorAll('.price').forEach(el => {
-            const price = Number(el.dataset.price);
-            el.textContent = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+   <script>
+    $(document).ready(function () {
+        const table = $('#room-tbl').DataTable({
+            autoWidth: false
         });
-    </script>
-</html>
 
+        // Hàm format tiền
+        function formatPrices() {
+            document.querySelectorAll('.price').forEach(el => {
+                const price = Number(el.dataset.price);
+                el.textContent = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+            });
+        }
+
+        // Gọi khi bảng vẽ lại (phân trang, search, sort...)
+        table.on('draw', function () {
+            formatPrices();
+        });
+
+        // Gọi ngay khi trang tải xong
+        formatPrices();
+    });
+</script>
+
+</html>

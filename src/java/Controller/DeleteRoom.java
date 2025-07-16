@@ -9,14 +9,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 
 /**
  *
  * @author Admin
  */
-public class DeteleRoom extends HttpServlet {
+public class DeleteRoom extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,41 +37,40 @@ public class DeteleRoom extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeteleRoom</title>");
+            out.println("<title>Servlet DeleteRoom</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeteleRoom at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteRoom at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String roomNumber = request.getParameter("roomNumber");
+        HttpSession session = request.getSession();
 
         try {
-            if (roomNumber != null && !roomNumber.trim().isEmpty()) {
+            if (roomNumber == null || roomNumber.trim().isEmpty()) {
+                session.setAttribute("errorMessage", "Mã phòng không hợp lệ.");
+            } else {
                 RoomsDAO dao = new RoomsDAO();
-                dao.deleteRoom(roomNumber); 
+                boolean success = dao.disableRoom(roomNumber);
+                if (success) {
+                    session.setAttribute("message", "✅ Phòng " + roomNumber + " đã được vô hiệu hóa thành công.");
+                } else {
+                    session.setAttribute("errorMessage", "❌ Không thể vô hiệu hóa phòng " + roomNumber + ". Có thể đang được sử dụng hoặc không tồn tại.");
+                }
             }
         } catch (Exception e) {
-          
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Không thể xóa phòng: " + e.getMessage());
+            session.setAttribute("errorMessage", "⚠️ Đã xảy ra lỗi: " + e.getMessage());
         }
 
-        
+        // Quay lại trang quản lý phòng
         response.sendRedirect("adminroom");
     }
 
@@ -84,7 +85,7 @@ public class DeteleRoom extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -1,38 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+
 package Models;
 
-/**
- *
- * @author Admin
- */
 public class RoomImage {
     private int imageID;
-    private String RoomNumber;
+    private String roomTypeID;
     private String roomImages;
-    private Room room;
+    private RoomType roomType;
 
     public RoomImage() {
     }
 
-    public RoomImage(int imageID, String RoomNumber, String roomImages, Room room) {
+    public RoomImage(int imageID, String roomTypeID, String roomImages, RoomType roomType) {
         this.imageID = imageID;
-        this.RoomNumber = RoomNumber;
+        this.roomTypeID = roomTypeID;
         this.roomImages = roomImages;
-        this.room = room;
+        this.roomType = roomType;
     }
 
-    public String getRoomNumber() {
-        return RoomNumber;
-    }
-
-    public void setRoomNumber(String RoomNumber) {
-        this.RoomNumber = RoomNumber;
-    }
-
- 
+  
 
     public int getImageID() {
         return imageID;
@@ -42,6 +28,16 @@ public class RoomImage {
         this.imageID = imageID;
     }
 
+    public String getRoomTypeID() {
+        return roomTypeID;
+    }
+
+    public void setRoomTypeID(String roomTypeID) {
+        this.roomTypeID = roomTypeID;
+    }
+
+   
+
     public String getRoomImages() {
         return roomImages;
     }
@@ -50,22 +46,23 @@ public class RoomImage {
         this.roomImages = roomImages;
     }
 
-    public Room getRoom() {
-        return room;
+    public RoomType getRoomType() {
+        return roomType;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 
     @Override
     public String toString() {
-        return "RoomImage{" + "imageID=" + imageID + ", RoomNumber=" + RoomNumber + ", roomImages=" + roomImages + ", room=" + room + '}';
+        return "RoomImage{" + "imageID=" + imageID + ", roomTypeID=" + roomTypeID + ", roomImages=" + roomImages + ", roomType=" + roomType + '}';
     }
 
+    
 
-
+}
   
     
     
-}
+

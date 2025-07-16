@@ -25,8 +25,48 @@
         <servlet-class>Controller.AdminRoomDetails</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeteleRoom</servlet-name>
-        <servlet-class>Controller.DeteleRoom</servlet-class>
+        <servlet-name>HomeRoom</servlet-name>
+        <servlet-class>Controller.HomeRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RoomDetailServlet</servlet-name>
+        <servlet-class>Controller.RoomDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookingResult</servlet-name>
+        <servlet-class>Controller.BookingResult</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminRoomType</servlet-name>
+        <servlet-class>Controller.AdminRoomType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoomTypeServlet</servlet-name>
+        <servlet-class>Controller.AddRoomTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditRoomTypeServlet</servlet-name>
+        <servlet-class>Controller.EditRoomTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisableRoomType</servlet-name>
+        <servlet-class>Controller.DisableRoomType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminRoomTypeDetails</servlet-name>
+        <servlet-class>Controller.AdminRoomTypeDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteRoom</servlet-name>
+        <servlet-class>Controller.DeleteRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminBooking</servlet-name>
+        <servlet-class>Controller.AdminBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminBookingDetailServlet</servlet-name>
+        <servlet-class>Controller.AdminBookingDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
@@ -48,19 +88,64 @@
         <servlet-name>AdminRoomDetails</servlet-name>
         <url-pattern>/admin-room-details</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <servlet-class>your.package.UploadAvatarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>DeteleRoom</servlet-name>
-        <url-pattern>/detele-room</url-pattern>
+        <servlet-name>UploadAvatarServlet</servlet-name>
+        <url-pattern>/upload-avatar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeRoom</servlet-name>
+        <url-pattern>/home-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomDetailServlet</servlet-name>
+        <url-pattern>/room-detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingResult</servlet-name>
+        <url-pattern>/booking-result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoomType</servlet-name>
+        <url-pattern>/admin-room-type</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomTypeServlet</servlet-name>
+        <url-pattern>/add-room-type</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditRoomTypeServlet</servlet-name>
+        <url-pattern>/edit-roomtype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisableRoomType</servlet-name>
+        <url-pattern>/disable-room-type</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRoomTypeDetails</servlet-name>
+        <url-pattern>/admin-room-type-details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRoom</servlet-name>
+        <url-pattern>/delete-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminBooking</servlet-name>
+        <url-pattern>/admin-booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminBookingDetailServlet</servlet-name>
+        <url-pattern>/admin-booking-detail</url-pattern>
     </servlet-mapping>
     <servlet>
-    <servlet-name>UploadAvatarServlet</servlet-name>
-    <servlet-class>your.package.UploadAvatarServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>UploadAvatarServlet</servlet-name>
-    <url-pattern>/upload-avatar</url-pattern>
-</servlet-mapping>
-
+        <servlet-name>AssignRoomServlet</servlet-name>
+        <servlet-class>Controller.AssignRoomServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AssignRoomServlet</servlet-name>
+        <url-pattern>/assign-room</url-pattern>
+    </servlet-mapping>
 </web-app>
-
