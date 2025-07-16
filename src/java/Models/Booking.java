@@ -16,7 +16,9 @@ public class Booking {
     private String specialRequests;
     private String customerPhoneNumber;
     private String customerName;
+    private String roomTypeName;
     public User user;
+    public RoomType roomType;
 
     public Booking() {
     }
@@ -135,11 +137,26 @@ public class Booking {
         this.customerName = customerName;
     }
 
+    public String getRoomTypeName() {
+        return roomTypeName;
+    }
+
+    public void setRoomTypeName(String roomTypeName) {
+        this.roomTypeName = roomTypeName;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
     @Override
     public String toString() {
-        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", roomTypeId=" + roomTypeId + ", roomNumber=" + roomNumber + ", checkinDate=" + checkinDate + ", checkoutDate=" + checkoutDate + ", numberOfGuests=" + numberOfGuests + ", totalPrice=" + totalPrice + ", status=" + status + ", bookingDate=" + bookingDate + ", specialRequests=" + specialRequests + ", customerPhoneNumber=" + customerPhoneNumber + ", customerName=" + customerName + ", user=" + user + '}';
+        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", roomTypeId=" + roomTypeId + ", roomNumber=" + roomNumber + ", checkinDate=" + checkinDate + ", checkoutDate=" + checkoutDate + ", numberOfGuests=" + numberOfGuests + ", totalPrice=" + totalPrice + ", status=" + status + ", bookingDate=" + bookingDate + ", specialRequests=" + specialRequests + ", customerPhoneNumber=" + customerPhoneNumber + ", customerName=" + customerName + ", roomTypeName=" + roomTypeName + ", user=" + user + ", roomType=" + roomType + '}';
     }
 
   
 }
-  

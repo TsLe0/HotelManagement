@@ -24,80 +24,26 @@
     <body class="bg-gray-200 text-gray-800">
         <!-- Header -->
         <jsp:include page="header.jsp" />
-        <!-- Search bar -->
+        <!-- Search and Sort bar -->
         <section class="max-w-7xl mx-auto px-4 mt-6">
-            <form action="#" class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0" id="searchForm" method="GET">
-                <!--    <div class="flex-1 min-w-[180px]">
-                     <label class="block text-xs font-normal text-gray-700 mb-1" for="location">
-                      Bạn muốn nghỉ dưỡng ở đâu ?
-                     </label>
-                     <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
-                      <i class="fas fa-map-marker-alt mr-2">
-                      </i>
-                      <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="location" name="location" placeholder="Mường Thanh Luxury Quảng Ninh" type="text" value="Mường Thanh Luxury Quảng Ninh"/>
-                     </div>
-                    </div>-->
-                <div class="flex-1 min-w-[180px]">
-                    <label class="block text-xs font-normal text-gray-700 mb-1" for="date">
-                        Ngày nhận 
-                    </label>
-                    <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
-                        <i class="far fa-calendar-alt mr-2">
-                        </i>
-                        <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="date" name="date" placeholder="10/07/2025 - 22/08/2025" type="date" value="10/07/2025 - 22/08/2025"/>
-                    </div>
+            <form action="getallrooms" class="bg-white rounded-md shadow-md p-4 flex items-center space-x-4" method="GET">
+                <div class="flex-grow">
+                    <input class="w-full rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none" 
+                           name="search" 
+                           placeholder="Nhập tên phòng để tìm kiếm..." 
+                           type="text"
+                           value="${searchQuery}"/>
                 </div>
-                <div class="flex-1 min-w-[180px]">
-                    <label class="block text-xs font-normal text-gray-700 mb-1" for="date">
-                        Trả phòng
-                    </label>
-                    <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-600">
-                        <i class="far fa-calendar-alt mr-2">
-                        </i>
-                        <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="date" name="date" placeholder="10/07/2025 - 22/08/2025" type="date" value="10/07/2025 - 22/08/2025"/>
-                    </div>
-                </div>
-                <div class="flex-1 min-w-[140px]">
-                    <label class="block text-xs font-normal text-gray-700 mb-1" for="roomCount">
-                        Số phòng
-                    </label>
-                    <select class="bg-gray-100 rounded px-3 py-2 text-xs text-gray-600 w-full outline-none" id="roomCount" name="roomCount">
-                        <option selected="" value="1">
-                            1 Phòng
-                        </option>
-                        <option value="2">
-                            2 Phòng
-                        </option>
-                        <option value="3">
-                            3 Phòng
-                        </option>
-                        <option value="4">
-                            4 Phòng
-                        </option>
-                        <option value="5">
-                            5 Phòng
-                        </option>
+                <div>
+                    <select name="sort" class="rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none" onchange="this.form.submit()">
+                        <option value="default" ${sort == 'default' ? 'selected' : ''}>Sắp xếp mặc định</option>
+                        <option value="price_asc" ${sort == 'price_asc' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
+                        <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
                     </select>
                 </div>
-                <div class="flex-1 min-w-[220px] flex space-x-2">
-                    <div class="flex-1">
-                        <label class="block text-xs font-normal text-gray-700 mb-1" for="voucher">
-                            Mã khuyến mãi/Voucher
-                        </label>
-                        <div class="flex items-center bg-gray-100 rounded px-3 py-2 text-xs text-gray-400">
-                            <i class="fas fa-ticket-alt mr-2">
-                            </i>
-                            <input class="bg-transparent w-full outline-none placeholder:text-gray-400" id="voucher" name="voucher" placeholder="Nhập mã khuyến mại/mã Vou" type="text"/>
-                        </div>
-                    </div>
-                    <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-xs px-4 rounded flex items-center space-x-2 whitespace-nowrap" type="submit">
-                        <i class="fas fa-search">
-                        </i>
-                        <span>
-                            TÌM KIẾM
-                        </span>
-                    </button>
-                </div>
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
         </section>
         <!-- Hotel info -->
@@ -212,7 +158,28 @@
                         </div>
                     </article>
                 </c:forEach>
+                <!-- Pagination -->
+                <div class="flex justify-center mt-6">
+                    <nav class="flex items-center space-x-2">
+                        <c:if test="${currentPage > 1}">
+                            <a href="getallrooms?page=${currentPage - 1}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                Previous
+                            </a>
+                        </c:if>
 
+                        <c:forEach begin="1" end="${totalPages}" var="i">
+                            <a href="getallrooms?page=${i}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 ${currentPage == i ? 'bg-yellow-500 text-white' : 'bg-white'} border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                ${i}
+                            </a>
+                        </c:forEach>
+
+                        <c:if test="${currentPage < totalPages}">
+                            <a href="getallrooms?page=${currentPage + 1}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                Next
+                            </a>
+                        </c:if>
+                    </nav>
+                </div>
             </div>
             <!-- Booking info -->
             <
@@ -227,6 +194,17 @@
                     prevEl: '.swiper-button-prev',
                 },
                 spaceBetween: 10,
+            });
+
+            let searchTimeout;
+            const searchInput = document.querySelector('input[name="search"]');
+            const searchForm = searchInput.form;
+
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchForm.submit();
+                }, 1000); // Wait for 500ms after the user stops typing
             });
         </script>
 

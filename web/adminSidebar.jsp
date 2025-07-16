@@ -26,15 +26,14 @@
 
        <a class="flex items-center space-x-3 px-3 py-2 rounded-md <%= currentPage.contains("roomManagement") ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100" %>"
        href="adminroom">
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-door-open"></i>
         <span>Danh sách phòng</span>
     </a>
-    <a class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100" href="#">
-        <i class="fas fa-calendar-check">
-        </i>
-        <span>
-            Bookings
-        </span>
+
+       <a class="flex items-center space-x-3 px-3 py-2 rounded-md <%= currentPage.contains("bookingManagement") ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100" %>"
+       href="admin-booking">
+        <i class="fas fa-calendar-check"></i>
+        <span>Danh sách đặt phòng</span>
     </a>
     <a class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100" href="#">
         <i class="fas fa-file-invoice-dollar">

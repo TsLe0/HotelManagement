@@ -56,7 +56,7 @@ public class BookingDAO extends DBContext {
     // Lấy danh sách tất cả các booking
     public List<Booking> getAllBookings() {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT BookingID, UserID, RoomTypeID, RoomNumber, CheckInDate, CheckOutDate, NumberOfGuests, TotalPrice, Status, BookingDate, SpecialRequests FROM Bookings";
+        String sql = "SELECT * FROM Bookings";
 
         try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -73,6 +73,8 @@ public class BookingDAO extends DBContext {
                 b.setStatus(rs.getString("Status"));
                 b.setBookingDate(rs.getDate("BookingDate"));
                 b.setSpecialRequests(rs.getString("SpecialRequests"));
+                b.setCustomerName(rs.getString("CustomerName"));
+                b.setCustomerPhoneNumber(rs.getString("CustomerPhoneNumber"));
                 list.add(b);
             }
 

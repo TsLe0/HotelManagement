@@ -33,16 +33,41 @@ public class GetAllRooms extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        String pageStr = request.getParameter("page");
+        String searchQuery = request.getParameter("search");
+        String sort = request.getParameter("sort");
+        int page = (pageStr == null) ? 1 : Integer.parseInt(pageStr);
+        int pageSize = 3; // Number of rooms per page
+
+        if (sort == null || sort.trim().isEmpty()) {
+            sort = "default";
+        }
+
+        int totalRooms;
+        List<RoomType> tList;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            totalRooms = typeDao.countSearchedActiveRoomTypes(searchQuery);
+            tList = typeDao.searchActiveRoomTypesByName(searchQuery, page, pageSize, sort);
+        } else {
+            totalRooms = typeDao.countActiveRoomTypes();
+            tList = typeDao.getActiveRoomTypes(page, pageSize, sort);
+        }
+
+        int totalPages = (int) Math.ceil((double) totalRooms / pageSize);
         List<List<RoomImage>> iList = new ArrayList<>();
-        List<RoomType> tList = typeDao.getActiveRoomTypes();
-        
+
         for (RoomType r : tList) {
             iList.add(imageDAO.getAllRoomImageByRoomTypeId(r.getRoomTypeID()));
         }
+
         request.setAttribute("iList", iList);
-//        System.out.println(iList.get(0));
         request.setAttribute("tList", tList);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("searchQuery", searchQuery);
+        request.setAttribute("sort", sort);
         request.getRequestDispatcher("room.jsp").forward(request, response);
     }
     
