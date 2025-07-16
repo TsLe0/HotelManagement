@@ -76,7 +76,7 @@ public class logoutServlet extends HttpServlet {
             }
         }
         //____________________________________________________________________________
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("home.jsp");
     }
 
     @Override
