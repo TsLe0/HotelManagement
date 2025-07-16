@@ -70,7 +70,6 @@
                                 <th class="px-6 py-3">Check-out</th>
                                 <th class="px-6 py-3">Total Price</th>
                                 <th class="px-6 py-3">Status</th>
-                                <th class="px-6 py-3">Booking Date</th>
                                 <th class="px-6 py-3">Actions</th>
                             </tr>
                         </thead>
@@ -102,7 +101,6 @@
                                             <c:otherwise><span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">${b.status}</span></c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td class="px-6 py-4"><fmt:formatDate value="${b.bookingDate}" pattern="dd-MM-yyyy" /></td>
                                     <td class="px-6 py-4">
                                         <a href="${pageContext.request.contextPath}/admin-booking-detail?bookingId=${b.bookingId}" class="text-indigo-600 hover:text-indigo-900">
                                             <i class="fas fa-eye"></i> View

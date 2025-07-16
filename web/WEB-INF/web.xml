@@ -140,4 +140,12 @@
         <servlet-name>AdminBookingDetailServlet</servlet-name>
         <url-pattern>/admin-booking-detail</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AssignRoomServlet</servlet-name>
+        <servlet-class>Controller.AssignRoomServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AssignRoomServlet</servlet-name>
+        <url-pattern>/assign-room</url-pattern>
+    </servlet-mapping>
 </web-app>

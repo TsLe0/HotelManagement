@@ -117,6 +117,19 @@ public class RoomsDAO {
         }
     }
 
+    public void updateRoomStatus(String roomNumber, String status) {
+        String sql = "UPDATE Room SET RoomStatus = ? WHERE RoomNumber = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setString(2, roomNumber);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Room getRoomById(String roomNumber) {
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
                    + "FROM Room r JOIN RoomType rt ON r.RoomTypeID = rt.RoomTypeID "
@@ -169,6 +182,31 @@ public class RoomsDAO {
     }
 }
 
+    
+    public List<Room> getAvailableRoomsByTypeId(String roomTypeId) {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                   + "FROM Room r "
+                   + "WHERE r.RoomTypeID = ? AND r.RoomStatus = N'Trống'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomTypeId);
+            rs = ps.executeQuery();
+            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+                list.add(room);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     
     public List<Room> getRoomsByTypeId(String roomTypeId) {
         List<Room> list = new ArrayList<>();

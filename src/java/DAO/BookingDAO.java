@@ -119,4 +119,32 @@ public class BookingDAO extends DBContext {
         }
         return null;
     }
+
+    public boolean updateBookingStatus(int bookingId, String status) {
+        String sql = "UPDATE Bookings SET Status = ? WHERE BookingID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setInt(2, bookingId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean assignRoomToBooking(int bookingId, String roomNumber) {
+        String sql = "UPDATE Bookings SET RoomNumber = ?, Status = 'Confirmed' WHERE BookingID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomNumber);
+            ps.setInt(2, bookingId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
