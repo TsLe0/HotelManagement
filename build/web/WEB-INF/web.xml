@@ -64,6 +64,10 @@
         <servlet-name>AdminBooking</servlet-name>
         <servlet-class>Controller.AdminBooking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminBookingDetailServlet</servlet-name>
+        <servlet-class>Controller.AdminBookingDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -131,5 +135,9 @@
     <servlet-mapping>
         <servlet-name>AdminBooking</servlet-name>
         <url-pattern>/admin-booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminBookingDetailServlet</servlet-name>
+        <url-pattern>/admin-booking-detail</url-pattern>
     </servlet-mapping>
 </web-app>
