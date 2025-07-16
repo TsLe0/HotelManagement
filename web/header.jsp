@@ -5,7 +5,8 @@
 <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <a class="flex items-center space-x-3" href="home.jsp">
-            <img alt="Logo khách sạn Mường Thanh màu xanh dương và trắng" class="h-10 w-auto object-contain" height="40" src="https://storage.googleapis.com/a1aa/image/70f89fa0-b8c9-42e9-d653-8f2a8d28c384.jpg" width="80"/>
+            <img alt="Logo khách sạn Mường Thanh màu xanh dương và trắng" class="h-16 w-16 w-auto object-contain"
+                 src="https://employer.jobsgo.vn/uploads/media/img/201912/pictures_library_38320_20191224135816_4094.jpg" width="80"/>
             <span class="text-2xl font-bold text-blue-700">
                 Mường Thanh
             </span>

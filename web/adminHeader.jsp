@@ -4,11 +4,10 @@
 <header class="bg-white shadow-md sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <div class="flex items-center space-x-3">
-            <img alt="Hotel logo with letter H in white on blue background"
-                 class="h-10 w-10 rounded-md"
-                 src="https://storage.googleapis.com/a1aa/image/e9b7da70-5fa0-461a-8dcf-a877cf2a5f0a.jpg"/>
+            <img alt="Logo khách sạn Mường Thanh màu xanh dương và trắng" class="h-16 w-16 w-auto object-contain"
+                 src="https://employer.jobsgo.vn/uploads/media/img/201912/pictures_library_38320_20191224135816_4094.jpg" width="80"/>
             <h1 class="text-2xl font-semibold text-gray-800">
-                Hotel Manager
+               Khách sạn Mường Thanh
             </h1>
         </div>
 

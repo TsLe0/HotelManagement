@@ -102,8 +102,6 @@ public class AddRoomTypeServlet extends HttpServlet {
                 uploadDir.mkdirs();
             }
             
-            System.out.println(parts.size());
-
             for (Part part : parts) {
                 if (part.getName().equals("roomImages") && part.getSize() > 0) {
                     String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();

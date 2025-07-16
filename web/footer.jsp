@@ -54,6 +54,6 @@
     </div>
    </div>
    <div class="border-t border-[#bb9a4a] text-center text-[12px] py-3 select-none">
-    © 2024 Mường Thanh Hospitality. All rights reserved.
+    © 2025 Mường Thanh Hospitality. All rights reserved.
    </div>
   </footer>

@@ -31,7 +31,7 @@ public class RoomsDAO {
 
         RoomType roomType = new RoomType();
         roomType.setRoomTypeID(rs.getString("RoomTypeID"));
-    
+
         room.setRoomType(roomType);
         return room;
     }
@@ -39,7 +39,7 @@ public class RoomsDAO {
     public List<Room> getAllRoom() {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r";
+                + "FROM Room r";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -47,14 +47,14 @@ public class RoomsDAO {
             RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {
                 Room room = new Room();
-            room.setRoomNumber(rs.getString("RoomNumber"));
-            room.setRoomStatus(rs.getString("RoomStatus"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
 
-            String roomTypeId = rs.getString("RoomTypeID");
-            room.setRoomTypeID(roomTypeId);
-            room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
-            
-            list.add(room);
+                String roomTypeId = rs.getString("RoomTypeID");
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+
+                list.add(room);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class RoomsDAO {
     public List<Room> getActiveRoom() {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r WHERE r.RoomStatus = 'Active'";
+                + "FROM Room r WHERE r.RoomStatus = 'Active'";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -73,14 +73,14 @@ public class RoomsDAO {
             RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
             while (rs.next()) {
                 Room room = new Room();
-            room.setRoomNumber(rs.getString("RoomNumber"));
-            room.setRoomStatus(rs.getString("RoomStatus"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
 
-            String roomTypeId = rs.getString("RoomTypeID");
-            room.setRoomTypeID(roomTypeId);
-            room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
-            
-            list.add(room);
+                String roomTypeId = rs.getString("RoomTypeID");
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+
+                list.add(room);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,18 +89,24 @@ public class RoomsDAO {
     }
 
     public void addRoom(Room room) {
-        String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatus) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Room (RoomNumber, RoomTypeID, RoomStatus) "
+                + "SELECT ?, ?, ? WHERE EXISTS "
+               + "(SELECT 1 FROM RoomType WHERE RoomTypeID = ? AND RoomTypeStatus = N'Đang kinh doanh')";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, room.getRoomNumber());
             ps.setString(2, room.getRoomTypeID());
             ps.setString(3, room.getRoomStatus());
-            ps.executeUpdate();
+            ps.setString(4, room.getRoomTypeID());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("RoomType is not active or does not exist.");
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
+    } 
 
     public void updateRoom(Room room) {
         String sql = "UPDATE Room SET RoomTypeID = ?, RoomStatus = ? WHERE RoomNumber = ?";
@@ -132,8 +138,8 @@ public class RoomsDAO {
 
     public Room getRoomById(String roomNumber) {
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r JOIN RoomType rt ON r.RoomTypeID = rt.RoomTypeID "
-                   + "WHERE r.RoomNumber = ?";
+                + "FROM Room r JOIN RoomType rt ON r.RoomTypeID = rt.RoomTypeID "
+                + "WHERE r.RoomNumber = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -156,38 +162,37 @@ public class RoomsDAO {
     }
 
     public boolean disableRoom(String roomNumber) {
-    Room room = getRoomById(roomNumber);
+        Room room = getRoomById(roomNumber);
 
-    if (room == null) {
-        System.out.println("Không tìm thấy phòng: " + roomNumber);
-        return false;
+        if (room == null) {
+            System.out.println("Không tìm thấy phòng: " + roomNumber);
+            return false;
+        }
+
+        if ("Đang sử dụng".equalsIgnoreCase(room.getRoomStatus())) {
+            System.out.println("Không thể vô hiệu hóa phòng đang được sử dụng: " + roomNumber);
+            return false;
+        }
+
+        String sql = "UPDATE Room SET RoomStatus = N'Vô hiệu hóa' WHERE RoomNumber = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomNumber);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+        }
     }
 
-    if ("Đang sử dụng".equalsIgnoreCase(room.getRoomStatus())) {
-        System.out.println("Không thể vô hiệu hóa phòng đang được sử dụng: " + roomNumber);
-        return false;
-    }
-
-    String sql = "UPDATE Room SET RoomStatus = N'Vô hiệu hóa' WHERE RoomNumber = ?";
-    try {
-        conn = new DBContext().getConnection();
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, roomNumber);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    } finally {
-    }
-}
-
-    
     public List<Room> getAvailableRoomsByTypeId(String roomTypeId) {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r "
-                   + "WHERE r.RoomTypeID = ? AND r.RoomStatus = N'Trống'";
+                + "FROM Room r "
+                + "WHERE r.RoomTypeID = ? AND r.RoomStatus = N'Trống'";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -207,12 +212,12 @@ public class RoomsDAO {
         }
         return list;
     }
-    
+
     public List<Room> getRoomsByTypeId(String roomTypeId) {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
-                   + "FROM Room r "
-                   + "WHERE r.RoomTypeID = ?";
+                + "FROM Room r "
+                + "WHERE r.RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -231,5 +236,20 @@ public class RoomsDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public int getTotalRooms() {
+        String sql = "SELECT COUNT(*) FROM Room";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

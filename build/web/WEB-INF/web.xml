@@ -68,6 +68,14 @@
         <servlet-name>AdminBookingDetailServlet</servlet-name>
         <servlet-class>Controller.AdminBookingDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangeRoom</servlet-name>
+        <servlet-class>Controller.ChangeRoom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashBoard</servlet-name>
+        <servlet-class>Controller.DashBoard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -147,5 +155,13 @@
     <servlet-mapping>
         <servlet-name>AssignRoomServlet</servlet-name>
         <url-pattern>/assign-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeRoom</servlet-name>
+        <url-pattern>/change-room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashBoard</servlet-name>
+        <url-pattern>/dash-board</url-pattern>
     </servlet-mapping>
 </web-app>
