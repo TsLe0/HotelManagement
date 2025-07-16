@@ -102,7 +102,7 @@
                                             <i class="fas fa-times-circle mr-2"></i>Cancel Booking
                                         </button>
                                     </form>
-                                    <a href="${pageContext.request.contextPath}/assign-room?bookingId=${booking.bookingId}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                                    <a href="${pageContext.request.contextPath}/change-room?bookingId=${booking.bookingId}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
                                         <i class="fas fa-door-open mr-2"></i>
                                         ${not empty booking.roomNumber ? 'Change Room' : 'Assign Room'}
                                     </a>

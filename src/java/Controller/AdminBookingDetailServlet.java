@@ -68,6 +68,25 @@ public class AdminBookingDetailServlet extends HttpServlet {
             } catch (NumberFormatException e) {
                 session.setAttribute("errorMessage", "Invalid Booking ID.");
             }
+        } else if ("changeRoom".equals(action)) {
+            try {
+                int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+                String newRoomNumber = request.getParameter("newRoomNumber");
+                String oldRoomNumber = request.getParameter("oldRoomNumber");
+
+                // Update booking with new room
+                if (bookingDAO.updateBookingRoom(bookingId, newRoomNumber)) {
+                    // Update status of old room to "Available"
+                    roomsDAO.updateRoomStatus(oldRoomNumber, "Trống");
+                    // Update status of new room to "Occupied"
+                    roomsDAO.updateRoomStatus(newRoomNumber, "Đang sử dụng");
+                    session.setAttribute("successMessage", "Room for booking #" + bookingId + " has been changed to " + newRoomNumber + ".");
+                } else {
+                    session.setAttribute("errorMessage", "Failed to change room for booking #" + bookingId + ".");
+                }
+            } catch (NumberFormatException e) {
+                session.setAttribute("errorMessage", "Invalid Booking or Room ID.");
+            }
         }
         
         response.sendRedirect(request.getContextPath() + "/admin-booking");

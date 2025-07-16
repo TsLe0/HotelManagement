@@ -64,7 +64,7 @@
                             <tr>
                                 <th class="px-6 py-3">ID</th>
                                 <th class="px-6 py-3">Customer Name</th>
-                                <th class="px-6 py-3">Room Type</th>
+                                <th class="px-6 py-3">Room Type Name</th>
                                 <th class="px-6 py-3">Room Number</th>
                                 <th class="px-6 py-3">Check-in</th>
                                 <th class="px-6 py-3">Check-out</th>
@@ -78,10 +78,10 @@
                                 <tr class="border-b hover:bg-gray-50">
                                     <td class="px-6 py-4">${b.bookingId}</td>
                                     <td class="px-6 py-4 font-medium">${b.customerName}</td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 font-medium">
                                         <c:forEach items="${tList}" var="rt">
                                             <c:if test="${rt.roomTypeID == b.roomTypeId}">
-                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                                <span class="px-6 py-4">
                                                     ${rt.roomTypeName}
                                                 </span>
                                             </c:if>

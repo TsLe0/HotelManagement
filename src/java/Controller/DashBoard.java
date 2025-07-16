@@ -6,6 +6,7 @@ package Controller;
 
 import DAO.BookingDAO;
 import DAO.RoomTypeDAO;
+import DAO.RoomsDAO;
 import Models.Booking;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
@@ -19,26 +20,52 @@ import java.util.List;
  *
  * @author Admin
  */
-public class AdminBooking extends HttpServlet {
+public class DashBoard extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    RoomsDAO roomsDAO = new RoomsDAO();
     BookingDAO bookingDAO = new BookingDAO();
     RoomTypeDAO tDao = new RoomTypeDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Booking> bookingList = bookingDAO.getAllBookings();
+        response.setContentType("text/html;charset=UTF-8");
+
         List<RoomType> tList = tDao.getAllRoomType();
-        
-        request.setAttribute("bookingList", bookingList);
+
+        int totalRooms = roomsDAO.getTotalRooms();
+        int totalBookings = bookingDAO.getTotalBookings();
+        List<Booking> recentBookings = bookingDAO.getRecentBookings(5);
+
+        request.setAttribute("totalRooms", totalRooms);
         request.setAttribute("tList", tList);
-        request.getRequestDispatcher("bookingManagement.jsp").forward(request, response);
+        request.setAttribute("totalBookings", totalBookings);
+        request.setAttribute("recentBookings", recentBookings);
+
+        request.getRequestDispatcher("dashboard.jsp").forward(request, response);
     }
 
     @Override
