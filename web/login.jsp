@@ -22,12 +22,16 @@
     </head>
     <body class="bg-gray-50 dark:bg-gray-900">
 
-        <main class="bg-gray-50 dark:bg-gray-900">
+        <main class="bg-gray-50 bg-gray-900" 
+              style="background-image: url('https://i.redd.it/dr5cbbya3md01.jpg');
+              background-position: center;
+              background-repeat: no-repeat;
+              ">
             <c:set var="cookie" value="${pageContext.request.cookies}"/>
             <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
                 <a href="https://flowbite-admin-dashboard.vercel.app/" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
                     <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
-                        <img src="images/FondevJSLogoSmal.svg" class="mr-4 h-25" alt="Logo">
+                        <img src="https://employer.jobsgo.vn/uploads/media/img/201912/pictures_library_38320_20191224135816_4094.jpg" class="mr-4 h-16 w-16" alt="Logo">
                     </a> 
                 </a>
                 <!-- Card -->
@@ -54,7 +58,20 @@
                             </div>
                             <a href="#" class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500">Lost Password?</a>
                         </div>
-                        <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login account</button>
+                        
+                        <div>
+                            <a href="register" class="text-sm">Chưa có tài khoản? <strong class="text-blue-600">Đăng ký ngay</strong></a>
+                        </div>
+                        
+                        <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Login account
+                        </button>
+                        
+                        <a
+                            href="home.jsp"
+                            class="w-full px-5 py-3 text-base font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-600 dark:hover:bg-secondary-700 dark:focus:ring-primary-800">
+                            Cancel
+                        </a>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
 
                         </div>
