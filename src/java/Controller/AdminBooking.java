@@ -15,33 +15,35 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
  *
  * @author Admin
  */
 public class AdminBooking extends HttpServlet {
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
- 
+
     }
 
-         BookingDAO bookingDAO = new BookingDAO(); 
-         RoomTypeDAO tDao = new RoomTypeDAO();
+    BookingDAO bookingDAO = new BookingDAO();
+    RoomTypeDAO tDao = new RoomTypeDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          List<Booking> bookingList = bookingDAO.getAllBookings();
-          List<RoomType> tList =tDao.getAllRoomType();
+        List<Booking> bookingList = bookingDAO.getAllBookings();
+        List<RoomType> tList = tDao.getAllRoomType();
+        
+        System.out.println(bookingList);
+        System.out.println(tList);
+        
         request.setAttribute("bookingList", bookingList);
-          request.setAttribute("tList", tList);
+        request.setAttribute("tList", tList);
         request.getRequestDispatcher("bookingManagement.jsp").forward(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

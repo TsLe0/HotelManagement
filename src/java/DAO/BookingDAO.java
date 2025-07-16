@@ -47,10 +47,10 @@ public class BookingDAO extends DBContext {
                 }
             }
         } catch (SQLException e) {
-                System.out.println("tuanvm dm ");
+            System.out.println("tuanvm dm ");
             e.printStackTrace();
         }
-        return -1; 
+        return -1;
     }
 
     // Lấy danh sách tất cả các booking
@@ -58,8 +58,11 @@ public class BookingDAO extends DBContext {
         List<Booking> list = new ArrayList<>();
         String sql = "SELECT * FROM Bookings";
 
-        try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
             while (rs.next()) {
                 Booking b = new Booking();
                 b.setBookingId(rs.getInt("BookingID"));
@@ -78,7 +81,7 @@ public class BookingDAO extends DBContext {
                 list.add(b);
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
