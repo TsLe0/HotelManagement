@@ -35,13 +35,7 @@
         <i class="fas fa-calendar-check"></i>
         <span>Danh sách đặt phòng</span>
     </a>
-    <a class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100" href="#">
-        <i class="fas fa-file-invoice-dollar">
-        </i>
-        <span>
-            Billing
-        </span>
-    </a>
+    
     <a class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100" href="#">
         <i class="fas fa-chart-line">
         </i>
