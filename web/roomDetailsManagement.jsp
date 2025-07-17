@@ -49,7 +49,7 @@
                     <div class="md:w-1/2 p-6 flex flex-col justify-center space-y-4">
                         <h2 class="text-3xl font-semibold text-gray-900">Room Details</h2>
                         <div class="space-y-3 text-gray-700">
-                            <a href="adminroom" class="text-blue-600 hover:underline">
+                            <a href="admin  room" class="text-blue-600 hover:underline">
                                 <i class="fas fa-arrow-left mr-2"></i>Back to List
                             </a
                             <!-- Room Number -->

@@ -37,24 +37,32 @@
                         <input type="hidden" name="guests" value="${guests}" />
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
+                            <div class="border p-4 rounded-xl shadow-sm">
                                 <label for="fullName" class="block text-sm font-medium text-gray-700">Họ và tên</label>
-                                <input type="text" id="fullName" name="fullName" value="${sessionScope.user.fullName}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"  />
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" id="email" name="email" value="${sessionScope.account.email}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" readonly />
-                            </div>
-                            <div class="md:col-span-2">
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
-                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"  />
-                            </div>
-                            <div class="md:col-span-2">
-                                <label for="specialRequests" class="block text-sm font-medium text-gray-700">Yêu cầu đặc biệt (tùy chọn)</label>
-                                <textarea id="specialRequests" name="specialRequests" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ví dụ: phòng tầng cao, không hút thuốc..."></textarea>
+                                <input type="text" id="fullName" name="fullName" value="${sessionScope.user.fullName}"
+                                       class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" />
                             </div>
 
+                            <div class="border p-4 rounded-xl shadow-sm">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" value="${sessionScope.account.email}"
+                                       class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" readonly />
+                            </div>
+
+                            <div class="md:col-span-2 border p-4 rounded-xl shadow-sm">
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                                <input type="tel" id="phone" name="phone"
+                                       class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" />
+                            </div>
+
+                            <div class="md:col-span-2 border p-4 rounded-xl shadow-sm">
+                                <label for="specialRequests" class="block text-sm font-medium text-gray-700">Yêu cầu đặc biệt (tùy chọn)</label>
+                                <textarea id="specialRequests" name="specialRequests" rows="4"
+                                          class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2"
+                                          placeholder="Ví dụ: phòng tầng cao, không hút thuốc..."></textarea>
+                            </div>
                         </div>
+
 
                         <div class="mt-8">
                             <h3 class="text-xl font-bold text-gray-800 mb-4">Phương thức thanh toán</h3>
@@ -102,10 +110,10 @@
                                 <span class="font-medium text-gray-600">Ngày trả phòng:</span>
                                 <span class="font-semibold text-gray-900">${checkout}</span>
                             </div>
-<!--                            <div class="flex justify-between">
-                                <span class="font-medium text-gray-600">Số khách:</span>
-                                <span class="font-semibold text-gray-900">${guests} người</span>
-                            </div>-->
+                            <!--                            <div class="flex justify-between">
+                                                            <span class="font-medium text-gray-600">Số khách:</span>
+                                                            <span class="font-semibold text-gray-900">${guests} người</span>
+                                                        </div>-->
                             <div class="flex justify-between">
                                 <span class="font-medium text-gray-600">Số đêm:</span>
                                 <span class="font-semibold text-gray-900">${nights} đêm</span>

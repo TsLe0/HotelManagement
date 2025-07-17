@@ -41,9 +41,9 @@
                         <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
                     </select>
                 </div>
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
+<!--                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
                     <i class="fas fa-search"></i>
-                </button>
+                </button>-->
             </form>
         </section>
         <!-- Hotel info -->
@@ -95,9 +95,7 @@
         <section class="max-w-7xl mx-auto px-4 mt-6">
             <div class="bg-white rounded-md shadow-md p-4 text-xs text-gray-700 font-semibold">
                 Vui lòng chọn phòng
-                <span class="font-normal">
-                    (Có 3 loại phòng theo tìm kiếm)
-                </span>
+                <span class="font-normal">                </span>
             </div>
         </section>
         <!-- Room and booking info -->
@@ -137,7 +135,7 @@
                                 </div>
                                 <div class="flex items-center space-x-1">
                                     <i class="fas fa-vr-cardboard"></i>
-                                    <span>${t.roomArea}<sup>2</sup></span>
+                                    <span>${t.roomArea}m<sup>2</sup></span>
                                 </div>
                             </div>
                             <div class="flex items-center space-x-4 mb-3 text-gray-600">
@@ -145,6 +143,10 @@
                                 <i class="fas fa-suitcase-rolling"></i>
                                 <i class="fas fa-smoking-ban"></i>
                             </div>
+                                 <div class="flex items-center space-x-1">
+                                    <i class="fas fa-bed"></i>
+                                    <span>${t.roomDec}</span>
+                                </div>
                             <div class="text-xs text-gray-700 mb-2">Giá chỉ từ</div>
                             <div class="text-yellow-600 font-semibold text-lg mb-2">
                                 ${t.roomTypePrice} VNĐ
@@ -182,7 +184,6 @@
                 </div>
             </div>
             <!-- Booking info -->
-            <
         </section>
         <jsp:include page="footer.jsp" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
