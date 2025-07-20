@@ -84,7 +84,7 @@
             <div class="text-center bg-white p-10 rounded-lg shadow-md">
                 <i class="fas fa-box-open fa-3x text-gray-400 mb-4"></i>
                 <p class="text-gray-600 text-lg">Bạn chưa có lịch sử đặt phòng nào.</p>
-                <a href="home.jsp" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors">
+                <a href="getallrooms" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors">
                     Bắt đầu đặt phòng
                 </a>
             </div>

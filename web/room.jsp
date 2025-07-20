@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <html lang="en">
@@ -18,130 +18,167 @@
         <style>
             body {
                 font-family: "Roboto", sans-serif;
+                background-color: #f4f7f6;
+            }
+            .swiper-button-next, .swiper-button-prev {
+                color: #fff;
+                background-color: rgba(0, 0, 0, 0.3);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                transition: background-color 0.3s ease;
+            }
+            .swiper-button-next:hover, .swiper-button-prev:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            .swiper-button-next::after, .swiper-button-prev::after {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .room-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .room-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
         </style>
     </head>
-    <body class="bg-gray-200 text-gray-800">
+    <body class="text-gray-800">
         <!-- Header -->
         <jsp:include page="header.jsp" />
-        <!-- Search and Sort bar -->
-        <section class="max-w-7xl mx-auto px-4 mt-6">
-            <form action="getallrooms" class="bg-white rounded-md shadow-md p-4 flex items-center space-x-4" method="GET">
-                <div class="flex-grow">
-                    <input class="w-full rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none" 
-                           name="search" 
-                           placeholder="Nhập tên phòng để tìm kiếm..." 
-                           type="text"
-                           value="${searchQuery}"/>
-                </div>
-                <div>
-                    <select name="sort" class="rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none" onchange="this.form.submit()">
-                        <option value="default" ${sort == 'default' ? 'selected' : ''}>Sắp xếp mặc định</option>
-                        <option value="price_asc" ${sort == 'price_asc' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
-                        <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
-                    </select>
-                </div>
-<!--                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>-->
-            </form>
-        </section>
-        <!-- Hotel info -->
 
-        <!-- Room selection notice -->
-        <section class="max-w-7xl mx-auto px-4 mt-6">
-            <div class="bg-white rounded-md shadow-md p-4 text-xs text-gray-700 font-semibold">
-                Vui lòng chọn phòng
-                <span class="font-normal">                </span>
-            </div>
-        </section>
-        <!-- Room and booking info -->
-        <section class="max-w-7xl mx-auto px-4 mt-6 flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0">
-            <!-- Room cards container -->
-            <div class="flex-1 flex flex-col space-y-6">
-                <c:forEach items="${tList}" var="t" varStatus="loop">
-                    <article class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-6">             
+        <main class="max-w-7xl mx-auto px-4 mt-8">
+            <!-- Filter and Sort Bar -->
+            <section class="bg-white rounded-lg shadow-md p-4 mb-8">
+                <form action="getallrooms" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <!-- Search Input -->
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </span>
+                        <input class="w-full rounded-md pl-10 pr-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               name="search" 
+                               placeholder="Tìm theo tên phòng..." 
+                               type="text"
+                               value="${searchQuery}"/>
+                    </div>
 
-                        <c:set var="imageList" value="${iList[loop.index]}" />
+                    <!-- Room Type Filter -->
+                    <div>
+                        <select name="roomType" class="w-full rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="this.form.submit()">
+                            <option value="all">Tất cả loại phòng</option>
+                            <c:forEach items="${allRoomTypes}" var="type">
+                                <option value="${type.roomTypeID}" ${type.roomTypeID == selectedRoomType ? 'selected' : ''}>
+                                    ${type.roomTypeName}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                        <!-- Swiper Container -->
-                        <div class="swiper mySwiper w-full sm:w-[320px]">
-                            <div class="swiper-wrapper">
-                                <c:forEach items="${imageList}" var="d">
-                                    <div class="swiper-slide relative">
-                                        <img class="rounded-md object-cover w-full h-44"
-                                             src="${d.roomImages}" 
-                                             height="180" 
-                                             width="320"/>
+                    <!-- Sort Dropdown -->
+                    <div>
+                        <select name="sort" class="w-full rounded-md px-4 py-2 text-sm text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="this.form.submit()">
+                            <option value="default" ${sort == 'default' ? 'selected' : ''}>Sắp xếp mặc định</option>
+                            <option value="price_asc" ${sort == 'price_asc' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
+                            <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
+                        </select>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Room Grid -->
+            <section>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <c:forEach items="${tList}" var="t" varStatus="loop">
+                        <article class="bg-white rounded-lg shadow-md overflow-hidden room-card">
+                            <c:set var="imageList" value="${iList[loop.index]}" />
+                            <!-- Swiper Container -->
+                            <div class="swiper mySwiper w-full h-56">
+                                <div class="swiper-wrapper">
+                                    <c:if test="${empty imageList}">
+                                        <div class="swiper-slide">
+                                            <img class="object-cover w-full h-full" src="https://via.placeholder.com/400x300.png?text=No+Image" alt="No Image Available"/>
+                                        </div>
+                                    </c:if>
+                                    <c:forEach items="${imageList}" var="d">
+                                        <div class="swiper-slide">
+                                            <img class="object-cover w-full h-full" src="${d.roomImages}" alt="${t.roomTypeName}"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
+
+                            <!-- Room Info -->
+                            <div class="p-5 flex flex-col flex-grow">
+                                <h3 class="font-bold text-xl mb-2 text-gray-900">${t.roomTypeName}</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">${t.roomDec}</p>
+                                
+                                <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-users text-blue-500"></i>
+                                        <span>${t.numBeds} người</span>
                                     </div>
-                                </c:forEach>
-                            </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-ruler-combined text-blue-500"></i>
+                                        <span>${t.roomArea} m<sup>2</sup></span>
+                                    </div>
+                                </div>
 
-                            <!-- Navigation buttons -->
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
+                                <div class="border-t border-gray-200 pt-4 mt-auto">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <span class="text-gray-500 text-xs">Giá mỗi đêm từ</span>
+                                            <div class="text-blue-600 font-bold text-xl">
+                                                <fmt:formatNumber value="${t.roomTypePrice}" type="currency" currencyCode="VND" minFractionDigits="0"/>
+                                            </div>
+                                        </div>
+                                        <a href="room-detail?roomTypeId=${t.roomTypeID}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                           Đặt Phòng 
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </c:forEach>
+                </div>
+                
+                <c:if test="${empty tList}">
+                    <div class="text-center col-span-full bg-white p-10 rounded-lg shadow-md">
+                        <i class="fas fa-search-minus fa-3x text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 text-lg">Không tìm thấy loại phòng phù hợp.</p>
+                        <a href="getallrooms" class="mt-4 inline-block text-blue-500 hover:underline">Xóa bộ lọc và thử lại</a>
+                    </div>
+                </c:if>
+            </section>
 
-                        <!-- Thông tin loại phòng -->
-                        <div class="flex-1 mt-4 sm:mt-0 text-xs text-gray-800">
-                            <h3 class="font-semibold text-sm mb-2">${t.roomTypeName}</h3>
-                            <div class="flex items-center space-x-4 mb-2 text-gray-600">
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-bed"></i>
-                                    <span>${t.numBeds}</span>
-                                </div>
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-vr-cardboard"></i>
-                                    <span>${t.roomArea}m<sup>2</sup></span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-4 mb-3 text-gray-600">
-                                <i class="fas fa-tv"></i>
-                                <i class="fas fa-suitcase-rolling"></i>
-                                <i class="fas fa-smoking-ban"></i>
-                            </div>
-                                 <div class="flex items-center space-x-1">
-                                    <i class="fas fa-bed"></i>
-                                    <span>${t.roomDec}</span>
-                                </div>
-                            <div class="text-xs text-gray-700 mb-2">Giá chỉ từ</div>
-                            <div class="text-yellow-600 font-semibold text-lg mb-2">
-                                ${t.roomTypePrice} VNĐ
-                                <span class="text-gray-700 font-normal text-sm">/ đêm</span>
-                            </div>
-                            <a href="room-detail?roomTypeId=${t.roomTypeID}">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold px-4 py-2 rounded">
-                                    Chọn phòng
-                                </button>
-                            </a>
-                        </div>
-                    </article>
-                </c:forEach>
-                <!-- Pagination -->
-                <div class="flex justify-center mt-6">
-                    <nav class="flex items-center space-x-2">
+            <!-- Pagination -->
+            <section class="mt-12 mb-8">
+                <c:if test="${totalPages > 1}">
+                    <nav class="flex justify-center items-center space-x-2">
                         <c:if test="${currentPage > 1}">
-                            <a href="getallrooms?page=${currentPage - 1}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                Previous
+                            <a href="getallrooms?page=${currentPage - 1}&search=${searchQuery}&sort=${sort}&roomType=${selectedRoomType}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-chevron-left"></i>
                             </a>
                         </c:if>
 
                         <c:forEach begin="1" end="${totalPages}" var="i">
-                            <a href="getallrooms?page=${i}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 ${currentPage == i ? 'bg-yellow-500 text-white' : 'bg-white'} border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <a href="getallrooms?page=${i}&search=${searchQuery}&sort=${sort}&roomType=${selectedRoomType}" class="px-4 py-2 ${currentPage == i ? 'bg-blue-500 text-white border-blue-500' : 'bg-white'} border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
                                 ${i}
                             </a>
                         </c:forEach>
 
                         <c:if test="${currentPage < totalPages}">
-                            <a href="getallrooms?page=${currentPage + 1}&search=${searchQuery}&sort=${sort}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                Next
+                            <a href="getallrooms?page=${currentPage + 1}&search=${searchQuery}&sort=${sort}&roomType=${selectedRoomType}" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-chevron-right"></i>
                             </a>
                         </c:if>
                     </nav>
-                </div>
-            </div>
-            <!-- Booking info -->
-        </section>
+                </c:if>
+            </section>
+        </main>
         <jsp:include page="footer.jsp" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script>

@@ -54,11 +54,18 @@ public class RoomTypeDAO {
         return list;
     }
 
-    public int countActiveRoomTypes() {
-        String sql = "SELECT COUNT(*) FROM [HotelManagement].[dbo].[RoomType] WHERE [RoomTypeStatus] = N'Đang kinh doanh'";
+    public int countActiveRoomTypes(String roomTypeId) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM [HotelManagement].[dbo].[RoomType] WHERE [RoomTypeStatus] = N'Đang kinh doanh'");
+        if (roomTypeId != null && !roomTypeId.isEmpty() && !roomTypeId.equals("all")) {
+            sql.append(" AND [RoomTypeID] = ?");
+        }
+
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql.toString());
+            if (roomTypeId != null && !roomTypeId.isEmpty() && !roomTypeId.equals("all")) {
+                ps.setString(1, roomTypeId);
+            }
             rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -69,7 +76,7 @@ public class RoomTypeDAO {
         return 0;
     }
 
-    public List<RoomType> getActiveRoomTypes(int page, int pageSize, String sort) {
+    public List<RoomType> getActiveRoomTypes(int page, int pageSize, String sort, String roomTypeId) {
         List<RoomType> list = new ArrayList<>();
         String orderBy;
         switch (sort) {
@@ -84,16 +91,27 @@ public class RoomTypeDAO {
                 break;
         }
 
-        String sql = "SELECT [RoomTypeID], [RoomTypeName], [RoomTypePrice], [RoomDec], [RoomArea], [NumBeds], [RoomTypeStatus]\n"
-                + "FROM [HotelManagement].[dbo].[RoomType]\n"
-                + "WHERE [RoomTypeStatus] = N'Đang kinh doanh'\n"
-                + "ORDER BY " + orderBy + "\n"
-                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        StringBuilder sql = new StringBuilder("SELECT [RoomTypeID], [RoomTypeName], [RoomTypePrice], [RoomDec], [RoomArea], [NumBeds], [RoomTypeStatus]\n")
+                .append("FROM [HotelManagement].[dbo].[RoomType]\n")
+                .append("WHERE [RoomTypeStatus] = N'Đang kinh doanh'\n");
+
+        if (roomTypeId != null && !roomTypeId.isEmpty() && !roomTypeId.equals("all")) {
+            sql.append(" AND [RoomTypeID] = ?\n");
+        }
+
+        sql.append("ORDER BY ").append(orderBy).append("\n")
+           .append("OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;");
+
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, (page - 1) * pageSize);
-            ps.setInt(2, pageSize);
+            ps = conn.prepareStatement(sql.toString());
+            int paramIndex = 1;
+            if (roomTypeId != null && !roomTypeId.isEmpty() && !roomTypeId.equals("all")) {
+                ps.setString(paramIndex++, roomTypeId);
+            }
+            ps.setInt(paramIndex++, (page - 1) * pageSize);
+            ps.setInt(paramIndex, pageSize);
+
             rs = ps.executeQuery();
             while (rs.next()) {
                 RoomType r = new RoomType();
@@ -112,8 +130,23 @@ public class RoomTypeDAO {
         return list;
     }
 
-    public List<RoomType> getActiveRoomTypes() {
-        return getActiveRoomTypes(1, 10, "default"); // Default to page 1, size 10, default sort
+    public List<RoomType> getAllActiveRoomTypes() {
+        List<RoomType> list = new ArrayList<>();
+        String sql = "SELECT [RoomTypeID], [RoomTypeName] FROM [HotelManagement].[dbo].[RoomType] WHERE [RoomTypeStatus] = N'Đang kinh doanh' ORDER BY RoomTypeName";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                RoomType r = new RoomType();
+                r.setRoomTypeID(rs.getString(1));
+                r.setRoomTypeName(rs.getString(2));
+                list.add(r);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
     }
 
     public int countSearchedActiveRoomTypes(String searchQuery) {
