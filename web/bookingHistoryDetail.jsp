@@ -166,9 +166,20 @@
                     <fmt:formatNumber value="${booking.totalPrice}" type="currency" currencySymbol="VNĐ"/>
                 </div>
 
-                <a href="booking-history" class="back-link">
-                    <i class="fas fa-arrow-left"></i> Quay lại lịch sử
-                </a>
+                <div class="flex justify-between items-center mt-8">
+                    <a href="booking-history" class="back-link mt-0">
+                        <i class="fas fa-arrow-left"></i> Quay lại lịch sử
+                    </a>
+
+                    <c:if test="${booking.status == 'Pending'}">
+                        <form action="cancel-booking" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đặt phòng này không?');">
+                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                            <button type="submit" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition-colors">
+                                <i class="fas fa-times-circle"></i> Hủy đặt phòng
+                            </button>
+                        </form>
+                    </c:if>
+                </div>
             </div>
         </c:if>
         <c:if test="${empty booking}">

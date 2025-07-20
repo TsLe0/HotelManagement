@@ -53,7 +53,7 @@ public class RoomTypeDAO {
         }
         return list;
     }
-    
+
     public int countActiveRoomTypes() {
         String sql = "SELECT COUNT(*) FROM [HotelManagement].[dbo].[RoomType] WHERE [RoomTypeStatus] = N'Đang kinh doanh'";
         try {
@@ -175,16 +175,10 @@ public class RoomTypeDAO {
         }
         return list;
     }
-    
+
     public RoomType getRoomTypeById(String roomTypeId) {
-        String sql = "SELECT TOP (1000) [RoomTypeID]\n"
-                + "      ,[RoomTypeName]\n"
-                + "      ,[RoomTypePrice]\n"
-                + "      ,[RoomDec]\n"
-                + "      ,[RoomArea]\n"
-                + "      ,[NumBeds]\n"
-                + "      ,[RoomTypeStatus]\n"
-                + "  FROM [HotelManagement].[dbo].[RoomType] WHERE RoomTypeID = ?";
+        String sql = "select*from RoomType\n"
+                + "WHERE RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -206,30 +200,31 @@ public class RoomTypeDAO {
         }
         return null;
     }
+
     public boolean addRoomType(RoomType roomType) {
-    String sql = "INSERT INTO RoomType (RoomTypeID, RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds, RoomTypeStatus) "
-               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-    try (Connection conn = new DBContext().getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-        
-        ps.setString(1, roomType.getRoomTypeID());
-        ps.setString(2, roomType.getRoomTypeName());
-        ps.setDouble(3, roomType.getRoomTypePrice());
-        ps.setString(4, roomType.getRoomDec());
-        ps.setDouble(5, roomType.getRoomArea());
-        ps.setInt(6, roomType.getNumBeds());
-        ps.setString(7, roomType.getRoomTypeStatus()); // ví dụ: "Đang kinh doanh" hoặc "Ngừng kinh doanh"
+        String sql = "INSERT INTO RoomType (RoomTypeID, RoomTypeName, RoomTypePrice, RoomDec, RoomArea, NumBeds, RoomTypeStatus) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        return ps.executeUpdate() > 0;
+            ps.setString(1, roomType.getRoomTypeID());
+            ps.setString(2, roomType.getRoomTypeName());
+            ps.setDouble(3, roomType.getRoomTypePrice());
+            ps.setString(4, roomType.getRoomDec());
+            ps.setDouble(5, roomType.getRoomArea());
+            ps.setInt(6, roomType.getNumBeds());
+            ps.setString(7, roomType.getRoomTypeStatus()); // ví dụ: "Đang kinh doanh" hoặc "Ngừng kinh doanh"
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
+
     public boolean editRoomType(RoomType roomType) {
         String sql = "UPDATE RoomType SET RoomTypeName = ?, RoomTypePrice = ?, RoomDec = ?, "
-                   + "RoomArea = ?, NumBeds = ?, RoomTypeStatus = ? WHERE RoomTypeID = ?";
+                + "RoomArea = ?, NumBeds = ?, RoomTypeStatus = ? WHERE RoomTypeID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -246,49 +241,61 @@ public class RoomTypeDAO {
             return false;
         }
     }
+
     public boolean disableRoomType(String roomTypeId) {
-    String sql = "UPDATE RoomType SET RoomTypeStatus = N'Ngừng kinh doanh' WHERE RoomTypeID = ?";
-    try {
-        conn = new DBContext().getConnection();
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, roomTypeId);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
+        String sql = "UPDATE RoomType SET RoomTypeStatus = N'Ngừng kinh doanh' WHERE RoomTypeID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomTypeId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public boolean existsRoomTypeId(String roomTypeId) {
+        String sql = "SELECT 1 FROM RoomType WHERE RoomTypeID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, roomTypeId);
+            rs = ps.executeQuery();
+            return rs.next(); // true nếu tìm thấy
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         return false;
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
-}
-public boolean existsRoomTypeId(String roomTypeId) {
-    String sql = "SELECT 1 FROM RoomType WHERE RoomTypeID = ?";
-    try {
-        conn = new DBContext().getConnection();
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, roomTypeId);
-        rs = ps.executeQuery();
-        return rs.next(); // true nếu tìm thấy
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    return false;
-}
-
-
 
 }

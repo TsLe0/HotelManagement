@@ -58,10 +58,12 @@
                                 <option value="" disabled="">
                                     Select room type
                                 </option>
-                                <c:forEach items="${roomTypeList}" var="rt">
-                                    <option value="${rt.roomTypeID}" data-price="${rt.roomTypePrice}" ${room.roomTypeID == rt.roomTypeID ? 'selected' : ''}>
-                                        ${rt.roomTypeName}
-                                    </option>
+                                <c:forEach items="${roomTypeList}" var="s">
+                                    <c:if test="${s.roomTypeStatus == 'Đang kinh doanh'}">
+                                        <option value="${s.roomTypeID}" data-price="${s.roomTypePrice}">
+                                            ${s.roomTypeName}
+                                        </option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>

@@ -10,14 +10,15 @@ import javax.mail.internet.MimeMessage;
 import Models.Booking;
 import Models.User;
 import javax.mail.Message;
-
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 
 public class EmailService {
 
     public static void sendBookingConfirmation(User user, Booking booking) {
         // Thay thế bằng thông tin email của bạn
-        final String fromEmail = "your-email@gmail.com"; // Email của bạn
-        final String password = "your-app-password"; // Mật khẩu ứng dụng email của bạn
+        final String fromEmail = "hai222ad@gmail.com"; // Email của bạn
+        final String password = "zbsjzcvwavxrqyfs"; // Mật khẩu ứng dụng email của bạn
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
@@ -39,26 +40,34 @@ public class EmailService {
             // Set from, to, subject, and content
             msg.setFrom(new InternetAddress(fromEmail));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
-            msg.setSubject("Xác nhận đặt phòng thành công!");
+            String subject = "Xác nhận đặt phòng #" + booking.getBookingId() + " - " + System.currentTimeMillis();
+            msg.setSubject(subject, "UTF-8");
+            
+//            String roomTypeName = (booking.getRoomType() != null)
+//                    ? booking.getRoomType().getRoomTypeName()
+//                    : "Không xác định";
 
             String emailContent = "Chào " + booking.getCustomerName() + ",<br><br>"
-                    + "Cảm ơn bạn đã đặt phòng tại khách sạn của chúng tôi. Đơn đặt phòng của bạn đã được xác nhận thành công.<br><br>"
+                    + "Cảm ơn bạn đã đặt phòng tại khách sạn của chúng tôi. Đơn đặt phòng của bạn đã được xác nhận.<br><br>"
                     + "<b>Chi tiết đặt phòng:</b><br>"
                     + "Mã đặt phòng: " + booking.getBookingId() + "<br>"
+//                    + "Hạng phòng: <b>" + roomTypeName + "</b><br>"
                     + "Ngày nhận phòng: " + booking.getCheckinDate() + "<br>"
                     + "Ngày trả phòng: " + booking.getCheckoutDate() + "<br>"
                     + "Tổng tiền: " + String.format("%,.0f", booking.getTotalPrice()) + " VNĐ<br><br>"
-                    + "Chúng tôi rất mong được chào đón bạn.<br><br>"
-                    + "Trân trọng,<br>"
-                    + "Khách sạn HotelManagement";
-
+                    + "<small>Mã hệ thống gửi: " + System.currentTimeMillis() + "</small><br><br>"
+                    + "Trân trọng,<br>Khách sạn Mường Thanh";
             msg.setContent(emailContent, "text/html; charset=UTF-8");
 
             // Gửi email
-            Transport.send(msg);
+            Transport transport = session.getTransport("smtp");
+            transport.connect();
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
             System.out.println("Email sent successfully!");
 
         } catch (Exception e) {
+            System.out.println("❌ Gửi email thất bại!");
             e.printStackTrace();
         }
     }
