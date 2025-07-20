@@ -5,6 +5,7 @@ import DAO.RoomTypeDAO;
 import Models.Booking;
 import Models.RoomType;
 import Models.User;
+import Services.EmailService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -91,6 +92,9 @@ public class ConfirmBookingServlet extends HttpServlet {
             int newBookingId = bookingDAO.addBooking(booking);
 
             if (newBookingId != -1) {
+                booking.setBookingId(newBookingId); // Set the new booking ID back to the object
+                // Gửi email xác nhận
+                EmailService.sendBookingConfirmation(user, booking);
                 response.sendRedirect("booking-result?bookingId=" + newBookingId);
             } else {
                 request.setAttribute("error", "Đặt phòng thất bại. Vui lòng thử lại.");
