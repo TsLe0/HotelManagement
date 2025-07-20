@@ -29,14 +29,12 @@
             <div class="flex items-center justify-end space-x-4">
                 <c:choose>
                     <c:when test="${not empty sessionScope.account}">
-                        <span class="text-green-700 font-semibold">
-                            Hello, ${sessionScope.account.username}
-                        </span>
-
-                        <a href="logout" class="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition">
-                            Đăng Xuất
-                        </a>
-                    </c:when>
+                    <div class="flex items-center space-x-4">
+                        <a href="booking-history" class="hover:text-blue-600 transition">Lịch sử đặt phòng</a>
+                        <span class="text-gray-700 font-semibold">${sessionScope.account.username}</span>
+                        <a href="logout" class="text-sm text-red-600 hover:underline">Đăng xuất</a>
+                    </div>
+                </c:when>
                     <c:otherwise>
                         <a href="login" aria-label="Đăng nhập" class="bg-blue-700 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-800 transition" id="login-btn">
                             <i class="fas fa-user mr-2"></i> Đăng Nhập

@@ -1,19 +1,23 @@
-import DAO.RoomImageDAO;
+import DAO.BookingDAO;
 import Models.Booking;
-import java.util.ArrayList;
 import java.util.List;
-import Models.Room;
-import DAO.RoomsDAO;
 public class NewMain {
     public static void main(String[] args) {
-     Room room = new Room();
-        room.setRoomNumber("A111");
-        room.setRoomTypeID("D01");  // Giả sử RT001 tồn tại và có Status = N'Đang kinh doanh'
-        room.setRoomStatus("Trống");
+    BookingDAO bookingDAO = new BookingDAO();
 
-        // Gọi DAO để thêm phòng
-        RoomsDAO roomDAO = new RoomsDAO();
-        roomDAO.addRoom(room);
+        // Giả sử bạn đã có UserID = 1 trong database
+        int testUserId = 5;
+
+        List<Booking> bookings = bookingDAO.getBookingsByUserId(testUserId);
+
+        if (bookings.isEmpty()) {
+            System.out.println("No bookings found for user ID: " + testUserId);
+        } else {
+            System.out.println("Bookings for user ID: " + testUserId);
+            for (Booking b : bookings) {
+                System.out.println(b); // Ensure Booking class has a proper toString() method
+            }
+        }
     }
 }
 
