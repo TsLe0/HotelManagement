@@ -41,63 +41,18 @@
                         <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
                     </select>
                 </div>
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
+<!--                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm px-6 py-2 rounded-md flex items-center" type="submit">
                     <i class="fas fa-search"></i>
-                </button>
+                </button>-->
             </form>
         </section>
         <!-- Hotel info -->
-        <section class="max-w-7xl mx-auto px-4 mt-6">
-            <div class="bg-white rounded-md shadow-md p-4 flex flex-col sm:flex-row sm:space-x-6">
-                <div class="flex-shrink-0 w-full sm:w-[320px] relative">
-                    <img alt="Hotel exterior at sunset with blue sky and modern tall buildings" class="rounded-md object-cover w-full h-44" height="180" src="https://storage.googleapis.com/a1aa/image/5f54440a-ff66-48d4-009b-f7f80074545e.jpg" width="320"/>
-                    <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs rounded px-2 py-1 flex items-center space-x-1">
-                        <i class="fas fa-image">
-                        </i>
-                        <span>
-                            Xem thêm ảnh
-                        </span>
-                    </div>
-                </div>
-                <div class="mt-4 sm:mt-0 flex-1 text-sm text-gray-800">
-                    <h2 class="font-semibold text-base mb-1">
-                        Mường Thanh Luxury Quảng Ninh
-                    </h2>
-                    <p class="flex items-center text-xs text-gray-600 mb-1">
-                        <i class="fas fa-map-marker-alt mr-1">
-                        </i>
-                        Tổ 1, khu 2, phường Bãi Cháy, thành phố Hạ Long, tỉnh Quảng Ninh,
-                        Việt Nam
-                    </p>
-                    <p class="flex items-center text-xs text-gray-600 mb-2">
-                        <i class="fas fa-phone-alt mr-1">
-                        </i>
-                        Điện thoại: +84 203 3646 618
-                    </p>
-                    <p class="text-xs text-gray-700 leading-tight">
-                        Tọa lạc ngay trung tâm khu du lịch Bãi Cháy - Hạ Long, từ đây du khách
-                        có thể quan sát và ngắm nhìn toàn cảnh non nước Hạ Long, khách sạn
-                        <strong>
-                            Mường Thanh Luxury Quảng Ninh
-                        </strong>
-                        là một nét vẽ trong bức
-                        tranh thủy mặc khổng lồ của thiên nhiên, một tạo hình tuyệt m...
-                        <a class="text-red-600 hover:underline text-xs flex items-center" href="#">
-                            Xem chi tiết
-                            <i class="fas fa-angle-right ml-1">
-                            </i>
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </section>
+
         <!-- Room selection notice -->
         <section class="max-w-7xl mx-auto px-4 mt-6">
             <div class="bg-white rounded-md shadow-md p-4 text-xs text-gray-700 font-semibold">
                 Vui lòng chọn phòng
-                <span class="font-normal">
-                    (Có 3 loại phòng theo tìm kiếm)
-                </span>
+                <span class="font-normal">                </span>
             </div>
         </section>
         <!-- Room and booking info -->
@@ -137,7 +92,7 @@
                                 </div>
                                 <div class="flex items-center space-x-1">
                                     <i class="fas fa-vr-cardboard"></i>
-                                    <span>${t.roomArea}<sup>2</sup></span>
+                                    <span>${t.roomArea}m<sup>2</sup></span>
                                 </div>
                             </div>
                             <div class="flex items-center space-x-4 mb-3 text-gray-600">
@@ -145,6 +100,10 @@
                                 <i class="fas fa-suitcase-rolling"></i>
                                 <i class="fas fa-smoking-ban"></i>
                             </div>
+                                 <div class="flex items-center space-x-1">
+                                    <i class="fas fa-bed"></i>
+                                    <span>${t.roomDec}</span>
+                                </div>
                             <div class="text-xs text-gray-700 mb-2">Giá chỉ từ</div>
                             <div class="text-yellow-600 font-semibold text-lg mb-2">
                                 ${t.roomTypePrice} VNĐ
@@ -182,7 +141,6 @@
                 </div>
             </div>
             <!-- Booking info -->
-            <
         </section>
         <jsp:include page="footer.jsp" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

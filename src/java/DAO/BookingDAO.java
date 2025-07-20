@@ -207,4 +207,38 @@ public class BookingDAO extends DBContext {
         }
         return list;
     }
+
+    // Lấy danh sách các booking theo UserID
+    public List<Booking> getBookingsByUserId(int userId) {
+        List<Booking> list = new ArrayList<>();
+        String sql = "SELECT * FROM Bookings WHERE UserID = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Booking b = new Booking();
+                b.setBookingId(rs.getInt("BookingID"));
+                b.setUserId(rs.getInt("UserID"));
+                b.setRoomTypeId(rs.getString("RoomTypeID"));
+                b.setRoomNumber(rs.getString("RoomNumber"));
+                b.setCheckinDate(rs.getDate("CheckInDate"));
+                b.setCheckoutDate(rs.getDate("CheckOutDate"));
+                b.setNumberOfGuests(rs.getInt("NumberOfGuests"));
+                b.setTotalPrice(rs.getDouble("TotalPrice"));
+                b.setStatus(rs.getString("Status"));
+                b.setBookingDate(rs.getDate("BookingDate"));
+                b.setSpecialRequests(rs.getString("SpecialRequests"));
+                b.setCustomerName(rs.getString("CustomerName"));
+                b.setCustomerPhoneNumber(rs.getString("CustomerPhoneNumber"));
+                list.add(b);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

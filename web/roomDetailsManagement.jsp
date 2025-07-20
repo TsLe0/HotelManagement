@@ -49,7 +49,9 @@
                     <div class="md:w-1/2 p-6 flex flex-col justify-center space-y-4">
                         <h2 class="text-3xl font-semibold text-gray-900">Room Details</h2>
                         <div class="space-y-3 text-gray-700">
-
+                            <a href="admin  room" class="text-blue-600 hover:underline">
+                                <i class="fas fa-arrow-left mr-2"></i>Back to List
+                            </a
                             <!-- Room Number -->
                             <div class="flex justify-between border-b border-gray-200 pb-2">
                                 <span class="font-medium text-gray-800">Room Number:</span>
@@ -83,6 +85,7 @@
                                 <span class="font-medium text-gray-800">Number of Beds:</span>
                                 <span>${room.roomType.numBeds}</span>
                             </div>
+
 
                         </div>
                     </div>

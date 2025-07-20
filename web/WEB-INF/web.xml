@@ -76,6 +76,10 @@
         <servlet-name>DashBoard</servlet-name>
         <servlet-class>Controller.DashBoard</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingHistoryServlet</servlet-name>
+        <servlet-class>Controller.BookingHistoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -163,5 +167,9 @@
     <servlet-mapping>
         <servlet-name>DashBoard</servlet-name>
         <url-pattern>/dash-board</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingHistoryServlet</servlet-name>
+        <url-pattern>/booking-history</url-pattern>
     </servlet-mapping>
 </web-app>
