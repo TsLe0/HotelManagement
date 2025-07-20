@@ -17,11 +17,10 @@ public class BookingHistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        // Lấy session hiện tại
-        HttpSession session = request.getSession(false); // false: không tạo session mới nếu chưa có
+        HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("account") == null) {
             response.sendRedirect("login.jsp");
@@ -29,11 +28,37 @@ public class BookingHistoryServlet extends HttpServlet {
         }
 
         User user = (User) session.getAttribute("account");
-
         BookingDAO bookingDAO = new BookingDAO();
-        List<Booking> bookingHistory = bookingDAO.getBookingsByUserId(user.getId());
+
+        // Pagination logic
+        int page = 1;
+        int pageSize = 6; // 6 bookings per page
+        if (request.getParameter("page") != null) {
+            try {
+                page = Integer.parseInt(request.getParameter("page"));
+            } catch (NumberFormatException e) {
+                // Handle invalid page parameter
+                page = 1;
+            }
+        }
+
+        int totalBookings = bookingDAO.getBookingCountByUserId(user.getId());
+        int totalPages = (int) Math.ceil((double) totalBookings / pageSize);
+
+        // Ensure page is within valid range
+        if (page > totalPages && totalPages > 0) {
+            page = totalPages;
+        }
+        if (page < 1) {
+            page = 1;
+        }
+
+        List<Booking> bookingHistory = bookingDAO.getBookingsByUserId(user.getId(), page, pageSize);
 
         request.setAttribute("bookingHistory", bookingHistory);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("bookingHistory.jsp").forward(request, response);
     }
 
