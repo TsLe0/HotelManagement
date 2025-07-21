@@ -1,7 +1,9 @@
 package Controller;
 
 import DAO.BookingDAO;
+import DAO.RoomTypeDAO;
 import Models.Booking;
+import Models.RoomType;
 import Models.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +17,9 @@ import java.io.IOException;
 @WebServlet(name = "BookingHistoryDetailServlet", urlPatterns = {"/booking-history-detail"})
 public class BookingHistoryDetailServlet extends HttpServlet {
 
+    BookingDAO bookingDAO = new BookingDAO();
+    RoomTypeDAO tDao =new RoomTypeDAO();
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,9 +39,11 @@ public class BookingHistoryDetailServlet extends HttpServlet {
 
         try {
             int bookingId = Integer.parseInt(bookingIdStr);
-            BookingDAO bookingDAO = new BookingDAO();
+            
             Booking booking = bookingDAO.getById(bookingId);
-
+            RoomType roomType =tDao.getRoomTypeById(booking.getRoomTypeId());
+            booking.setUser(user);
+            booking.setRoomType(roomType);
             // 2. Check if booking exists and belongs to the current user
             if (booking != null && booking.getUserId() == user.getId()) {
                 request.setAttribute("booking", booking);

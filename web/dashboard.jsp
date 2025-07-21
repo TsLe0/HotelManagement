@@ -27,7 +27,18 @@
                         <i class="fas fa-bed fa-2x"></i>
                     </div>
                     <div>
-                        <p class="text-gray-500 font-semibold">Total Rooms</p>
+                        <p class="text-gray-500 font-semibold">Số phòng </p>
+                        <p class="text-2xl font-bold text-gray-800">
+                            ${totalRooms}
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-5 flex items-center space-x-4">
+                    <div class="p-3 bg-blue-100 text-blue-600 rounded-full">
+                        <i class="fas fa-bed fa-2x"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 font-semibold">Số phòng </p>
                         <p class="text-2xl font-bold text-gray-800">
                             ${totalRooms}
                         </p>
@@ -38,7 +49,7 @@
                         <i class="fas fa-calendar-check fa-2x"></i>
                     </div>
                     <div>
-                        <p class="text-gray-500 font-semibold">Total Bookings</p>
+                        <p class="text-gray-500 font-semibold">Lượt đặt phòng</p>
                         <p class="text-2xl font-bold text-gray-800">
                             ${totalBookings}
                         </p>

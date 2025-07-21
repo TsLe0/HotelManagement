@@ -43,19 +43,19 @@ public class EmailService {
             String subject = "Xác nhận đặt phòng #" + booking.getBookingId() + " - " + System.currentTimeMillis();
             msg.setSubject(subject, "UTF-8");
             
-//            String roomTypeName = (booking.getRoomType() != null)
-//                    ? booking.getRoomType().getRoomTypeName()
-//                    : "Không xác định";
-
+            String roomTypeName = (booking.getRoomType() != null)
+                    ? booking.getRoomType().getRoomTypeName()
+                    : "Không xác định";
+            
             String emailContent = "Chào " + booking.getCustomerName() + ",<br><br>"
                     + "Cảm ơn bạn đã đặt phòng tại khách sạn của chúng tôi. Đơn đặt phòng của bạn đã được xác nhận.<br><br>"
                     + "<b>Chi tiết đặt phòng:</b><br>"
                     + "Mã đặt phòng: " + booking.getBookingId() + "<br>"
-//                    + "Hạng phòng: <b>" + roomTypeName + "</b><br>"
+                    + "Hạng phòng: <b>" + roomTypeName + "</b><br>"
+                    + "Mã phòng: <b>" + booking.getRoomNumber() + "</b><br>"
                     + "Ngày nhận phòng: " + booking.getCheckinDate() + "<br>"
                     + "Ngày trả phòng: " + booking.getCheckoutDate() + "<br>"
                     + "Tổng tiền: " + String.format("%,.0f", booking.getTotalPrice()) + " VNĐ<br><br>"
-                    + "<small>Mã hệ thống gửi: " + System.currentTimeMillis() + "</small><br><br>"
                     + "Trân trọng,<br>Khách sạn Mường Thanh";
             msg.setContent(emailContent, "text/html; charset=UTF-8");
 

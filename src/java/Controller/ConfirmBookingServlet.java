@@ -94,7 +94,7 @@ public class ConfirmBookingServlet extends HttpServlet {
             if (newBookingId != -1) {
                 booking.setBookingId(newBookingId); // Set the new booking ID back to the object
                 // Gửi email xác nhận
-                EmailService.sendBookingConfirmation(user, booking);
+//                EmailService.sendBookingConfirmation(user, booking);
                 response.sendRedirect("booking-result?bookingId=" + newBookingId);
             } else {
                 request.setAttribute("error", "Đặt phòng thất bại. Vui lòng thử lại.");
