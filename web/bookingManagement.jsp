@@ -24,6 +24,11 @@
         <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
 
         <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.min.js"></script>
+        <style>
+            #booking-tbl_wrapper, #booking-tbl {
+                font-size: 0.75rem; /* 14px */
+            }
+        </style>
     </head>
 
     <body class="bg-gray-50 min-h-screen flex flex-col">

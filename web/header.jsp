@@ -40,7 +40,7 @@
                     <c:when test="${not empty sessionScope.account}">
                     <div class="flex items-center space-x-4">
                         <a href="booking-history" class="hover:text-blue-600 transition">Lịch sử đặt phòng</a>
-                        <span class="text-gray-700 font-semibold">Xin chào ${sessionScope.account.username}</span>
+                        <span class="text-gray-700 font-semibold">Xin chào  ${sessionScope.account.username}</span>
                         <a href="logout" class="text-sm text-red-600 hover:underline">Đăng xuất</a>
                     </div>
                 </c:when>

@@ -58,11 +58,13 @@ public class DashBoard extends HttpServlet {
 
         int totalRooms = roomsDAO.getTotalRooms();
         int totalBookings = bookingDAO.getTotalBookings();
+        int totalRoomTypes = tDao.getTotalRoomTypes();
         List<Booking> recentBookings = bookingDAO.getRecentBookings(5);
 
         request.setAttribute("totalRooms", totalRooms);
         request.setAttribute("tList", tList);
         request.setAttribute("totalBookings", totalBookings);
+        request.setAttribute("totalRoomTypes", totalRoomTypes);
         request.setAttribute("recentBookings", recentBookings);
 
         request.getRequestDispatcher("dashboard.jsp").forward(request, response);

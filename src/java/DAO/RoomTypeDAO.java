@@ -331,4 +331,17 @@ public class RoomTypeDAO {
         return false;
     }
 
+    public int getTotalRoomTypes() {
+        String sql = "SELECT count(*) FROM RoomType";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
 }

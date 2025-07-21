@@ -1,6 +1,7 @@
 
-import DAO.BookingDAO;
-import Models.Booking;
+import DAO.RoomTypeDAO;
+
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,10 +17,10 @@ public class CMM {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        BookingDAO dao = new BookingDAO();
-        Booking b = dao.getById(35);
-        System.out.println(b);
+  public static void main(String[] args) {
+        RoomTypeDAO dao = new RoomTypeDAO();
+        int totalRoomTypes = dao.getTotalRoomTypes();
+        System.out.println("Tổng số hạng phòng: " + totalRoomTypes);
     }
     
 }

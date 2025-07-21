@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>Hotel Management Dashboard</title>
+    <title>Mường Thanh Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
@@ -22,14 +22,14 @@
 
             <!-- Stats Section -->
             <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow p-5 flex items-center space-x-4">
+                  <div class="bg-white rounded-lg shadow p-5 flex items-center space-x-4">
                     <div class="p-3 bg-blue-100 text-blue-600 rounded-full">
                         <i class="fas fa-bed fa-2x"></i>
                     </div>
                     <div>
-                        <p class="text-gray-500 font-semibold">Số phòng </p>
+                        <p class="text-gray-500 font-semibold">Hạng phòng </p>
                         <p class="text-2xl font-bold text-gray-800">
-                            ${totalRooms}
+                            ${totalRoomTypes}
                         </p>
                     </div>
                 </div>
@@ -44,6 +44,7 @@
                         </p>
                     </div>
                 </div>
+              
                 <div class="bg-white rounded-lg shadow p-5 flex items-center space-x-4">
                     <div class="p-3 bg-green-100 text-green-600 rounded-full">
                         <i class="fas fa-calendar-check fa-2x"></i>
