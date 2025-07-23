@@ -34,7 +34,15 @@ public class AdminBookingDetailServlet extends HttpServlet {
 
                 if (booking != null) {
                     RoomType roomType = roomTypeDAO.getRoomTypeById(booking.getRoomTypeId());
-                    List<Room> availableRooms = roomsDAO.getAvailableRoomsByTypeId(booking.getRoomTypeId());
+
+                    // Lấy ngày check-in và check-out từ đối tượng booking
+                    java.sql.Date checkIn = booking.getCheckinDate();
+                    java.sql.Date checkOut = booking.getCheckoutDate();
+
+                    // Lấy danh sách phòng trống từ DAO
+                    List<Room> availableRooms = roomsDAO.getAvailableRoomsByTypeId(
+                            String.valueOf(booking.getRoomTypeId()), checkIn, checkOut
+                    );
 
                     request.setAttribute("booking", booking);
                     request.setAttribute("roomType", roomType);
@@ -88,7 +96,7 @@ public class AdminBookingDetailServlet extends HttpServlet {
                 session.setAttribute("errorMessage", "Invalid Booking or Room ID.");
             }
         }
-        
+
         response.sendRedirect(request.getContextPath() + "/admin-booking");
     }
 

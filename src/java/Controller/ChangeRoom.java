@@ -33,7 +33,13 @@ public class ChangeRoom extends HttpServlet {
         if (bookingIdStr != null) {
             int bookingId = Integer.parseInt(bookingIdStr);
             Booking booking = bookingDAO.getById(bookingId);
-            List<Room> availableRooms = roomsDAO.getAvailableRoomsByTypeId(booking.getRoomTypeId());
+            java.sql.Date checkIn = booking.getCheckinDate();
+                    java.sql.Date checkOut = booking.getCheckoutDate();
+
+                    // Lấy danh sách phòng trống từ DAO
+                    List<Room> availableRooms = roomsDAO.getAvailableRoomsByTypeId(
+                            String.valueOf(booking.getRoomTypeId()), checkIn, checkOut
+                    );
 
             request.setAttribute("booking", booking);
             request.setAttribute("availableRooms", availableRooms);
