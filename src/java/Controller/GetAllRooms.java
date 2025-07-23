@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet(name = "GetAllRooms", urlPatterns = {"/rooms"})
+@WebServlet(name = "GetAllRooms", urlPatterns = {"/getallrooms"})
 public class GetAllRooms extends HttpServlet {
     
     RoomsDAO dao = new RoomsDAO();
@@ -37,22 +37,31 @@ public class GetAllRooms extends HttpServlet {
         String pageStr = request.getParameter("page");
         String searchQuery = request.getParameter("search");
         String sort = request.getParameter("sort");
+        String roomTypeFilter = request.getParameter("roomType");
+
         int page = (pageStr == null) ? 1 : Integer.parseInt(pageStr);
         int pageSize = 3; // Number of rooms per page
 
         if (sort == null || sort.trim().isEmpty()) {
             sort = "default";
         }
+        if (roomTypeFilter == null || roomTypeFilter.trim().isEmpty()) {
+            roomTypeFilter = "all";
+        }
 
         int totalRooms;
         List<RoomType> tList;
+
+        // Get all room types for the filter dropdown
+        List<RoomType> allRoomTypes = typeDao.getAllActiveRoomTypes();
 
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
             totalRooms = typeDao.countSearchedActiveRoomTypes(searchQuery);
             tList = typeDao.searchActiveRoomTypesByName(searchQuery, page, pageSize, sort);
         } else {
-            totalRooms = typeDao.countActiveRoomTypes();
-            tList = typeDao.getActiveRoomTypes(page, pageSize, sort);
+            // Use the new methods that accept a filter
+            totalRooms = typeDao.countActiveRoomTypes(roomTypeFilter);
+            tList = typeDao.getActiveRoomTypes(page, pageSize, sort, roomTypeFilter);
         }
 
         int totalPages = (int) Math.ceil((double) totalRooms / pageSize);
@@ -64,10 +73,12 @@ public class GetAllRooms extends HttpServlet {
 
         request.setAttribute("iList", iList);
         request.setAttribute("tList", tList);
+        request.setAttribute("allRoomTypes", allRoomTypes); // For the filter dropdown
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("searchQuery", searchQuery);
         request.setAttribute("sort", sort);
+        request.setAttribute("selectedRoomType", roomTypeFilter); // To keep filter state
         request.getRequestDispatcher("room.jsp").forward(request, response);
     }
     

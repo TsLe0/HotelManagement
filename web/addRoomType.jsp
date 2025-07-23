@@ -94,7 +94,7 @@
                                 <option value="Ngừng kinh doanh">Ngừng kinh doanh</option>
                             </select>
                         </div>
-                        
+
                         <div class="mb-4">
                             <label class="block text-gray-700 font-semibold mb-2" for="roomImages">
                                 Ảnh phòng (có thể chọn nhiều ảnh)
@@ -102,6 +102,8 @@
                             <input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
                                    id="roomImages" name="roomImages" type="file" accept="image/*" multiple />
                         </div>
+
+                        <div id="imagePreview" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"></div>
 
                         <!-- Error message -->
                         <c:if test="${not empty error}">
@@ -128,4 +130,62 @@
             </div>
         </div>
     </body>
+
+    <script>
+        const input = document.getElementById('roomImages');
+        const preview = document.getElementById('imagePreview');
+
+        // Danh sách tạm giữ file (vì input.files không thể chỉnh trực tiếp)
+        let selectedFiles = [];
+
+        input.addEventListener('change', function () {
+            // Gộp file mới với các file đã chọn trước đó
+            selectedFiles = [...selectedFiles, ...Array.from(input.files)];
+            renderPreviews();
+        });
+
+        function updateInputFiles() {
+            const dataTransfer = new DataTransfer();
+            selectedFiles.forEach(file => dataTransfer.items.add(file));
+            input.files = dataTransfer.files;
+        }
+
+
+        function renderPreviews() {
+            preview.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                if (!file.type.startsWith('image/'))
+                    return;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const container = document.createElement('div');
+                    container.className = 'relative';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-full h-40 object-cover rounded-md shadow';
+
+                    // Nút xóa
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = '❌';
+                    closeBtn.className = 'absolute top-1 right-1 bg-white rounded-full text-red-500 font-bold text-xs px-1 hover:bg-red-100';
+                    closeBtn.addEventListener('click', () => {
+                        selectedFiles.splice(index, 1);  // Xóa khỏi danh sách
+                        renderPreviews(); // Vẽ lại
+                    });
+
+                    container.appendChild(img);
+                    container.appendChild(closeBtn);
+                    preview.appendChild(container);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            input.value = '';
+            updateInputFiles();
+        }
+
+    </script>
 </html>

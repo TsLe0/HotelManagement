@@ -89,7 +89,7 @@ public class BookingDAO extends DBContext {
     }
 
     public Booking getById(int bookingId) {
-        String sql = "SELECT * FROM [HotelManagement].[dbo].[Bookings]\n"
+        String sql = "SELECT * FROM [HotelManagement].[dbo].[Bookings]"
                 + "WHERE BookingID = ?";
         try {
             conn = new DBContext().getConnection();
@@ -208,15 +208,17 @@ public class BookingDAO extends DBContext {
         return list;
     }
 
-    // Lấy danh sách các booking theo UserID
-    public List<Booking> getBookingsByUserId(int userId) {
+    // Lấy danh sách các booking theo UserID với phân trang
+    public List<Booking> getBookingsByUserId(int userId, int page, int pageSize) {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT * FROM Bookings WHERE UserID = ?";
+        String sql = "SELECT * FROM Bookings WHERE UserID = ? ORDER BY BookingDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
+            ps.setInt(2, (page - 1) * pageSize);
+            ps.setInt(3, pageSize);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -240,5 +242,22 @@ public class BookingDAO extends DBContext {
             e.printStackTrace();
         }
         return list;
+    }
+
+    // Đếm tổng số booking của một UserID
+    public int getBookingCountByUserId(int userId) {
+        String sql = "SELECT COUNT(*) FROM Bookings WHERE UserID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -7,20 +7,29 @@
         <a class="flex items-center space-x-3" href="home.jsp">
             <img alt="Logo khách sạn Mường Thanh màu xanh dương và trắng" class="h-16 w-16 w-auto object-contain"
                  src="https://employer.jobsgo.vn/uploads/media/img/201912/pictures_library_38320_20191224135816_4094.jpg" width="80"/>
-            <span class="text-2xl font-bold text-blue-700">
-                Mường Thanh
+            
+            <span class="text-xl font-bold text-black-700">
+                Mường Thanh Grand
             </span>
-        </a>
+            <div class="flex space-x-4 text-base">
+    <a aria-label="Facebook" class="hover:text-[#f5a623]" href="#">
+      <i class="fab fa-facebook-f" aria-hidden="true"></i>
+    </a>
+    <a aria-label="Instagram" class="hover:text-[#f5a623]" href="#">
+      <i class="fab fa-instagram" aria-hidden="true"></i>
+    </a>
+    <a aria-label="YouTube" class="hover:text-[#f5a623]" href="#">
+      <i class="fab fa-youtube" aria-hidden="true"></i>
+    </a>
+  </div>
+            
+            
+        </a> 
         <nav class="hidden md:flex space-x-8 font-semibold text-gray-700 items-center">
             <a class="hover:text-blue-600 transition" href="getallrooms">
                 Đặt Phòng
             </a>
-            <a class="hover:text-blue-600 transition" href="#hotels">
-                Khách Sạn
-            </a>
-            <a class="hover:text-blue-600 transition" href="#promotion">
-                Khuyến Mãi
-            </a>
+
             <a class="hover:text-blue-600 transition" href="#contact">
                 Liên Hệ
             </a>
@@ -31,7 +40,7 @@
                     <c:when test="${not empty sessionScope.account}">
                     <div class="flex items-center space-x-4">
                         <a href="booking-history" class="hover:text-blue-600 transition">Lịch sử đặt phòng</a>
-                        <span class="text-gray-700 font-semibold">${sessionScope.account.username}</span>
+                        <span class="text-gray-700 font-semibold">Xin chào  ${sessionScope.account.username}</span>
                         <a href="logout" class="text-sm text-red-600 hover:underline">Đăng xuất</a>
                     </div>
                 </c:when>
@@ -54,12 +63,12 @@
         <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#booking">
             Đặt Phòng
         </a>
-        <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#hotels">
+<!--        <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#hotels">
             Khách Sạn
-        </a>
-        <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#promotion">
+        </a>-->
+<!--        <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#promotion">
             Khuyến Mãi
-        </a>
+        </a>-->
         <a class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 transition" href="#contact">
             Liên Hệ
         </a>

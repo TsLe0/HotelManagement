@@ -188,29 +188,37 @@ public class RoomsDAO {
         }
     }
 
-    public List<Room> getAvailableRoomsByTypeId(String roomTypeId) {
-        List<Room> list = new ArrayList<>();
+    public List<Room> getAvailableRoomsByTypeId(String roomTypeId, java.util.Date checkIn, java.util.Date checkOut) {
+        List<Room> availableRooms = new ArrayList<>();
         String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
                 + "FROM Room r "
-                + "WHERE r.RoomTypeID = ? AND r.RoomStatus = N'Trống'";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
+                + "WHERE r.RoomTypeID = ? "
+                + "AND r.RoomNumber NOT IN ("
+                + "    SELECT b.RoomNumber "
+                + "    FROM Bookings b "
+                + "    WHERE b.RoomNumber IS NOT NULL "
+                + "    AND b.Status = 'Confirmed' "
+                + "    AND (? < b.CheckOutDate AND ? > b.CheckInDate)"
+                + ")";
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, roomTypeId);
-            rs = ps.executeQuery();
-            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
-            while (rs.next()) {
-                Room room = new Room();
-                room.setRoomNumber(rs.getString("RoomNumber"));
-                room.setRoomStatus(rs.getString("RoomStatus"));
-                room.setRoomTypeID(roomTypeId);
-                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
-                list.add(room);
+            ps.setDate(2, new java.sql.Date(checkIn.getTime()));
+            ps.setDate(3, new java.sql.Date(checkOut.getTime()));
+            try (ResultSet rs = ps.executeQuery()) {
+                RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
+                while (rs.next()) {
+                    Room room = new Room();
+                    room.setRoomNumber(rs.getString("RoomNumber"));
+                    room.setRoomStatus(rs.getString("RoomStatus"));
+                    room.setRoomTypeID(rs.getString("RoomTypeID"));
+                    room.setRoomType(roomTypeDAO.getRoomTypeById(rs.getString("RoomTypeID")));
+                    availableRooms.add(room);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return list;
+        return availableRooms;
     }
 
     public List<Room> getRoomsByTypeId(String roomTypeId) {

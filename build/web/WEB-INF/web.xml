@@ -80,6 +80,14 @@
         <servlet-name>BookingHistoryServlet</servlet-name>
         <servlet-class>Controller.BookingHistoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelBookingServlet</servlet-name>
+        <servlet-class>Controller.CancelBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RoomSearchServlet</servlet-name>
+        <servlet-class>Controller.RoomSearchServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetAllRooms</servlet-name>
         <url-pattern>/getallrooms</url-pattern>
@@ -171,5 +179,13 @@
     <servlet-mapping>
         <servlet-name>BookingHistoryServlet</servlet-name>
         <url-pattern>/booking-history</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelBookingServlet</servlet-name>
+        <url-pattern>/cancel-booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomSearchServlet</servlet-name>
+        <url-pattern>/search-rooms</url-pattern>
     </servlet-mapping>
 </web-app>

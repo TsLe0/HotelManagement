@@ -68,10 +68,9 @@
             border-top: 1px solid #e5e7eb;
             padding-top: 1rem;
             margin-top: 1rem;
-            text-align: right;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -85,7 +84,7 @@
             <div class="text-center bg-white p-10 rounded-lg shadow-md">
                 <i class="fas fa-box-open fa-3x text-gray-400 mb-4"></i>
                 <p class="text-gray-600 text-lg">Bạn chưa có lịch sử đặt phòng nào.</p>
-                <a href="home.jsp" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors">
+                <a href="getallrooms" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors">
                     Bắt đầu đặt phòng
                 </a>
             </div>
@@ -123,14 +122,46 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <span>Tổng cộng: </span>
-                            <span class="text-blue-600">
+                            <a href="booking-history-detail?bookingId=${booking.bookingId}" class="text-sm font-semibold text-blue-600 hover:text-blue-800">
+                                Xem chi tiết <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                            <div class="text-lg font-bold text-gray-800">
                                 <fmt:setLocale value="vi_VN"/>
                                 <fmt:formatNumber value="${booking.totalPrice}" type="currency" currencySymbol="VNĐ"/>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </c:forEach>
+            </div>
+        </c:if>
+
+        <!-- Pagination Controls -->
+        <c:if test="${totalPages > 1}">
+            <div class="flex justify-center items-center mt-8">
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                    <!-- Previous Button -->
+                    <a href="booking-history?page=${currentPage - 1}"
+                       class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage == 1 ? 'pointer-events-none text-gray-300' : ''}">
+                        <span class="sr-only">Previous</span>
+                        <i class="fas fa-chevron-left h-5 w-5"></i>
+                    </a>
+
+                    <!-- Page Numbers -->
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="booking-history?page=${i}"
+                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium
+                                  ${i == currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50'}">
+                            ${i}
+                        </a>
+                    </c:forEach>
+
+                    <!-- Next Button -->
+                    <a href="booking-history?page=${currentPage + 1}"
+                       class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage == totalPages ? 'pointer-events-none text-gray-300' : ''}">
+                        <span class="sr-only">Next</span>
+                        <i class="fas fa-chevron-right h-5 w-5"></i>
+                    </a>
+                </nav>
             </div>
         </c:if>
     </div>

@@ -45,77 +45,7 @@
                         sạn Mường Thanh trên toàn quốc. Đặt phòng nhanh chóng, giá tốt nhất.
                     </p>
                 </div>
-                <form action="#" aria-label="Form Đặt phòng khách sạn Mường Thanh" class="bg-white rounded-lg shadow-lg p-6 w-full md:w-1/2 mt-10 md:mt-0" id="booking" method="POST">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1" for="checkin">
-                                Ngày Đến
-                            </label>
-                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="checkin" name="checkin" required="" type="date"/>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1" for="checkout">
-                                Ngày Đi
-                            </label>
-                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="checkout" name="checkout" required="" type="date"/>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1" for="hotel">
-                                Chọn khách sạn
-                            </label>
-                            <select class="w-full border text-black border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="hotel" name="hotel" required="">
-                                <option disabled="" selected="" value="">
-                                    Chọn khách sạn
-                                </option>
-                                <option value="muong-thanh-grand">
-                                    Mường Thanh Grand
-                                </option>
-                                <option value="muong-thanh-premier">
-                                    Mường Thanh Premier
-                                </option>
-                                <option value="muong-thanh-standard">
-                                    Mường Thanh Standard
-                                </option>
-                                <option value="muong-thanh-resort">
-                                    Mường Thanh Resort
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1" for="room-type">
-                                Loại phòng
-                            </label>
-                            <select class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="room-type" name="room-type" required="">
-                                <option disabled="" selected="" value="">
-                                    Chọn loại phòng
-                                </option>
-                                <option value="standard">
-                                    Phòng tiêu chuẩn
-                                </option>
-                                <option value="deluxe">
-                                    Phòng Deluxe
-                                </option>
-                                <option value="suite">
-                                    Phòng Suite
-                                </option>
-                                <option value="family">
-                                    Phòng Gia Đình
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1" for="guests">
-                                Số khách
-                            </label>
-                            <input class="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="guests" max="10" min="1" name="guests" required="" type="number" value="1"/>
-                        </div>
-                        <div class="flex items-end">
-                            <button class="w-full bg-blue-700 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition" type="submit">
-                                Tìm Phòng
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                
             </div>
         </section>
         <!-- Hotels Section -->
