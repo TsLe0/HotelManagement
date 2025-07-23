@@ -25,7 +25,7 @@
             <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-7xl mx-auto my-4" role="alert">
                 <strong class="font-bold">Thành công!</strong>
                 <span class="block sm:inline">${sessionScope.bookingSuccess}</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').style.display='none';">
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').style.display = 'none';">
                     <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
                 </span>
             </div>
@@ -51,12 +51,17 @@
                         <div>
                             <label for="checkin" class="block text-sm font-medium text-gray-700">Ngày nhận phòng</label>
                             <input type="date" id="checkin" name="checkin" 
-                            required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                   required 
+                                   class="text-gray-900 mt-1 block w-full border border-gray-300 
+                                   rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
                         <div>
                             <label for="checkout" class="block text-sm font-medium text-gray-700">Ngày trả phòng</label>
-                            <input type="date" id="checkout" name="checkout" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <input type="date" id="checkout" name="checkout" 
+                                   required 
+                                   class="text-black mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
+
                         <button type="submit" class="w-full bg-blue-700 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition">Tìm Kiếm</button>
                     </form>
                 </div>
@@ -153,11 +158,55 @@
         </section>
 
         <!-- Footer -->
-              <jsp:include page="footer.jsp" />
+        <jsp:include page="footer.jsp" />
         <script>
-            document.getElementById('menu-btn').addEventListener('click', function () {
-                const menu = document.getElementById('mobile-menu');
-                menu.classList.toggle('hidden');
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            function validateBookingForm() {
+                const checkinDate = new Date(document.getElementById('checkin').value);
+                const checkoutDate = new Date(document.getElementById('checkout').value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // So sánh chỉ ngày, không tính giờ
+
+                if (checkinDate < today) {
+                    alert('Ngày nhận phòng không được là ngày trong quá khứ.');
+                    return false;
+                }
+
+                if (checkoutDate <= checkinDate) {
+                    alert('Ngày trả phòng phải sau ngày nhận phòng.');
+                    return false;
+                }
+                return true;
+            }
+
+            // Set min date for checkin and checkout
+            document.addEventListener("DOMContentLoaded", function () {
+                var today = new Date().toISOString().split('T')[0];
+                var checkinInput = document.getElementById('checkin');
+                var checkoutInput = document.getElementById('checkout');
+
+                checkinInput.setAttribute('min', today);
+
+                checkinInput.addEventListener('change', function () {
+                    var checkinDate = new Date(this.value);
+                    checkinDate.setDate(checkinDate.getDate() + 1);
+                    var nextDay = checkinDate.toISOString().split('T')[0];
+                    checkoutInput.setAttribute('min', nextDay);
+                    if (checkoutInput.value < nextDay) {
+                        checkoutInput.value = nextDay;
+                    }
+                });
+
+                // Initial setup for checkout min date
+                var checkinDate = new Date(checkinInput.value);
+                checkinDate.setDate(checkinDate.getDate() + 1);
+                var nextDay = checkinDate.toISOString().split('T')[0];
+                checkoutInput.setAttribute('min', nextDay);
             });
         </script>
     </body>
