@@ -45,63 +45,52 @@
                         sạn Mường Thanh trên toàn quốc. Đặt phòng nhanh chóng, giá tốt nhất.
                     </p>
                 </div>
-                
+                <div class="md:w-1/2 mt-10 md:mt-0">
+                    <form action="getallrooms" method="GET" class="bg-white p-8 rounded-lg shadow-2xl space-y-6">
+                        <h2 class="text-2xl font-bold text-gray-800 text-center">Tìm Kiếm Phòng</h2>
+                        <div>
+                            <label for="checkin" class="block text-sm font-medium text-gray-700">Ngày nhận phòng</label>
+                            <input type="date" id="checkin" name="checkin" 
+                            required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="checkout" class="block text-sm font-medium text-gray-700">Ngày trả phòng</label>
+                            <input type="date" id="checkout" name="checkout" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-700 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition">Tìm Kiếm</button>
+                    </form>
+                </div>
             </div>
         </section>
-        <!-- Hotels Section -->
+        <!-- Featured Rooms Section -->
         <section class="max-w-7xl mx-auto px-6 py-16 space-y-12" id="hotels">
             <h2 class="text-3xl font-extrabold text-center text-blue-700">
-                Hệ Thống Khách Sạn Mường Thanh
+                Phòng Nổi Bật
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Grand Hà Nội với kiến trúc hiện đại và ánh sáng ban ngày" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Grand Hà Nội
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn 5 sao sang trọng tọa lạc tại trung tâm thủ đô Hà Nội,
-                            tiện nghi hiện đại, dịch vụ đẳng cấp.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Premier Đà Nẵng nhìn ra biển với bãi cát trắng và bầu trời xanh" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/738f10e3-9298-4a24-ae28-3c31227a9c41.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Premier Đà Nẵng
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn 4 sao cao cấp bên bờ biển Mỹ Khê, Đà Nẵng, với phòng nghỉ
-                            hướng biển tuyệt đẹp.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Standard Hạ Long với view vịnh Hạ Long và núi non" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/e9bc38d5-d58a-4c85-8690-42b305823c8c.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Standard Hạ Long
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn tiêu chuẩn với vị trí thuận lợi gần vịnh Hạ Long, tiện
-                            nghi đầy đủ cho kỳ nghỉ gia đình.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khu resort Mường Thanh Phú Quốc với hồ bơi ngoài trời và cây xanh nhiệt đới" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/69c2e0f9-d010-4647-0655-d768ba6fbf15.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Resort Phú Quốc
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khu nghỉ dưỡng cao cấp tại đảo Phú Quốc với hồ bơi, spa và bãi biển
-                            riêng.
-                        </p>
-                    </div>
-                </article>
+                <c:forEach items="${featuredRoomTypes}" var="roomType" varStatus="loop">
+                    <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
+                        <c:choose>
+                            <c:when test="${not empty featuredRoomImages[loop.index]}">
+                                <img alt="${roomType.roomTypeName}" class="w-full h-56 object-cover" height="250" src="${pageContext.request.contextPath}/uploads/room_images/${featuredRoomImages[loop.index][0].imagePath}" width="400"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img alt="Default Room Image" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-2">
+                                ${roomType.roomTypeName}
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                ${roomType.roomDec}
+                            </p>
+                            <div class="mt-4">
+                                <a href="${pageContext.request.contextPath}/room-detail?roomTypeId=${roomType.roomTypeID}" class="text-blue-600 hover:text-blue-800 font-semibold">Xem Chi Tiết</a>
+                            </div>
+                        </div>
+                    </article>
+                </c:forEach>
             </div>
         </section>
         <!-- Promotion Section -->

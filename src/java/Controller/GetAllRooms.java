@@ -7,7 +7,6 @@ package Controller;
 import DAO.RoomImageDAO;
 import DAO.RoomTypeDAO;
 import DAO.RoomsDAO;
-import Models.Room;
 import Models.RoomImage;
 import Models.RoomType;
 import jakarta.servlet.ServletException;
@@ -15,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,8 @@ public class GetAllRooms extends HttpServlet {
         String searchQuery = request.getParameter("search");
         String sort = request.getParameter("sort");
         String roomTypeFilter = request.getParameter("roomType");
+        String checkinDateStr = request.getParameter("checkin");
+        String checkoutDateStr = request.getParameter("checkout");
 
         int page = (pageStr == null) ? 1 : Integer.parseInt(pageStr);
         int pageSize = 3; // Number of rooms per page
@@ -55,7 +57,10 @@ public class GetAllRooms extends HttpServlet {
         // Get all room types for the filter dropdown
         List<RoomType> allRoomTypes = typeDao.getAllActiveRoomTypes();
 
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+        if (checkinDateStr != null && !checkinDateStr.isEmpty() && checkoutDateStr != null && !checkoutDateStr.isEmpty()) {
+            tList = typeDao.getAvailableRoomTypesByDate(checkinDateStr, checkoutDateStr);
+            totalRooms = tList.size();
+        } else if (searchQuery != null && !searchQuery.trim().isEmpty()) {
             totalRooms = typeDao.countSearchedActiveRoomTypes(searchQuery);
             tList = typeDao.searchActiveRoomTypesByName(searchQuery, page, pageSize, sort);
         } else {
@@ -79,6 +84,8 @@ public class GetAllRooms extends HttpServlet {
         request.setAttribute("searchQuery", searchQuery);
         request.setAttribute("sort", sort);
         request.setAttribute("selectedRoomType", roomTypeFilter); // To keep filter state
+        request.setAttribute("checkin", checkinDateStr);
+        request.setAttribute("checkout", checkoutDateStr);
         request.getRequestDispatcher("room.jsp").forward(request, response);
     }
     

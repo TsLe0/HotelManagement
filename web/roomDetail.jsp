@@ -142,13 +142,13 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1" for="checkin">
                                     Ngày nhận phòng
                                 </label>
-                                <input class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="checkin" min="2025-06-29" name="checkin" type="date" value="2025-06-29"/>
+                                <input class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="checkin" name="checkin" type="date" value="${checkin}" />
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1" for="checkout">
                                     Ngày trả phòng
                                 </label>
-                                <input class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="checkout" min="2025-06-30" name="checkout" type="date" value="2025-06-30"/>
+                                <input class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="checkout" name="checkout" type="date" value="${checkout}" />
                             </div>
 <!--                            <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1" for="guests">
