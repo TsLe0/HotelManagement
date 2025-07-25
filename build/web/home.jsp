@@ -52,7 +52,7 @@
                             <label for="checkin" class="block text-sm font-medium text-gray-700">Ngày nhận phòng</label>
                             <input type="date" id="checkin" name="checkin" 
                                    required 
-                                   class="text-gray-900 mt-1 block w-full border border-gray-300 
+                                   class="text-gray-900 mt-1 block w-full border border-gray-300
                                    rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
                         <div>
@@ -76,11 +76,13 @@
                 <c:forEach items="${featuredRoomTypes}" var="roomType" varStatus="loop">
                     <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
                         <c:choose>
-                            <c:when test="${not empty featuredRoomImages[loop.index]}">
-                                <img alt="${roomType.roomTypeName}" class="w-full h-56 object-cover" height="250" src="${pageContext.request.contextPath}/uploads/room_images/${featuredRoomImages[loop.index][0].imagePath}" width="400"/>
+                            <c:when test="${not empty featuredRoomImages and not empty featuredRoomImages[loop.index]}">
+                                <img alt="${roomType.roomTypeName}" class="w-full h-56 object-cover" height="250"
+                                     src="${featuredRoomImages[loop.index][0].roomImages}" width="400"/>
                             </c:when>
                             <c:otherwise>
-                                <img alt="Default Room Image" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
+                                <img alt="Default Room Image" class="w-full h-56 object-cover" height="250"
+                                     src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
                             </c:otherwise>
                         </c:choose>
                         <div class="p-4">

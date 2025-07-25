@@ -23,11 +23,15 @@
                 <!-- Main content -->
                 <main class="flex-1 overflow-auto p-6 bg-slate-50">
                     <h2 class="text-2xl font-semibold mb-6 select-none">
-                        Tạo hạng phòng
+                        Tạo hạng phòng mới
                     </h2>
                     <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg"
                           action="add-room-type" method="POST" enctype="multipart/form-data">
-
+                        <c:if test="${not empty error}">
+                            <div class="mb-4">
+                                <p class="text-red-600 font-medium">${error}</p>
+                            </div>
+                        </c:if>
 
                         <!-- RoomTypeID -->
                         <div class="mb-4">
@@ -106,11 +110,7 @@
                         <div id="imagePreview" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"></div>
 
                         <!-- Error message -->
-                        <c:if test="${not empty error}">
-                            <div class="mb-4">
-                                <p class="text-red-600 font-medium">${error}</p>
-                            </div>
-                        </c:if>
+
 
                         <!-- Buttons -->
                         <div class="flex justify-end space-x-3">

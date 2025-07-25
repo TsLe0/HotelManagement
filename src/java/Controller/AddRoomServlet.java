@@ -40,13 +40,13 @@ public class AddRoomServlet extends HttpServlet {
 
             // Validate room number
             if (roomNumber == null || roomNumber.trim().isEmpty()) {
-                session.setAttribute("addRoomError", "Room number cannot be empty.");
+                session.setAttribute("addRoomError", "Mã phòng không được để trống.");
                 response.sendRedirect("add-room");
                 return;
             }
 
             if (roomNumber.length() > 6) {
-                session.setAttribute("addRoomError", "Room number must not exceed 6 characters.");
+                session.setAttribute("addRoomError", "Mã phòng không được vượt quá 6 ký tự.");
                 response.sendRedirect("add-room");
                 return;
             }
@@ -54,20 +54,19 @@ public class AddRoomServlet extends HttpServlet {
             // Check if room number already exists
             for (Room r : dao.getAllRoom()) {
                 if (r.getRoomNumber().equalsIgnoreCase(roomNumber)) {
-                    session.setAttribute("addRoomError", "Room number already existed.");
+                    session.setAttribute("addRoomError", "Mã phòng đã tồn tại.");
                     response.sendRedirect("add-room");
                     return;
                 }
             }
 
             // Check if RoomType is active
-           RoomType selectedRoomType = roomTypeDAO.getRoomTypeById(roomTypeId);
-if (selectedRoomType == null || !"Đang kinh doanh".equalsIgnoreCase(selectedRoomType.getRoomTypeStatus())) {
-    session.setAttribute("addRoomError", "Selected room type is not active.");
-    response.sendRedirect("add-room");
-    return;
-}
-
+            RoomType selectedRoomType = roomTypeDAO.getRoomTypeById(roomTypeId);
+            if (selectedRoomType == null || !"Đang kinh doanh".equalsIgnoreCase(selectedRoomType.getRoomTypeStatus())) {
+                session.setAttribute("addRoomError", "Loại phòng được chọn hiện không hoạt động.");
+                response.sendRedirect("add-room");
+                return;
+            }
 
             // Add the new room
             Room newRoom = new Room();
@@ -77,14 +76,13 @@ if (selectedRoomType == null || !"Đang kinh doanh".equalsIgnoreCase(selectedRoo
 
             dao.addRoom(newRoom);
 
-            session.setAttribute("message", "Thêm thành công.");
+            session.setAttribute("message", "Thêm phòng thành công.");
             response.sendRedirect("adminroom");
 
         } catch (Exception e) {
-            session.setAttribute("errorMessage", "Thêm phòng thất bại.");
+            session.setAttribute("errorMessage", "Đã xảy ra lỗi khi thêm phòng.");
             e.printStackTrace();
             response.sendRedirect("add-room");
         }
     }
-
 }

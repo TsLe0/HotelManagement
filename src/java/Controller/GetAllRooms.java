@@ -64,7 +64,6 @@ public class GetAllRooms extends HttpServlet {
             totalRooms = typeDao.countSearchedActiveRoomTypes(searchQuery);
             tList = typeDao.searchActiveRoomTypesByName(searchQuery, page, pageSize, sort);
         } else {
-            // Use the new methods that accept a filter
             totalRooms = typeDao.countActiveRoomTypes(roomTypeFilter);
             tList = typeDao.getActiveRoomTypes(page, pageSize, sort, roomTypeFilter);
         }

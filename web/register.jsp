@@ -74,7 +74,7 @@
                         </button>
                         
                         <a
-                            href="home.jsp"
+                            href="home-room"
                             class="w-full px-5 py-3 text-base font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-600 dark:hover:bg-secondary-700 dark:focus:ring-primary-800">
                             Cancel
                         </a>

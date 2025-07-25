@@ -28,9 +28,14 @@
                 <!-- Main content -->
                 <main class="flex-1 overflow-auto p-6 bg-slate-50">
                     <h2 class="text-2xl font-semibold mb-6 select-none">
-                        Create New Room
+                        Tạo phòng mới
                     </h2>
                     <form class="bg-white rounded-md shadow-sm border border-gray-200 p-6 max-w-lg" action="add-room" method="POST">
+                        <c:if test="${not empty addRoomError}">
+                            <div class="mb-4">
+                                <p class="text-red-600 font-medium">${addRoomError}</p>
+                            </div>
+                        </c:if>
                         <div class="mb-4">
                             <label class="block text-gray-700 font-semibold mb-2 select-none" for="roomNumber">
                                 Room Number
@@ -79,11 +84,7 @@
                         </div>
 
 
-                        <c:if test="${not empty addRoomError}">
-                            <div class="mb-4">
-                                <p class="text-red-600 font-medium">${addRoomError}</p>
-                            </div>
-                        </c:if>
+
 
                         <div class="flex justify-end space-x-3">
                             <a
