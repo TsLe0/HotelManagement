@@ -72,6 +72,25 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* --- New styles for alerts --- */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .alert-success {
+            background-color: #d1fae5; /* Green 100 */
+            color: #065f46; /* Green 800 */
+            border: 1px solid #34d399; /* Green 400 */
+        }
+        .alert-error {
+            background-color: #fee2e2; /* Red 100 */
+            color: #991b1b; /* Red 800 */
+            border: 1px solid #f87171; /* Red 400 */
+        }
+        /* --- End new styles --- */
     </style>
 </head>
 <body>
@@ -80,6 +99,22 @@
     <div class="container mx-auto mt-8 px-4">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Lịch sử đặt phòng</h1>
 
+        <%-- Hiển thị thông báo Hủy phòng thành công/lỗi --%>
+        <c:if test="${not empty sessionScope.cancellationMessage}">
+            <div class="alert alert-success flex items-center">
+                <i class="fas fa-check-circle mr-2 text-xl"></i>
+                <span>${sessionScope.cancellationMessage}</span>
+            </div>
+            <c:remove var="cancellationMessage" scope="session"/> <%-- Xóa thông báo sau khi hiển thị --%>
+        </c:if>
+        <c:if test="${not empty sessionScope.errorMessage}">
+            <div class="alert alert-error flex items-center">
+                <i class="fas fa-exclamation-triangle mr-2 text-xl"></i>
+                <span>${sessionScope.errorMessage}</span>
+            </div>
+            <c:remove var="errorMessage" scope="session"/> <%-- Xóa thông báo sau khi hiển thị --%>
+        </c:if>
+        
         <c:if test="${empty bookingHistory}">
             <div class="text-center bg-white p-10 rounded-lg shadow-md">
                 <i class="fas fa-box-open fa-3x text-gray-400 mb-4"></i>
@@ -129,33 +164,32 @@
                                 <fmt:setLocale value="vi_VN"/>
                                 <fmt:formatNumber value="${booking.totalPrice}" type="currency" currencySymbol="VNĐ"/>
                             </div>
+                            
+                            <%-- Thêm nút Hủy phòng nếu trạng thái là Pending hoặc Confirmed --%>
+                            
                         </div>
                     </div>
                 </c:forEach>
             </div>
         </c:if>
 
-        <!-- Pagination Controls -->
         <c:if test="${totalPages > 1}">
             <div class="flex justify-center items-center mt-8">
                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                    <!-- Previous Button -->
                     <a href="booking-history?page=${currentPage - 1}"
                        class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage == 1 ? 'pointer-events-none text-gray-300' : ''}">
                         <span class="sr-only">Previous</span>
                         <i class="fas fa-chevron-left h-5 w-5"></i>
                     </a>
 
-                    <!-- Page Numbers -->
                     <c:forEach begin="1" end="${totalPages}" var="i">
                         <a href="booking-history?page=${i}"
                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium
-                                  ${i == currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50'}">
+                                    ${i == currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50'}">
                             ${i}
                         </a>
                     </c:forEach>
 
-                    <!-- Next Button -->
                     <a href="booking-history?page=${currentPage + 1}"
                        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage == totalPages ? 'pointer-events-none text-gray-300' : ''}">
                         <span class="sr-only">Next</span>

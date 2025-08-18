@@ -83,6 +83,7 @@ public class AddRoomServlet extends HttpServlet {
             session.setAttribute("errorMessage", "Đã xảy ra lỗi khi thêm phòng.");
             e.printStackTrace();
             response.sendRedirect("add-room");
+            IllegalArgumentException
         }
     }
 }

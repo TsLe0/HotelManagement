@@ -26,11 +26,9 @@
             <h1 class="text-3xl font-extrabold text-gray-900 mb-8">Xác nhận và thanh toán</h1>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                <!-- Left Column: Booking Form -->
                 <div class="lg:col-span-2 bg-white p-8 rounded-lg shadow-lg">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Thông tin khách hàng</h2>
                     <form action="confirmBooking" method="POST" id="bookingForm">
-                        <!-- Hidden fields for booking data -->
                         <input type="hidden" name="roomTypeId" value="${roomType.roomTypeID}" />
                         <input type="hidden" name="checkin" value="${checkin}" />
                         <input type="hidden" name="checkout" value="${checkout}" />
@@ -90,7 +88,6 @@
                     </form>
                 </div>
 
-                <!-- Right Column: Booking Summary -->
                 <div class="lg:col-span-1">
                     <div class="bg-white p-6 rounded-lg shadow-lg sticky top-24">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4">Tóm tắt đặt phòng</h3>
@@ -110,10 +107,6 @@
                                 <span class="font-medium text-gray-600">Ngày trả phòng:</span>
                                 <span class="font-semibold text-gray-900">${checkout}</span>
                             </div>
-                            <!--                            <div class="flex justify-between">
-                                                            <span class="font-medium text-gray-600">Số khách:</span>
-                                                            <span class="font-semibold text-gray-900">${guests} người</span>
-                                                        </div>-->
                             <div class="flex justify-between">
                                 <span class="font-medium text-gray-600">Số đêm:</span>
                                 <span class="font-semibold text-gray-900">${nights} đêm</span>
@@ -151,13 +144,14 @@
 
                     // Validate phone number
                     const phone = document.getElementById("phone").value.trim();
-                    const phoneRegex = /^[0-9]{9,11}$/;
+                    // New regex: starts with '0', followed by 8 to 10 digits
+                    const phoneRegex = /^0[0-9]{8,10}$/; 
                     if (phone === "") {
                         isValid = false;
                         messages.push("Số điện thoại không được để trống.");
                     } else if (!phoneRegex.test(phone)) {
                         isValid = false;
-                        messages.push("Số điện thoại không hợp lệ (chỉ gồm 9-11 chữ số).");
+                        messages.push("Số điện thoại không hợp lệ (phải bắt đầu bằng '0' và có tổng cộng 9-11 chữ số).");
                     }
 
                     // Nếu không hợp lệ, ngăn gửi form và báo lỗi

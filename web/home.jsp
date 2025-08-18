@@ -100,6 +100,17 @@
                 </c:forEach>
             </div>
         </section>
+
+        <!-- Latest Rooms Section -->
+        <section class="max-w-7xl mx-auto px-6 py-16 space-y-12" id="latest-rooms">
+            <h2 class="text-3xl font-extrabold text-center text-blue-700">
+                Phòng Mới Nhất
+            </h2>
+            <div class="text-center">
+                <a href="latest-rooms-servlet" class="bg-blue-700 text-white font-semibold rounded-md py-3 px-6 hover:bg-blue-800 transition inline-block">Xem Tất Cả Phòng Mới Nhất</a>
+            </div>
+        </section>
+
         <!-- Promotion Section -->
         <section class="bg-blue-50 py-16 px-6" id="promotion">
             <div class="max-w-7xl mx-auto space-y-10">

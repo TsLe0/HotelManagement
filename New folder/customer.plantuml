@@ -1,0 +1,23 @@
+@startuml 
+left to right direction
+actor "Customer" as customer
+
+rectangle "Hotel Management System" {
+  usecase "Logout" as logout
+  usecase "Booking Room" as bookingRoom
+  usecase "View Booking History" as viewBookingHistory
+  usecase "View Room List" as viewRoomList
+  usecase "Search Room" as searchRoom
+  viewRoomList <.. searchRoom : extends
+  usecase "Cancel Booking" as cancelBooking
+  usecase "View Booking Detail" as viewBookingDetail
+}
+
+customer -- logout
+customer -- bookingRoom
+customer -- viewBookingHistory
+customer -- viewRoomList
+customer -- cancelBooking
+customer -- viewBookingDetail
+
+@enduml
