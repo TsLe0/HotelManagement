@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -28,6 +29,9 @@ public class RoomDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String roomTypeId = request.getParameter("roomTypeId");
+        String checkinDate = request.getParameter("checkin");
+        String checkoutDate = request.getParameter("checkout");
+
         try {
             RoomType roomType = roomTypeDAO.getRoomTypeById(roomTypeId); // String version
 
@@ -42,6 +46,8 @@ public class RoomDetailServlet extends HttpServlet {
             request.setAttribute("roomType", roomType);
             request.setAttribute("rooms", rooms);
             request.setAttribute("iList", roomImages);
+            request.setAttribute("checkin", checkinDate);
+            request.setAttribute("checkout", checkoutDate);
 
             System.out.println(roomType);
 

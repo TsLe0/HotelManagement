@@ -344,4 +344,36 @@ public class RoomTypeDAO {
         }
         return 0;
     }
+
+    public List<RoomType> getAvailableRoomTypesByDate(String checkinDate, String checkoutDate) {
+        List<RoomType> list = new ArrayList<>();
+        String sql = "SELECT DISTINCT rt.* FROM RoomType rt "
+                + "JOIN Room r ON rt.RoomTypeID = r.RoomTypeID "
+                + "WHERE rt.RoomTypeStatus = N'Đang kinh doanh' AND r.RoomNumber NOT IN ("
+                + "SELECT b.RoomNumber FROM Bookings b "
+                + "WHERE b.RoomNumber IS NOT NULL AND b.Status = 'Confirmed' AND "
+                + "(? < b.CheckOutDate AND ? > b.CheckInDate)"
+                + ")";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, checkoutDate);
+            ps.setString(2, checkinDate);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                RoomType r = new RoomType();
+                r.setRoomTypeID(rs.getString(1));
+                r.setRoomTypeName(rs.getString(2));
+                r.setRoomTypePrice(rs.getDouble(3));
+                r.setRoomDec(rs.getString(4));
+                r.setRoomArea(rs.getDouble(5));
+                r.setNumBeds(rs.getInt(6));
+                r.setRoomTypeStatus(rs.getString(7));
+                list.add(r);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }

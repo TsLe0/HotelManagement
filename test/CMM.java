@@ -1,8 +1,6 @@
 
 import DAO.RoomsDAO;
 import Models.Room;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -22,36 +20,23 @@ public class CMM {
      * @param args the command line arguments
      */
   public static void main(String[] args) {
-        try {
-            // Khởi tạo DAO
-            RoomsDAO roomsDAO = new RoomsDAO();
+       RoomsDAO roomDAO = new RoomsDAO();
+        int limit = 5; // Lấy 5 phòng mới nhất
 
-            // Định dạng ngày
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date checkIn = sdf.parse("2025-07-25");
-            Date checkOut = sdf.parse("2025-07-28");
+        List<Room> latestRooms = roomDAO.getLatestRooms(limit);
 
-            // ID loại phòng (ví dụ RoomTypeID = "RT01")
-            String roomTypeId = "RT01";
-
-            // Gọi method
-            List<Room> availableRooms = roomsDAO.getAvailableRoomsByTypeId(roomTypeId, checkIn, checkOut);
-
-            // In kết quả
-            if (availableRooms.isEmpty()) {
-                System.out.println("Không có phòng trống trong khoảng thời gian đã chọn.");
-            } else {
-                System.out.println("Danh sách phòng trống:");
-                for (Room room : availableRooms) {
-                    System.out.println("Phòng: " + room.getRoomNumber() +
-                                       ", Trạng thái: " + room.getRoomStatus() +
-                                       ", Loại phòng: " + room.getRoomTypeID());
-                }
+        System.out.println("Danh sách " + limit + " phòng mới nhất:");
+        for (Room room : latestRooms) {
+            System.out.println("Số phòng: " + room.getRoomNumber());
+            System.out.println("Trạng thái: " + room.getRoomStatus());
+            System.out.println("Loại phòng ID: " + room.getRoomTypeID());
+            if (room.getRoomType() != null) {
+                System.out.println("Tên loại phòng: " + room.getRoomType().getRoomTypeName());
+                System.out.println("Giá: " + room.getRoomType().getRoomTypePrice());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("----------");
         }
-    
+    }
     }
     
-}
+

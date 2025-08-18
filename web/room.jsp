@@ -135,7 +135,7 @@
                                                 <fmt:formatNumber value="${t.roomTypePrice}" type="currency" currencyCode="VND" minFractionDigits="0"/>
                                             </div>
                                         </div>
-                                        <a href="room-detail?roomTypeId=${t.roomTypeID}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                        <a href="room-detail?roomTypeId=${t.roomTypeID}&checkin=${checkin}&checkout=${checkout}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                                            Đặt Phòng 
                                         </a>
                                     </div>

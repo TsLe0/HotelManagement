@@ -106,7 +106,7 @@
                 </div>
             </section>
 
-            <a aria-label="Quay về trang chủ" class="mt-12 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition" href="home.jsp">
+            <a aria-label="Quay về trang chủ" class="mt-12 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition" href="home-room">
                 <i class="fas fa-home mr-2">
                 </i>
                 Quay về trang chủ

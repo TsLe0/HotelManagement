@@ -116,7 +116,7 @@ public class loginServlet extends HttpServlet {
             if ("admin".equalsIgnoreCase(user.getRole())) {
                 response.sendRedirect("dash-board"); // Redirect admin to admin dashboard
             } else {
-                response.sendRedirect("home.jsp"); // Redirect normal users to home page
+                response.sendRedirect("home-room"); // Redirect normal users to home page
             }
         }
     }

@@ -43,7 +43,7 @@
             <!-- Main Content -->
             <main class="flex-1 p-6">
                 <div class="flex justify-between">
-                    <h2 class="text-3xl font-semibold mb-6">Rooms</h2>
+                    <h2 class="text-3xl font-semibold mb-6">Danh sách phòng</h2>
                     <a href="add-room"
                        class="text-xl font-semibold mb-6 bg-[#007bff] cursor-pointer hover:bg-[#0069D9] py-2 px-4 rounded-lg text-white">
                         Create

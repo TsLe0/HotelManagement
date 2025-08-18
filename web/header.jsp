@@ -4,7 +4,7 @@
 
 <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <a class="flex items-center space-x-3" href="home.jsp">
+        <a class="flex items-center space-x-3" href="home-room">
             <img alt="Logo khách sạn Mường Thanh màu xanh dương và trắng" class="h-16 w-16 w-auto object-contain"
                  src="https://employer.jobsgo.vn/uploads/media/img/201912/pictures_library_38320_20191224135816_4094.jpg" width="80"/>
             

@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+actor "Manager" as manager
+
+rectangle "Hotel Management System" {
+  usecase "View Dashboard" as viewDashboard
+  usecase "View List Room Type" as viewRoomType
+  usecase "View List Room" as viewRoom
+  usecase "View List Booking" as viewBooking
+
+  note "Create, Update, Delete" as crudRoomType
+  viewRoomType -- crudRoomType
+
+  note "Create, Update, Delete" as crudRoom
+  viewRoom -- crudRoom
+
+  note "Create, Update, Delete" as crudBooking
+  viewBooking -- crudBooking
+}
+
+manager -- viewDashboard
+manager -- viewRoomType
+manager -- viewRoom
+manager -- viewBooking
+
+@enduml

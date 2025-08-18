@@ -179,7 +179,7 @@ public class BookingDAO extends DBContext {
 
     public List<Booking> getRecentBookings(int limit) {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT TOP (?) * FROM Bookings ORDER BY BookingDate DESC";
+        String sql = "SELECT TOP (?) * FROM Bookings ORDER BY BookingId DESC";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);

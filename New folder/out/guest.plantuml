@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+actor Guest
+
+rectangle "Hotel Management System" {
+  usecase (Register) as Register
+  usecase (Login) as Login
+  usecase (Logout) as Logout
+  usecase (View Home Page) as ViewHomePage
+  usecase (View Room Detail) as ViewRoomDetail
+}
+
+Guest -- Register
+Guest -- Login
+Guest -- Logout
+Guest -- ViewHomePage
+Guest -- ViewRoomDetail
+
+@enduml

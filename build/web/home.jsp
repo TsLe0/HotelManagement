@@ -25,7 +25,7 @@
             <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-7xl mx-auto my-4" role="alert">
                 <strong class="font-bold">Thành công!</strong>
                 <span class="block sm:inline">${sessionScope.bookingSuccess}</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').style.display='none';">
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').style.display = 'none';">
                     <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
                 </span>
             </div>
@@ -45,65 +45,72 @@
                         sạn Mường Thanh trên toàn quốc. Đặt phòng nhanh chóng, giá tốt nhất.
                     </p>
                 </div>
-                
+                <div class="md:w-1/2 mt-10 md:mt-0">
+                    <form action="getallrooms" method="GET" class="bg-white p-8 rounded-lg shadow-2xl space-y-6">
+                        <h2 class="text-2xl font-bold text-gray-800 text-center">Tìm Kiếm Phòng</h2>
+                        <div>
+                            <label for="checkin" class="block text-sm font-medium text-gray-700">Ngày nhận phòng</label>
+                            <input type="date" id="checkin" name="checkin" 
+                                   required 
+                                   class="text-gray-900 mt-1 block w-full border border-gray-300
+                                   rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="checkout" class="block text-sm font-medium text-gray-700">Ngày trả phòng</label>
+                            <input type="date" id="checkout" name="checkout" 
+                                   required 
+                                   class="text-black mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-700 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition">Tìm Kiếm</button>
+                    </form>
+                </div>
             </div>
         </section>
-        <!-- Hotels Section -->
+        <!-- Featured Rooms Section -->
         <section class="max-w-7xl mx-auto px-6 py-16 space-y-12" id="hotels">
             <h2 class="text-3xl font-extrabold text-center text-blue-700">
-                Hệ Thống Khách Sạn Mường Thanh
+                Phòng Nổi Bật
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Grand Hà Nội với kiến trúc hiện đại và ánh sáng ban ngày" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Grand Hà Nội
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn 5 sao sang trọng tọa lạc tại trung tâm thủ đô Hà Nội,
-                            tiện nghi hiện đại, dịch vụ đẳng cấp.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Premier Đà Nẵng nhìn ra biển với bãi cát trắng và bầu trời xanh" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/738f10e3-9298-4a24-ae28-3c31227a9c41.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Premier Đà Nẵng
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn 4 sao cao cấp bên bờ biển Mỹ Khê, Đà Nẵng, với phòng nghỉ
-                            hướng biển tuyệt đẹp.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khách sạn Mường Thanh Standard Hạ Long với view vịnh Hạ Long và núi non" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/e9bc38d5-d58a-4c85-8690-42b305823c8c.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Standard Hạ Long
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khách sạn tiêu chuẩn với vị trí thuận lợi gần vịnh Hạ Long, tiện
-                            nghi đầy đủ cho kỳ nghỉ gia đình.
-                        </p>
-                    </div>
-                </article>
-                <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
-                    <img alt="Khu resort Mường Thanh Phú Quốc với hồ bơi ngoài trời và cây xanh nhiệt đới" class="w-full h-56 object-cover" height="250" src="https://storage.googleapis.com/a1aa/image/69c2e0f9-d010-4647-0655-d768ba6fbf15.jpg" width="400"/>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">
-                            Mường Thanh Resort Phú Quốc
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Khu nghỉ dưỡng cao cấp tại đảo Phú Quốc với hồ bơi, spa và bãi biển
-                            riêng.
-                        </p>
-                    </div>
-                </article>
+                <c:forEach items="${featuredRoomTypes}" var="roomType" varStatus="loop">
+                    <article class="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition">
+                        <c:choose>
+                            <c:when test="${not empty featuredRoomImages and not empty featuredRoomImages[loop.index]}">
+                                <img alt="${roomType.roomTypeName}" class="w-full h-56 object-cover" height="250"
+                                     src="${featuredRoomImages[loop.index][0].roomImages}" width="400"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img alt="Default Room Image" class="w-full h-56 object-cover" height="250"
+                                     src="https://storage.googleapis.com/a1aa/image/d67f6d0c-1f19-48b2-18a9-7efdd5380939.jpg" width="400"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-2">
+                                ${roomType.roomTypeName}
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                ${roomType.roomDec}
+                            </p>
+                            <div class="mt-4">
+                                <a href="${pageContext.request.contextPath}/room-detail?roomTypeId=${roomType.roomTypeID}" class="text-blue-600 hover:text-blue-800 font-semibold">Xem Chi Tiết</a>
+                            </div>
+                        </div>
+                    </article>
+                </c:forEach>
             </div>
         </section>
+
+        <!-- Latest Rooms Section -->
+        <section class="max-w-7xl mx-auto px-6 py-16 space-y-12" id="latest-rooms">
+            <h2 class="text-3xl font-extrabold text-center text-blue-700">
+                Phòng Mới Nhất
+            </h2>
+            <div class="text-center">
+                <a href="latest-rooms-servlet" class="bg-blue-700 text-white font-semibold rounded-md py-3 px-6 hover:bg-blue-800 transition inline-block">Xem Tất Cả Phòng Mới Nhất</a>
+            </div>
+        </section>
+
         <!-- Promotion Section -->
         <section class="bg-blue-50 py-16 px-6" id="promotion">
             <div class="max-w-7xl mx-auto space-y-10">
@@ -164,11 +171,55 @@
         </section>
 
         <!-- Footer -->
-              <jsp:include page="footer.jsp" />
+        <jsp:include page="footer.jsp" />
         <script>
-            document.getElementById('menu-btn').addEventListener('click', function () {
-                const menu = document.getElementById('mobile-menu');
-                menu.classList.toggle('hidden');
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            function validateBookingForm() {
+                const checkinDate = new Date(document.getElementById('checkin').value);
+                const checkoutDate = new Date(document.getElementById('checkout').value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // So sánh chỉ ngày, không tính giờ
+
+                if (checkinDate < today) {
+                    alert('Ngày nhận phòng không được là ngày trong quá khứ.');
+                    return false;
+                }
+
+                if (checkoutDate <= checkinDate) {
+                    alert('Ngày trả phòng phải sau ngày nhận phòng.');
+                    return false;
+                }
+                return true;
+            }
+
+            // Set min date for checkin and checkout
+            document.addEventListener("DOMContentLoaded", function () {
+                var today = new Date().toISOString().split('T')[0];
+                var checkinInput = document.getElementById('checkin');
+                var checkoutInput = document.getElementById('checkout');
+
+                checkinInput.setAttribute('min', today);
+
+                checkinInput.addEventListener('change', function () {
+                    var checkinDate = new Date(this.value);
+                    checkinDate.setDate(checkinDate.getDate() + 1);
+                    var nextDay = checkinDate.toISOString().split('T')[0];
+                    checkoutInput.setAttribute('min', nextDay);
+                    if (checkoutInput.value < nextDay) {
+                        checkoutInput.value = nextDay;
+                    }
+                });
+
+                // Initial setup for checkout min date
+                var checkinDate = new Date(checkinInput.value);
+                checkinDate.setDate(checkinDate.getDate() + 1);
+                var nextDay = checkinDate.toISOString().split('T')[0];
+                checkoutInput.setAttribute('min', nextDay);
             });
         </script>
     </body>

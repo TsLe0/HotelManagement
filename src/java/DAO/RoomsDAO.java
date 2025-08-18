@@ -260,4 +260,31 @@ public class RoomsDAO {
         }
         return 0;
     }
+
+    public List<Room> getLatestRooms(int limit) {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT r.RoomNumber, r.RoomStatus, r.RoomTypeID "
+                + "FROM Room r ORDER BY r.RoomNumber DESC OFFSET 0 ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, limit);
+            rs = ps.executeQuery();
+            RoomTypeDAO roomTypeDAO = new RoomTypeDAO();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomStatus(rs.getString("RoomStatus"));
+
+                String roomTypeId = rs.getString("RoomTypeID");
+                room.setRoomTypeID(roomTypeId);
+                room.setRoomType(roomTypeDAO.getRoomTypeById(roomTypeId));
+
+                list.add(room);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
